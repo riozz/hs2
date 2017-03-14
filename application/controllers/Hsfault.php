@@ -5,6 +5,8 @@
       parent::__construct();
       $this->load->helper('url_helper');
       $this->load->helper('url');
+      $this->load->library('session');
+      $this->load->library('staffInfo');
     }
 
     public function index($page = 'index')
@@ -16,6 +18,10 @@
         }
 
         $data['title'] = ucfirst($page); // Capitalize the first letter
+        $data['orderid'] = $this->input->post('orderid');
+        $data['staffid'] = $this->input->post('staffid');
+        $data['userlogin'] = $this->input->post('login');
+        $this->staffinfo->getStaffInfo($data['staffid']);
 
         $this->load->view('templates/header', $data);
         $this->load->view('hsfault/'.$page, $data);

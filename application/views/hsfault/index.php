@@ -289,6 +289,37 @@
 
                 </div>
 
+<!--history-->
+                <div class="thumbnail">
+
+    	            <div class="alert alert-warning"><h3>Fault History</h3></div>
+
+       		      <table data-toggle="table">
+    			<thead>
+      			  <tr>
+        		  <th>Firstname</th>
+        		  <th>Lastname</th>
+        		  <th>Email</th>
+      			  </tr>
+    			</thead>
+    			<tbody>
+      			<tr id="tr-id-1" class="tr-class-1">
+        		  <td id="td-id-1" class="td-class-1">John</td>
+        		  <td>Doe</td>
+        		  <td>john@example.com</td>
+      			</tr>
+      			<tr id="tr-id-2" class="tr-class-2">
+        		  <td id="td-id-2" class="td-class-2">Mary Peter</td>
+        		  <td>Moe</td>
+        		  <td>mary@example.com</td>
+      		  	</tr>
+    			</tbody>
+  		      </table>
+		</div>
+<!--history test-->
+                <div class="thumbnail">
+
+		</div>
             </div>
 
         </div>
@@ -300,4 +331,5 @@
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap-table.js"></script>
 
