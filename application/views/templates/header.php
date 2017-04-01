@@ -41,9 +41,9 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="#">Welcome, 
-<?php echo "staffid=".$staffid."orderid=".$orderid."userlogin=".$userlogin; ?></a>
+<?php echo "xxx staffid=".$staffid."orderid=".$orderid."userlogin=".$userlogin; ?></a>
 <label class="navbar-brand">
-<br><?php echo "from session:ccc=".$this->session->ccc.";name=".$this->session->name.";location=".$this->session->location; ?></label>
+<br><?php echo "xxx from session:ccc=".$this->session->ccc.";name=".$this->session->name.";location=".$this->session->location; ?></label>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">

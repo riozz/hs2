@@ -6,7 +6,8 @@
       $this->load->helper('url_helper');
       $this->load->helper('url');
       $this->load->model('faults_model');
-      //$this->load->library('session');
+      $this->load->library('session');
+      //$this->load->helper('form');
       //$this->load->library('staffInfo');
       //$this->load->library('faultInfo');
     }
@@ -19,10 +20,11 @@
         //echo "orderid = $orderid";
 	$data['faults'] = $this->faults_model->getFaultHistory($orderid);
         $data['title'] = 'Fault History';
+        //$data['faults']['id'] = 0;
 	$this->load->view('hsfault/v_faulthistory', $data);
     } 
 
-    
+    // fault detail 
     public function view($fid = "0")
     {
         	
@@ -36,14 +38,35 @@
 	$this->load->view('hsfault/v_faultinfo', $data);
     } 
    
-    /**    
-    public function view($faultid = 0)
+    public function change($oid = 0)
     {
-	$data['faultinfo'] = $this->faultmodel->getFaultInfo($faultid);
-        $data['title'] = 'Fault Info';
-        $this->load->view('hsfault/v_faultinfo', $data);
+      $this->load->helper('form');
+      $this->load->library('form_validation');
+      $data['title'] = 'Change fault';
+      $orderid = $this->input->post('orderid');
+      $faultid = $this->input->post('faultid');
+      $staffnumber = $this->input->post('staffnumber');
+      log_message('debug', 'zzz:orderid='.$orderid);
+      log_message('debug', 'zzz:oid='.$oid);
+      log_message('debug', 'zzz:faultid='.$faultid);
+      log_message('debug', 'zzz:staffnumber='.$staffnumber);
+      $this->form_validation->set_rules('staffnumer','Staff Number','required');
+      $this->form_validation->set_rules('customername','Customer Name','required');
+      $this->form_validation->set_rules('optcert','Certificate','required');
+      $this->form_validation->set_rules('certno','Certificate','required');
+      $this->form_validation->set_rules('contactnumber','Contact Number','required');
+      $this->form_validation->set_rules('f_faultto_id','Fault Report to','required');
+      if ($this->form_validation->run() == FAlSE)
+      {
+        //$this->faults_model->set_faults();
+        //$this->load->view('templates/footer');
+	//redirect(base_url()."index.php/hsfault/index/".$orderid."/".$faultid);
+	redirect('http://www.google.com');
+      } else {
+	redirect('http://www.yahoo.com');
+        //$this->load->view('templates/header');
+      }
     }
-	*/
 
 }
 

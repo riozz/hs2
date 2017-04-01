@@ -1,33 +1,52 @@
 <pre>
  <?php 
-    //echo json_encode($faultsinfo); 
-    //echo $faultsinfo['name']; 
-    $qresult = ($faultsinfo['name'] == 'NULL')?false:true; 
+    echo json_encode($faultsinfo); 
+    //$qresult = isset($faultsinfo['name'])?true:false; 
+    if (isset($faultsinfo['name'])) {
+      $qresult=true;
+    } else {
+      $qresult=false;
+      $faultsinfo['report_to']=0;
+      $faultsinfo['category']=0;
+      $faultsinfo['symptomid']=0;
+      $faultsinfo['replacement']=0;
+      $faultsinfo['itemtypeid']=0;
+      $faultsinfo['transfertoid']=0;
+      $faultsinfo['appointmenttimeid']=0;
+      $faultsinfo['faultid']=0;
+      $faultsinfo['orderid']=0;
+    }
+    //echo "<br>category:".strtoupper($faultsinfo['category']); 
+    /*
+    foreach ($faultsinfo['reportto'] as $row) {
+      echo '<br>'.$row['id'].'<br>'.$row['content'].'<br>';
+    }
+    */
  ?>
 <p>
 </pre>
-<form class="form-horizontal" id="faultForm">
+<form class="form-horizontal" id="faultForm" method="post" action="<?php echo base_url()."index.php/faults/change/".$faultsinfo['orderid']; ?>"> 
 <div class="thumbnail">
   <div class="caption-full">
     <h4>Part I: CS/TS Staff Profile </h4><br/>
       <div class="form-group">
      	<label class="col-sm-2 control-label">Staff Number</label>
       	<div class="col-sm-4">
-          <input class="form-control" id="disabledInput" type="text" name="staffnumber" value="<?php echo ($qresult)?$faultsinfo['sfstaffid']:''; ?>" placeholder="" disabled>
+          <input class="form-control" id="disabledInput" type="text" name="staffnumber" value="<?php echo ($qresult)?$faultsinfo['sfstaffid']:$this->session->userdata('s_staffid'); ?>" placeholder="" disabled>
      	</div>
       	<label class="col-sm-2 control-label">Staff Name</label>
       	<div class="col-sm-4">
-       	  <input class="form-control" id="disabledInput" type="text" name="staffname" value="<?php echo ($qresult)?$faultsinfo['name']:''; ?>" placeholder="" disabled>
+       	  <input class="form-control" id="disabledInput" type="text" name="staffname" value="<?php echo ($qresult)?$faultsinfo['name']:$this->session->userdata('s_name'); ?>" placeholder="" disabled>
       	</div>
       </div>
       <div class="form-group">
      	<label class="col-sm-2 control-label">Staff Team Code</label>
       	<div class="col-sm-4">
-       	  <input class="form-control" id="disabledInput" type="text" name="staffteamcode" value="<?php echo ($qresult)?$faultsinfo['teamcode']:''; ?>" placeholder="" disabled>
+       	  <input class="form-control" id="disabledInput" type="text" name="staffteamcode" value="<?php echo ($qresult)?$faultsinfo['teamcode']:$this->session->userdata('s_teamcode'); ?>" placeholder="" disabled>
       	</div>
         <label class="col-sm-2 control-label">Channel</label>
       	<div class="col-sm-4">
-       	  <input class="form-control" id="disabledInput" type="text" name="channel" value="<?php echo ($qresult)?$faultsinfo['channel']:''; ?>" placeholder="" disabled>
+       	  <input class="form-control" id="disabledInput" type="text" name="staffchannel" value="<?php echo ($qresult)?$faultsinfo['channel']:$this->session->userdata('s_channel'); ?>" placeholder="" disabled>
       	</div>
       </div>
   </div>
@@ -50,9 +69,9 @@
 
     <div class="form-group">
       <label class="col-sm-3">
-      <input type="radio" name="optcert" value="">HKID&nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="radio" name="optcert" value="">BR&nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="radio" name="optcert" value="">PS
+      <input type="radio" name="optcert" value="HKID">HKID&nbsp;&nbsp;&nbsp;&nbsp;
+      <input type="radio" name="optcert" value="BR">BR&nbsp;&nbsp;&nbsp;&nbsp;
+      <input type="radio" name="optcert" value="PS">PS
       </label>
 
       <div class="col-sm-3">
@@ -70,7 +89,7 @@
       </div>
       <label class="col-sm-2 control-label">2nd Contact Number</label>
       <div class="col-sm-4">
-        <input class="form-control" id="focusedInput" type="text" value="<?php echo ($qresult)?$faultsinfo['c2number']:''; ?>" name="2ndcontactnumber">
+        <input class="form-control" id="focusedInput" type="text" value="<?php echo ($qresult)?$faultsinfo['c2number']:''; ?>" name="ndcontactnumber">
       </div>
     </div>
     <div class="form-group">
@@ -108,18 +127,24 @@
 	  </div>
 	  <div class="form-group">
       	    <label class="col-sm-2 control-label">[ District ]</label>
+      	    <div class="col-sm-4"><input class="form-control" id="focusedInput" type="text" value="<?php echo ($qresult)?$faultsinfo['district']:''; ?>" name="ia_district"></div>
+	    <!--
       	    <div class="col-sm-4 dropdown">
 	      <select class="form-control" id="district" name="district">
 	        <option value="1">WanChai</option>
 		<option value="2">ChaiWan</option>
 	      </select>
             </div>
+	    // -->
+	    <?php $areacode=($qresult)?substr($faultsinfo['area'],0,2):''; ?>
    	    <label class="col-sm-2 control-label">[ Area ]</label>
       	    <div class="col-sm-4 dropdown">
-	      <select class="form-control" id="area" name="area">
-	         <option value="HK">HK</option>
-	         <option value="KLN">KLN</option>
-		 <option value="NT">NT</option>
+	      <select class="form-control" id="area" name="ia_area">
+	         <option value="" <?php echo ($areacode=='')?'selected':''; ?>>Please select</option>
+	         <option value="HK" <?php echo ($areacode=='HK')?'selected':''; ?>>HK-Hong Kong Island</option>
+	         <option value="KLN" <?php echo ($areacode=='KL')?'selected':''; ?>>KLN-Kowloon</option>
+	         <option value="LI" <?php echo ($areacode=='LI')?'selected':''; ?>>LI-Lantau Island</option>
+		 <option value="NT" <?php echo ($areacode=='NT')?'selected':''; ?>>NT-New Territories</option>
 	      </select>
 	    </div>  
           </div>
@@ -129,7 +154,7 @@
       <br/>
       <div class="form-group">
         <label class="col-sm-2 control-label">Additional Address</label>
-        <div class="col-sm-10"> <textarea class="form-control" id="focusedInput" row="5" id="2ndaddress" name="additionaladdress" ><?php echo ($qresult)?$faultsinfo['additionaladdr']:''; ?></textarea></div>
+        <div class="col-sm-10"> <textarea class="form-control" id="focusedInput" row="5" id="2ndaddress" name="ia_additionaladdress" ><?php echo ($qresult)?$faultsinfo['additionaladdr']:''; ?></textarea></div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">Ref. Order No</label>
@@ -154,8 +179,12 @@
       <div class="form-group">
         <label class="col-sm-2 control-label">Fault Report To</label>
         <div class="col-sm-10"> 
-          <label class="radio-inline"><input type="radio" name="faultto" value="ts">TS</label>
-	  <label class="radio-inline"><input type="radio" name="faultto" value="cs">CS</label>
+	  <?php foreach ($faultsinfo['reportto'] as $row) 
+	    {
+              //echo "<label class='radio-inline'><input type='radio' name='faultto' value='".$row['id']."' >".$row['desc']."</label>";
+              echo "<label class='radio-inline'><input type='radio' name='f_faultto_id' value='".$row['id']."' ". (($row['id']==$faultsinfo['report_to'])?'checked':'')  .">".$row['content']."</label>";
+	    }
+	  ?>
 	</div>
       </div>
 
@@ -163,18 +192,22 @@
         <label class="col-sm-1 control-label"></label>
         <label class="col-sm-3 control-label">[ Fault Category ]</label>
         <div class="col-sm-8"> 
-          <label class="checkbox-inline"> <input type="checkbox" value="Option 1" name="faultcatgory1">Option 1</label>
-	  <label class="checkbox-inline"> <input type="checkbox" value="Option 2" name="faultcatgory2">Option 2</label>
+          <label class="checkbox-inline"> <input type="checkbox" value="PCD" name="f_pcd" <?php echo (strpos(strtoupper($faultsinfo['category']),"PCD")===false)?'':'checked'; ?>>PCD</label>
+	  <label class="checkbox-inline"> <input type="checkbox" value="LTS" name="f_lts" <?php echo (strpos(strtoupper($faultsinfo['category']),"LTS")===false)?'':'checked'; ?>>LTS</label>
 	</div>
       </div>
 
       <div class="form-group">
         <label class="col-sm-1 control-label"></label>
-        <label class="col-sm-3 control-label">[ Fault Sympthon ]</label>
+        <label class="col-sm-3 control-label">[ Fault Symptom ]</label>
         <div class="col-sm-8"> 
-          <select class="form-control" id="faultsym" name="faultsymthon">
-	    <option value="faultsym1">faultsym1</option>
-	    <option value="faultsym2">faultsym2</option>
+          <select class="form-control" id="faultsym" name="f_faultsymptom_id">
+	    <?php echo "<option value=0 ".(($faultsinfo['symptomid']==0)?'selected':'') . ">Please select</option>";
+	      foreach ($faultsinfo['tab_symptom'] as $row) 
+              {
+	        echo "<option value=".$row['id']." ".(($row['id']==$faultsinfo['symptomid'])?'selected':'') . ">".$row['content']."</option>";
+              }
+            ?> 
 	  </select>
         </div>
       </div>
@@ -183,7 +216,7 @@
         <label class="col-sm-1 control-label"></label>
         <label class="col-sm-3 control-label">[ Item Replacement ]</label>
         <div class="col-sm-8"> 
-          <label> <input type="checkbox" value="itemreplacement" name="itemreplacement">&nbsp;&nbsp;</label>
+          <label> <input type="checkbox" value="itemreplacement" name="f_itemreplacement" <?php echo (($faultsinfo['replacement']==0)?'':'checked') ?>>&nbsp;&nbsp;</label>
 	</div>
       </div>
 
@@ -191,9 +224,13 @@
       <label class="col-sm-1 control-label"></label>
       <label class="col-sm-3 control-label">[ Item Type ]</label>
       <div class="col-sm-8"> 
-        <select class="form-control" id="itemtype" name="itemtype">
-	  <option value="itemtype1">itemtype1</option>
-	  <option value="itemtype2">itemtype2</option>
+        <select class="form-control" id="itemtype" name="f_itemtype_id">
+	  <?php echo "<option value=0 ".(($faultsinfo['itemtypeid']==0)?'selected':'') . ">Please select</option>";
+	    foreach ($faultsinfo['tab_itemtype'] as $row) 
+            {
+	    echo "<option value=".$row['id']." ".(($row['id']==$faultsinfo['itemtypeid'])?'selected':'') . ">".$row['content']."</option>";
+            }
+	  ?>
 	</select>
       </div>
     </div>
@@ -201,15 +238,15 @@
     <div class="form-group">
       <label class="col-sm-1 control-label"></label>
       <label class="col-sm-3 control-label">[ Item Model ]</label>
-      <div class="col-sm-3"> <input class="form-control" id="itemmodel" type="text" name="itemmodel" value="<?php echo ($qresult)?$faultsinfo['model']:''; ?>"> </div>
+      <div class="col-sm-3"> <input class="form-control" id="itemmodel" type="text" name="f_itemmodel" value="<?php echo ($qresult)?$faultsinfo['model']:''; ?>"> </div>
       <label class="col-sm-2 control-label">[ Quantities ]</label>
-      <div class="col-sm-3"> <input class="form-control" id="quantities" type="text" name="quantities" value="<?php echo ($qresult)?$faultsinfo['quantity']:''; ?>"> </div>
+      <div class="col-sm-3"> <input class="form-control" id="quantities" type="text" name="f_quantities" value="<?php echo ($qresult)?$faultsinfo['quantity']:''; ?>"> </div>
     </div>
 
     <div class="form-group">
       <label class="col-sm-1 control-label"></label>
       <label class="col-sm-3 control-label">[ Item Serial ]</label>
-      <div class="col-sm-5"> <input class="form-control" id="itemserial" type="text" name="itemserial" value="<?php echo ($qresult)?$faultsinfo['serial']:''; ?>"> </div>
+      <div class="col-sm-5"> <input class="form-control" id="itemserial" type="text" name="f_itemserial" value="<?php echo ($qresult)?$faultsinfo['serial']:''; ?>"> </div>
       <label class="col-sm-3 control-label">[ Use ";" for separation ]</label>
     </div>
 
@@ -217,9 +254,13 @@
       <label class="col-sm-1 control-label"></label>
       <label class="col-sm-3 control-label">[ Transfer To ]</label>
       <div class="col-sm-8"> 
-        <select class="form-control" id="transferto" name="transferto">
-	  <option value="transferto1">transferto1</option>
-	  <option value="transferto2">transferto2</option>
+        <select class="form-control" id="transferto" name="f_transferto_id">
+	  <?php echo "<option value=0 ".(($faultsinfo['transfertoid']==0)?'selected':'') . ">Please select</option>";
+	    foreach ($faultsinfo['tab_transferto'] as $row) 
+            {
+	    echo "<option value=".$row['id']." ".(($row['id']==$faultsinfo['transfertoid'])?'selected':'') . ">".$row['content']."</option>";
+            }
+	  ?>
         </select>
       </div>
     </div>
@@ -227,16 +268,20 @@
     <div class="form-group">
       <label class="col-sm-1 control-label"></label>
       <label class="col-sm-3 control-label">[ Appointment Date ]</label>
-      <div class="col-sm-8"> <input class="form-control" id="appointmentdate" type="text" name="appointmentdate" value="<?php echo ($qresult)?$faultsinfo['appointment_date']:''; ?>"> </div>
+      <div class="col-sm-8"> <input class="form-control" id="appointmentdate" type="text" name="f_appointmentdate" value="<?php echo ($qresult)?$faultsinfo['appointment_date']:''; ?>"> </div>
     </div>
 
     <div class="form-group">
       <label class="col-sm-1 control-label"></label>
       <label class="col-sm-3 control-label">[ Appointment Time ]</label>
       <div class="col-sm-8"> 
-      <select class="form-control" id="appointmenttime" name="appointmenttime">
-	<option value="appointmenttime1">appointmenttime1</option>
-	<option value="appointmenttime2">appointmenttime2</option>
+      <select class="form-control" id="appointmenttime" name="f_appointmenttime_id">
+	<?php echo "<option value=0 ".(($faultsinfo['appointmenttimeid']==0)?'selected':'') . ">Please select</option>";
+	  foreach ($faultsinfo['tab_appointmenttime'] as $row) 
+          {
+	    echo "<option value=".$row['id']." ".(($row['id']==$faultsinfo['appointmenttimeid'])?'selected':'') . ">".$row['content']."</option>";
+          }
+	?>
       </select>
     </div>
   </div>
@@ -244,13 +289,15 @@
   <div class="form-group">
     <label class="col-sm-1 control-label"></label>
     <label class="col-sm-3 control-label">[ Fault Details ]</label>
-    <div class="col-sm-8"> <textarea class="form-control" id="faultdetail" row="5" id="faultdetail" name="faultdetails" ><?php echo ($qresult)?$faultsinfo['details']:''; ?></textarea> </div>
+    <div class="col-sm-8"> <textarea class="form-control" id="faultdetail" row="5" id="faultdetail" name="f_faultdetails" ><?php echo ($qresult)?$faultsinfo['details']:''; ?></textarea> </div>
   </div>
 
   <div class="form-group">
     <div class="col-sm-10">&nbsp;</div>
-    <div class="col-sm-2"><button type="submit" class="btn btn-info" action="addfault" id="faultSubmit">Submit</button></div>
+    <input type="hidden" name="faultid" value=<?php echo $faultsinfo['faultid']; ?>>
+    <input type="hidden" name="orderid" value=<?php echo $faultsinfo['orderid']; ?>>
     <input type="hidden" name="action" value="addfault">
+    <div class="col-sm-2"><button type="submit" class="btn btn-info" action="addfault" id="faultSubmit">Submit</button></div>
     </div>
   </div>
 </div>

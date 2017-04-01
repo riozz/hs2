@@ -4,6 +4,8 @@
             <div class="col-md-9">
 	   	<div class="row">
     			<div class="alert alert-info"><h3>Fault Management</h3></div>
+		<?php echo "xxx orderid=".$orderid; ?>
+		<?php echo "xxx faultid=".$faultid; ?>
 		</div>
 
 
@@ -12,16 +14,17 @@
 	        var fiid = <?php echo $faultid ?>; 
 		//var url = "faults/"+<?php echo $orderid; ?>;
 		//get fault history
-		var furl = "/dev/hs2/index.php/faults" + "<?php echo '/'.$orderid; ?>";
+		var furl = "/dev/hs2/index.php/faults/index/" + "<?php echo '/'.$orderid; ?>";
 		//get fault detail
 		var fiurl = "/dev/hs2/index.php/faults/view/" + "<?php echo $faultid; ?>";
 		//alert ("furl="+furl);	
+		//alert ("fiurl="+fiurl);	
 		$(document).ready(function(){
 		    //alert("<?php echo "orderid=".$orderid; ?>");
-		    alert("href = "+window.location.href);
-		    alert("hrefpath = "+window.location.pathname);
-		    alert("url = "+furl);
-		    alert ("fiurl="+fiurl);	
+		    //alert("href = "+window.location.href);
+		    //alert("hrefpath = "+window.location.pathname);
+		    //alert("url = "+furl);
+		    //alert ("fiurl="+fiurl);	
 		    $('#history').html("<b><center>Loading ... </center></b>");
 	 	    $.ajax({
 		      type:'POST',

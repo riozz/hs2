@@ -24,15 +24,18 @@ class StaffInfo {
 	  $this->CI->load->library('session');
   	}
 
-        public function getStaffInfo($staffid) {
-	  $sql = "SELECT id,name,staffid,ccc,location FROM staff where staffid=?";
+        public function getStaffInfo($staffid, $orderid) {
+	  $sql = "SELECT id,name,staffid,ccc,location,'HKT' teamcode, 'CHANNEL' channel FROM staff where staffid=?";
 	  $results = $this->hktp_db->query($sql, array($staffid));
           $staffMetadata = $results -> row();
- 	  $data['id'] = $staffMetadata->id;
- 	  $data['name'] = $staffMetadata->name;
- 	  $data['ccc'] = $staffMetadata->ccc;
- 	  $data['location'] = $staffMetadata->location;
- 	  $data['staffid'] = $staffMetadata->staffid;
+ 	  $data['s_id'] = $staffMetadata->id;
+ 	  $data['s_name'] = $staffMetadata->name;
+ 	  $data['s_ccc'] = $staffMetadata->ccc;
+ 	  $data['s_location'] = $staffMetadata->location;
+ 	  $data['s_staffid'] = $staffMetadata->staffid;
+ 	  $data['s_teamcode'] = $staffMetadata->teamcode;
+ 	  $data['s_channel'] = $staffMetadata->channel;
+ 	  $data['s_orderid'] = $orderid;
           $this->CI->session->set_userdata($data);
         }
 }
