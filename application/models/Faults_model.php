@@ -29,7 +29,7 @@ class Faults_model extends CI_Model {
         }
 
         public function getFaultInfo($faultid = '0') {
-	  $sql ="SELECT `sf`.`id` faultid, `sf`.`staff_id` sfstaffid, staff.name, staff.teamcode, 'no data' channel, o.customer_name, o.staff_id ostaffid, o.uid, o.workinglocation, o.contactnumber,o.c2number, o.officetel,o.email, o.flat, o.floor, o.hse, o.bldg, o.stno, o.street, o.district, o.area, o.additionaladdr, `sf`.`orders_id` orderid, `sf`.`report_to`,sfrt.content reporttodesc, `sf`.`category`, `sf`.`symptomid`, `sf`.`replacement`, `sf`.`itemtypeid`, `sf`.`model`, `sf`.`quantity`, `sf`.`serial`, `sf`.`transfertoid`, `sf`.`appointment_date`, `sf`.`appointmenttimeid`, `sf`.`details`, `sf`.`updatetime`, `sf`.`createdby`, sf.createddate FROM `square_fault` sf join `square_fault_reportto` sfrt on sf.report_to = sfrt.id join devhktp.staff staff on sf.staff_id = staff.staffid join (select o.id id, c.customer_name customer_name, o.staff_id staff_id, c.uid uid, 'no data' workinglocation, c.contactnumber contactnumber, c.c2number c2number, 'no data' officetel, c.customer_email email, ia.flat flat, ia.floor floor, ia.hse hse, ia.bldg bldg, ia.stno stno, ia.street street, ia.district district, ia.area area, 'no data' additionaladdr from orders o join customers c on o.customer_id = c.customer_id join iatable ia on o.id = ia.order_id) o on sf.orders_id = o.id where sf.id = ?";
+	  $sql ="SELECT `sf`.`id` faultid, `sf`.`staff_id` sfstaffid, staff.name, staff.teamcode, 'no data' channel, o.customer_name, o.staff_id ostaffid, o.uid, o.workinglocation, o.contactnumber,o.c2number, o.officetel,o.email, o.flat, o.floor, o.hse, o.bldg, o.stno, o.street, o.district, o.area, o.additionaladdr, `sf`.`orders_id` orderid, `sf`.`report_to`, `sf`.`category`, `sf`.`symptomid`, `sf`.`replacement`, `sf`.`itemtypeid`, `sf`.`model`, `sf`.`quantity`, `sf`.`serial`, `sf`.`transfertoid`, `sf`.`appointmentid`, `sfa`.`date`, `sfa`.`timeslot`, `sf`.`details`, `sf`.`updatetime`, `sf`.`createdby`, sf.createddate FROM `square_fault` sf join square_fault_appointment sfa on sf.appointmentid = sfa.id join devhktp.staff staff on sf.staff_id = staff.staffid join (select o.id id, c.customer_name customer_name, o.staff_id staff_id, c.uid uid, 'no data' workinglocation, c.contactnumber contactnumber, c.c2number c2number, 'no data' officetel, c.customer_email email, ia.flat flat, ia.floor floor, ia.hse hse, ia.bldg bldg, ia.stno stno, ia.street street, ia.district district, ia.area area, 'no data' additionaladdr from orders o join customers c on o.customer_id = c.customer_id join iatable ia on o.id = ia.order_id) o on sf.orders_id = o.id where sf.id = ?";
 	  $result = $this->db->query($sql, array($faultid));
 	  $data = $result->row_array();
 
@@ -49,9 +49,9 @@ class Faults_model extends CI_Model {
 	  $result = $this->db->query($sql);
 	  $data['tab_transferto'] = $result->result_array();
 
-	  $sql = "select `id`,`content` from square_fault_appointmenttime";
+	  $sql = "select `id`,`date`, timeslot, quota, quotaused from square_fault_appointment where quota-quotaused>0 and `date`>=curdate()";
 	  $result = $this->db->query($sql);
-	  $data['tab_appointmenttime'] = $result->result_array();
+	  $data['tab_appointment'] = $result->result_array();
           //$data['abc'][1] = 'AAA';
 	  //return signal row
 	  //return $result->row_array();
@@ -96,8 +96,7 @@ class Faults_model extends CI_Model {
 	  $quantities = $this->input->post('quantities');
 	  $itemserial = $this->input->post('itemserial');
 	  $transferto_id = $this->input->post('transferto');
-	  $appointmentdate = $this->input->post('appointmentdate');
-	  $appointmenttime = $this->input->post('appointmenttime');
+	  $appointmentid = $this->input->post('appointmentid');
 	  $faultdetails = $this->input->post('faultdetails');
           //hidden
 	  $faultid = $this->input->post('faultid');	

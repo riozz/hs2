@@ -25,28 +25,31 @@
  ?>
 <p>
 </pre>
-<form class="form-horizontal" id="faultForm" method="post" action="<?php echo base_url()."index.php/faults/change/".$faultsinfo['orderid']; ?>"> 
+<?php 
+  echo validation_errors(); 
+  echo form_open(base_url().'index.php/faults/change/'.$faultsinfo['orderid'], 'class="form-horizontal" id="faultForm"');
+?>
 <div class="thumbnail">
   <div class="caption-full">
     <h4>Part I: CS/TS Staff Profile </h4><br/>
       <div class="form-group">
      	<label class="col-sm-2 control-label">Staff Number</label>
       	<div class="col-sm-4">
-          <input class="form-control" id="disabledInput" type="text" name="staffnumber" value="<?php echo ($qresult)?$faultsinfo['sfstaffid']:$this->session->userdata('s_staffid'); ?>" placeholder="" disabled>
+          <input class="form-control" id="disabledInput" type="text" name="staffnumber" value="<?php echo ($qresult)?$faultsinfo['sfstaffid']:$this->session->userdata('s_staffid'); ?>" placeholder="" readonly>
      	</div>
       	<label class="col-sm-2 control-label">Staff Name</label>
       	<div class="col-sm-4">
-       	  <input class="form-control" id="disabledInput" type="text" name="staffname" value="<?php echo ($qresult)?$faultsinfo['name']:$this->session->userdata('s_name'); ?>" placeholder="" disabled>
+       	  <input class="form-control" id="disabledInput" type="text" name="staffname" value="<?php echo ($qresult)?$faultsinfo['name']:$this->session->userdata('s_name'); ?>" placeholder="" readonly>
       	</div>
       </div>
       <div class="form-group">
      	<label class="col-sm-2 control-label">Staff Team Code</label>
       	<div class="col-sm-4">
-       	  <input class="form-control" id="disabledInput" type="text" name="staffteamcode" value="<?php echo ($qresult)?$faultsinfo['teamcode']:$this->session->userdata('s_teamcode'); ?>" placeholder="" disabled>
+       	  <input class="form-control" id="disabledInput" type="text" name="staffteamcode" value="<?php echo ($qresult)?$faultsinfo['teamcode']:$this->session->userdata('s_teamcode'); ?>" placeholder="" readonly>
       	</div>
         <label class="col-sm-2 control-label">Channel</label>
       	<div class="col-sm-4">
-       	  <input class="form-control" id="disabledInput" type="text" name="staffchannel" value="<?php echo ($qresult)?$faultsinfo['channel']:$this->session->userdata('s_channel'); ?>" placeholder="" disabled>
+       	  <input class="form-control" id="disabledInput" type="text" name="staffchannel" value="<?php echo ($qresult)?$faultsinfo['channel']:$this->session->userdata('s_channel'); ?>" placeholder="" readonly>
       	</div>
       </div>
   </div>
@@ -67,15 +70,26 @@
       </div>
     </div>
 
+    <?php if (!isset($faultsinfo['uid'])) {
+	    $faultsinfo['uid']=0; 
+	    $uid_no='';
+          } else {
+	    $uid_no=$faultsinfo['uid']; 
+	    $uid_no=str_replace('HKID: ','',strtoupper($uid_no));
+	    $uid_no=str_replace('BR: ','',strtoupper($uid_no));
+	    $uid_no=str_replace('PS: ','',strtoupper($uid_no));
+	  }
+          //log_message('debug', 'zzz82:uid_no='.str_replace('HKID: ','',strtoupper($uid_no)));
+    ?>
     <div class="form-group">
       <label class="col-sm-3">
-      <input type="radio" name="optcert" value="HKID">HKID&nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="radio" name="optcert" value="BR">BR&nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="radio" name="optcert" value="PS">PS
+      <input type="radio" name="optcert" value="HKID" <?php echo (strpos(strtoupper($faultsinfo['uid']),'HKID')===false)?'':'checked'; ?>>HKID&nbsp;&nbsp;&nbsp;
+      <input type="radio" name="optcert" value="BR" <?php echo (strpos(strtoupper($faultsinfo['uid']),'BR')===false)?'':'checked'; ?>>BR&nbsp;&nbsp;&nbsp;
+      <input type="radio" name="optcert" value="PS" <?php echo (strpos(strtoupper($faultsinfo['uid']),'PS')===false)?'':'checked'; ?>>PS
       </label>
 
       <div class="col-sm-3">
-        <input class="form-control" id="focusedInput" type="text" value="<?php echo ($qresult)?$faultsinfo['uid']:''; ?>" name="certno" data-toggle="tooltip" data-placement="right" title="Hooray!">
+        <input class="form-control" id="focusedInput" type="text" value="<?php echo ($qresult)?$uid_no:''; ?>" name="certno" data-toggle="tooltip" data-placement="right" title="Hooray!">
       </div>
       <label class="col-sm-2 control-label">Working location</label>
       <div class="col-sm-4">
@@ -265,21 +279,25 @@
       </div>
     </div>
 
+<!--
     <div class="form-group">
       <label class="col-sm-1 control-label"></label>
-      <label class="col-sm-3 control-label">[ Appointment Date ]</label>
-      <div class="col-sm-8"> <input class="form-control" id="appointmentdate" type="text" name="f_appointmentdate" value="<?php echo ($qresult)?$faultsinfo['appointment_date']:''; ?>"> </div>
+      <label class="col-sm-3 control-label">[ Appointment Date/time ]</label>
+      <div class="col-sm-8"> 
+       <input class="form-control" id="appointmentdate" type="text" name="f_appointmentid" value="<?php echo ($qresult)?$faultsinfo['appointmentid']:''; ?>"> </div>
     </div>
+//-->
 
     <div class="form-group">
       <label class="col-sm-1 control-label"></label>
-      <label class="col-sm-3 control-label">[ Appointment Time ]</label>
+      <label class="col-sm-3 control-label">[ Appointment ]</label>
       <div class="col-sm-8"> 
-      <select class="form-control" id="appointmenttime" name="f_appointmenttime_id">
-	<?php echo "<option value=0 ".(($faultsinfo['appointmenttimeid']==0)?'selected':'') . ">Please select</option>";
-	  foreach ($faultsinfo['tab_appointmenttime'] as $row) 
+      <select class="form-control" id="appointment" name="f_appointmentid">
+	<?php echo "<option value=0 ".(($faultsinfo['appointmentid']==0)?'selected':'') . ">Please select</option>";
+	  echo "<option value=".$faultsinfo['appointmentid'].">".$faultsinfo['date'].' '.$faultsinfo['timeslot']."</option>";
+	  foreach ($faultsinfo['tab_appointment'] as $row) 
           {
-	    echo "<option value=".$row['id']." ".(($row['id']==$faultsinfo['appointmenttimeid'])?'selected':'') . ">".$row['content']."</option>";
+	    echo "<option value=".$row['id']." ".(($row['id']==$faultsinfo['appointmentid'])?'selected':'') . ">".$row['date'].' '.$row['timeslot']."</option>";
           }
 	?>
       </select>
