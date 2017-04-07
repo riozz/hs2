@@ -27,14 +27,14 @@
     } 
 
     // fault detail 
-    public function view($fid = "0")
+    public function view($oid = 0, $fid = "0")
     {
-        	
-	$data['faultsinfo'] = $this->faults_model->getFaultInfo($fid);
-	if (empty($data['faultsinfo'])) {
-	  $data['faultsinfo']['name'] = "NULL";
-	  //show_404();
-	}
+	//$orderid = substr($oid, -6);
+	$data['faultsinfo'] = $this->faults_model->getFaultInfo(substr($oid,-6), $fid);
+	//if (empty($data['faultsinfo'])) {
+	  //$data['faultsinfo']['name'] = "NULL";
+	//}
+	$data['faultsinfo']['orderid'] = substr($oid, -6);
         $data['title'] = 'Fault Info';
         //$data['title'] = $data['faultsinfo']['name'];
 	$this->load->view('hsfault/v_faultinfo', $data);
@@ -45,6 +45,8 @@
       $data['title'] = 'Change fault';
       $orderid = $this->input->post('orderid');
       $faultid = $this->input->post('faultid');
+      log_message('debug', 'zzz[Faults]48:orderid='.$orderid.'/faultid='.$faultid);
+      /*      
       $action = $this->input->post('action');
       $staffnumber = $this->input->post('staffnumber');
       $staffname = $this->input->post('staffname');
@@ -84,27 +86,40 @@
       $f_itemserial = $this->input->post('f_itemserial');
       $f_transferto_id = $this->input->post('f_transferto_id');
       $f_appointment_id = $this->input->post('f_appointment_id'); 
+      $f_o_appointment_id = $this->input->post('f_o_appointment_id'); 
       $f_faultdetails = $this->input->post('f_faultdetails'); 
-      log_message('debug', 'zzz:orderid='.$orderid); 
       log_message('debug', 'zzz:oid='.$oid);
       log_message('debug', 'zzz:faultid='.$faultid);
       log_message('debug', 'zzz:staffnumber='.$staffnumber);
       log_message('debug', 'zzz:staffname='.$staffname);
       log_message('debug', 'zzz:customername='.$customername);
       log_message('debug', 'zzz:action='.$action);
+      */ 
       $this->form_validation->set_rules('staffnumer','Staff Number','required');
       $this->form_validation->set_rules('customername','Customer Name','required');
       $this->form_validation->set_rules('optcert','Certificate','required');
       $this->form_validation->set_rules('certno','Certificate','required');
       $this->form_validation->set_rules('contactnumber','Contact Number','required');
       $this->form_validation->set_rules('f_faultto_id','Fault Report to','required');
-      if ($this->form_validation->run() == FAlSE)
+      if ($this->form_validation->run() === FAlSE)
       {
         //$this->faults_model->set_faults();
         //$this->load->view('templates/footer');
 	//redirect(base_url()."index.php/hsfault/index/".$orderid."/".$faultid);
-	redirect('http://www.google.com');
+	//redirect('http://www.google.com');
+	//$this->load->view(base_url().'index.php/hsfault/index/'.$orderid.'/'.$faultid);
+	
+        $data['staffid'] = $this->session->userdata('s_staffid');
+        $data['orderid'] = $orderid;
+        $data['faultid'] = $faultid;
+        $data['userlogin'] = 1;
+	$this->faults_model->set_faults();
+	$this->load->view('templates/header', $data);
+	$this->load->view('hsfault/index', $data);
+	$this->load->view('templates/footer', $data);
+	
       } else {
+	$this->faults_model->set_faults();
 	redirect('http://www.yahoo.com');
         //$this->load->view('templates/header');
       }

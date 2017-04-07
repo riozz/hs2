@@ -11,7 +11,6 @@
       $this->load->library('session');
     }
 
-    //public function index($page = 'index')
     public function index($oid = 0, $fid = 0)
     {
 	$page = 'index';
@@ -55,6 +54,37 @@
         $this->load->view('hsfault/'.$page, $data);
         $this->load->view('templates/footer', $data);
     }
+
+    public function index2($oid = 0, $fid = 0)
+    {
+	$page = 'index2';
+        if ( ! file_exists(APPPATH.'views/hsfault/'.$page.'.php'))
+        {
+                // Whoops, we don't have a page for that!
+                show_404();
+        }
+
+        $data['staffid'] = $this->session->userdata('s_staffid');
+	if (isset($data['action'])) {
+          $this->staffinfo->getStaffInfo($data['staffid'],$data['orderid']);
+	} else {
+	  $data['staffid'] = $this->session->userdata('s_staffid');
+	  $data['orderid'] = $this->session->userdata('s_orderid');
+        } 
+        // for testing
+  	/*		
+        $data['orderid'] = "H201702001907";
+        $data['staffid'] = "1352731";
+        $data['userlogin'] = "1";
+        $data['faultid'] = $fid;
+	*/	
+        // end of  for testing
+	
+        $this->load->view('templates/header', $data);
+        $this->load->view('hsfault/'.$page, $data);
+        $this->load->view('templates/footer', $data);
+    }
+
     public function view($page = 'index')
     {
 	$this->load->helper('url');

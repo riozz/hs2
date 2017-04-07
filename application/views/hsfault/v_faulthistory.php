@@ -1,4 +1,4 @@
-<?php echo "zzz:". json_encode($faults); ?>
+<?php echo log_message('debug', 'zzz[v_faulthistory]1:'. json_encode($faults)); ?>
 <table class="table table-hover">
 <thead>
  <tr><th>Fault ID</th><th>Created Date</th><th>Customer Name</th><th>Handle Staff</th><th>Detail</th></tr>

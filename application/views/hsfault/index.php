@@ -16,7 +16,7 @@
 		//get fault history
 		var furl = "/dev/hs2/index.php/faults/index/" + "<?php echo '/'.$orderid; ?>";
 		//get fault detail
-		var fiurl = "/dev/hs2/index.php/faults/view/" + "<?php echo $faultid; ?>";
+		var fiurl = "/dev/hs2/index.php/faults/view/" + "<?php echo $orderid; ?>/<?php echo $faultid; ?>";
 		//alert ("furl="+furl);	
 		//alert ("fiurl="+fiurl);	
 		$(document).ready(function(){
