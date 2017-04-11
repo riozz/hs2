@@ -40,24 +40,25 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
+<!--
                 <a class="navbar-brand" href="#">Welcome, 
-<?php echo "xxx staffid=".$staffid."orderid=".$orderid."userlogin=".$userlogin; ?></a>
+<?php echo $staffid."orderid=".$orderid."userlogin=".$userlogin; ?></a>
+//-->
 <label class="navbar-brand">
-<br><?php echo "xxx from session:ccc=".$this->session->ccc.";name=".$this->session->name.";location=".$this->session->location; ?></label>
+</label>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
+                    <li>
+                        <a href="#">Welcome, <?php echo $this->session->userdata('s_name'); ?></a>
+                    </li>
                     <li>
                         <a href="#">About</a>
                     </li>
                     <li>
                         <a href="#">Contact</a>
                     </li>
-                    <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
-                    <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
-                    <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
-                    <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
                     <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
                     <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
                     <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
@@ -92,9 +93,9 @@
             <div class="col-md-3">
                 <p class="lead">Menu</p>
                 <div class="list-group">
-                    <a href="#" class="list-group-item active">Add order</a>
-                    <a href="#" class="list-group-item">Search</a>
-                    <a href="#" class="list-group-item">ITC Request</a>
-                    <a href="#" class="list-group-item">Admin</a>
+                    <a href="<?php echo HS_V1; ?>" class="list-group-item active">Add order</a>
+                    <a href="<?php echo HS_V1; ?>" class="list-group-item">Search</a>
+                    <a href="<?php echo HS_V1; ?>" class="list-group-item">ITC Request</a>
+                    <a href="<?php echo HS_V1; ?>" class="list-group-item">Admin</a>
                 </div>
             </div>

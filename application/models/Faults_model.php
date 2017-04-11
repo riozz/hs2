@@ -19,6 +19,7 @@ class Faults_model extends CI_Model {
 	  $this->load->helper('url');
 	  $this->load->database();
 	  $this->hktp_db=$this->load->database('HKTP', TRUE);
+	  $this->maildb=$this->load->database('maildb', TRUE);
 	}
 
         public function getFaultHistory($orderid = '000000') {
@@ -30,16 +31,15 @@ class Faults_model extends CI_Model {
         }
 
         public function getFaultInfo($orderid, $faultid = '0') {
-	  log_message('debug', 'zzz[Faults_model]33:orderid='.$orderid);
-	  log_message('debug', 'zzz[Faults_model]34:faultid='.$faultid);
+	  log_message('debug', 'zzz[Faults_model]34:orderid/faultid='.$orderid.'/'.$faultid);
           if ($faultid > 0) {
 	    $sql=" SELECT 
 		sf.orders_id orderid,
 		sf.id faultid, 
 		sf.staff_id staffid, 
 		staff.name staffname, 
-		staff.teamcode staffteamcode, 
-		'' staffchannel, 
+		sf.staff_teamcode staffteamcode, 
+		sf.staff_channel staffchannel, 
 		sf.c_name c_name, 
 		sf.c_uid c_uid, 
 		sf.c_workingloc c_workingloc, 
@@ -67,12 +67,15 @@ class Faults_model extends CI_Model {
 		sf.serial f_serial, 
 		sf.transfertoid f_transfertoid,
 		sf.appointmentid f_appointmentid, 
+		a.`date` appointmentdate,
+		a.`timeslot` appointmenttimeslot,
 		sf.details f_details, 
 		sf.updatetime f_updatetime, 
 		sf.createdby f_createdby, 
 		sf.createddate f_createddate
 		FROM `square_fault` sf
 		join devhktp.staff staff on sf.staff_id = staff.staffid
+		left join square_fault_appointment a on sf.appointmentid = a.id
 		where sf.id = ?";
 	    log_message('debug', 'zzz[Faults_model]43:'.$sql);
 	    $result = $this->db->query($sql, array($faultid));
@@ -166,7 +169,7 @@ class Faults_model extends CI_Model {
           $c_certtype = $this->input->post('c_certtype');
           $c_certno = $this->input->post('c_certno');
           $c_uid = (strlen(trim($c_certno))>0)?($c_certtype.':'.trim($c_certno)):'';
-	  log_message('debug', 'zzz[Faults_model]169/c_certtype='.$c_certtype.'/c_certno='.$c_certno.'/c_uid='.$c_uid);
+	  //log_message('debug', 'zzz[Faults_model]169/c_certtype='.$c_certtype.'/c_certno='.$c_certno.'/c_uid='.$c_uid);
           $c_workingloc = $this->input->post('c_workingloc');
           $c_contact= $this->input->post('c_contact');
           $c_ndcontact= $this->input->post('c_ndcontact');
@@ -190,6 +193,7 @@ class Faults_model extends CI_Model {
           $f_category = (isset($pcd)?'PCD':'');
           $f_category = $f_category.' '.(isset($lts)?'LTS':'');
           $f_symptomid = $this->input->post('f_symptomid');
+	  $f_replacement = 0;
           $f_replacement = $this->input->post('f_replacement');
           $f_itemtypeid = $this->input->post('f_itemtypeid');
           $f_model = $this->input->post('f_model');
@@ -240,20 +244,60 @@ class Faults_model extends CI_Model {
  	  if ($faultid == 0) {
 	    if ($data['staff_id'] != null)  {
 	      log_message('debug', 'zzz[Faults_model]251/insert:'.json_encode($data));
-              $row = $this->db->insert('square_fault', $data);
-	      log_message('debug', 'zzz[Faults_model]244:row='.$row);
-	      //$this->db-insert('square_fault', $data);
+	      $row = $this->insert_log('fault','insert',$data,'');
+	      if ($row == 1) {
+		$row = $this->email('HS - fault','ringo.wc.lau@pccw.com','HS - Fault', json_encode($data));
+                $row = $this->db->insert('square_fault', $data);
+	        log_message('debug', 'zzz[Faults_model]244:row='.$row);
+	        //$this->db-insert('square_fault', $data);
+	      }
   	    }
 	  } else {
 	    log_message('debug', 'zzz[Faults_model]248/update:'.json_encode($data));
+	    $row = $this->insert_log('fault','update',$data,$faultid);
+	    if ($row == 1) {
+	      //$row = $this->email('HS - fault','ringo.wc.lau@pccw.com','HS - Fault', json_encode($data));
+	      $this->db->where('id', $faultid);
+	      $row = $this->db->update('square_fault', $data);
+	      log_message('debug', 'zzz[Faults_model]262:row='.$row);
+	    }
             //$row = $this->db->insert('square_fault', $data);
-	    $row = 0;
-	    log_message('debug', 'zzz[Faults_model]251:row='.$row);
 	    //$this->db->where('id', $faultid);
 	    //$this->db->update('square_fault', $data);
 	    //$affectd_rows = $this->db->affected_rows();
 	  }
 	  return;
         }
+
+        public function insert_log($section, $action, $raw, $other) {
+	  $staffid = $raw['staff_id'];
+	  $raw['c_uid'] = 'XXXXXX';
+	  $raw['c_contact'] = 'XXXXXXXX';
+	  if (strlen($other)>0) 
+	    $d = '{faultid:'.$other.'},'.json_encode($raw);
+  	  else 
+	    $d = json_encode($raw);
+	  $data = array (
+		'section' => $section,
+		'action' => $action,
+		'user' => $staffid,
+		'data' => $d
+	  );
+          $row = $this->db->insert('square_log', $data);
+	  return $row;
+	}
+
+ 	public function email($section, $mailto, $mailsubject, $mailcontent) {
+	  $data = array (
+		'mail_system' => $section,
+		'mail_to' => $mailto,
+		'mail_subject' => $mailsubject,
+		'mail_content' => $mailcontent,
+		'mail_inserttime' => date("Y-m-d H:i:s")
+	  );
+	  $row = $this->maildb->insert('mailsend', $data);
+	  log_message('debug', 'zzz[Faults_model]291/insert maildb:'.json_encode($data));
+	  return $row;
+  	}
 
 }

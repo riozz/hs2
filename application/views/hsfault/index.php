@@ -3,9 +3,7 @@
 
             <div class="col-md-9">
 	   	<div class="row">
-    			<div class="alert alert-info"><h3>Fault Management</h3></div>
-		<?php echo "xxx orderid=".$orderid; ?>
-		<?php echo "xxx faultid=".$faultid; ?>
+    			<div class="alert alert-info"><h3>Fault Management<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#faultinfo">+</button></h3></div>
 		</div>
 
 
@@ -80,9 +78,9 @@
     </div>
 
     <!-- jQuery -->
-    <script src="js/jquery.js"></script>
+    <script src="<?php echo base_url("js/jquery.js"); ?>></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/bootstrap-table.js"></script>
+    <script src="<?php echo base_url("js/bootstrap.min.js"); ?>></script>
+    <script src="<?php echo base_url("js/bootstrap-table.js"); ?>></script>
 

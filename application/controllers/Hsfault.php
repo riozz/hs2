@@ -33,13 +33,6 @@
 	  $data['staffid'] = $this->session->userdata('s_staffid');
 	  $data['orderid'] = $this->session->userdata('s_orderid');
         } 
-	/*else {
-          $sessiondata = array(
-		  'staffid' => $data['staffid'],
-		  'orderid' => $data['orderid']
-	  );
-	  $this->session->set_userdata($sessiondata);
-	} */
         // for testing
   	/*		
         $data['orderid'] = "H201702001907";
@@ -49,12 +42,16 @@
 	*/	
         // end of  for testing
 	
-
-        $this->load->view('templates/header', $data);
-        $this->load->view('hsfault/'.$page, $data);
-        $this->load->view('templates/footer', $data);
+	if (strlen($data['staffid'])>0) {
+          $this->load->view('templates/header', $data);
+          $this->load->view('hsfault/'.$page, $data);
+          $this->load->view('templates/footer', $data);
+	} else {
+	  redirect(HS_V1);
+	}
     }
 
+/*
     public function index2($oid = 0, $fid = 0)
     {
 	$page = 'index2';
@@ -71,19 +68,12 @@
 	  $data['staffid'] = $this->session->userdata('s_staffid');
 	  $data['orderid'] = $this->session->userdata('s_orderid');
         } 
-        // for testing
-  	/*		
-        $data['orderid'] = "H201702001907";
-        $data['staffid'] = "1352731";
-        $data['userlogin'] = "1";
-        $data['faultid'] = $fid;
-	*/	
-        // end of  for testing
 	
         $this->load->view('templates/header', $data);
         $this->load->view('hsfault/'.$page, $data);
         $this->load->view('templates/footer', $data);
     }
+*/
 
     public function view($page = 'index')
     {

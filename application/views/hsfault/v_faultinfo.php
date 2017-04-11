@@ -6,17 +6,6 @@
       $qresult=true;
     } else {
       $qresult=false;
-      /*
-      $faultsinfo['report_to']=0;
-      $faultsinfo['category']=0;
-      $faultsinfo['symptomid']=0;
-      $faultsinfo['replacement']=0;
-      $faultsinfo['itemtypeid']=0;
-      $faultsinfo['transfertoid']=0;
-      $faultsinfo['appointmentid']=0;
-      $faultsinfo['faultid']=0;
-      $faultsinfo['orderid']=0;
-	*/
     }
     /*
     foreach ($faultsinfo['reportto'] as $row) {
@@ -30,10 +19,10 @@
   echo validation_errors(); 
   echo form_open(base_url().'index.php/faults/change/'.$faultsinfo['orderid'], 'class="form-horizontal" id="faultForm"');
 ?>
-<div class="thumbnail">
+<div class="thumbnail collapse" id="faultinfo">
   <div class="caption-full">
     <h4>Part I: CS/TS Staff Profile </h4><br/>
-      <div class="form-group">
+      <div class="form-group" id="part1">
      	<label class="col-sm-2 control-label">Staff Number</label>
       	<div class="col-sm-4">
           <input class="form-control" id="disabledInput" type="text" name="staffid" value="<?php echo ($qresult)?$faultsinfo['staffid']:$this->session->userdata('s_staffid'); ?>" placeholder="" readonly>
@@ -74,13 +63,13 @@
     </div>
 
     <?php if (strlen($faultsinfo['c_uid'])>0) {
-	    $uid_no=str_replace('HKID:','',strtoupper($faultsinfo['c_uid']));
 	    $uid_no=str_replace('BR:','',strtoupper($faultsinfo['c_uid']));
-	    $uid_no=str_replace('PS:','',strtoupper($faultsinfo['c_uid']));
+	    $uid_no=str_replace('PS:','',strtoupper($uid_no));
+	    $uid_no=str_replace('HKID:','',strtoupper($uid_no));
           } else {
 	    $uid_no = 0;
 	  } 
-          //log_message('debug', 'zzz82:uid_no='.str_replace('HKID: ','',strtoupper($uid_no)));
+          //log_message('debug', 'zzz[v_faultinfo]83:uid_no='.$faultsinfo['c_uid'].' / '.$uid_no);
     ?>
     <div class="form-group">
       <label class="col-sm-3">
@@ -224,7 +213,7 @@
         <label class="col-sm-1 control-label"></label>
         <label class="col-sm-3 control-label">[ Item Replacement ]</label>
         <div class="col-sm-8"> 
-          <label> <input type="checkbox" value="itemreplacement" name="f_replacement" <?php echo (($faultsinfo['f_replacement']==0)?'':'checked') ?>>&nbsp;&nbsp;</label>
+          <label> <input type="checkbox" name="f_replacement" value='1' <?php echo (($faultsinfo['f_replacement']==0)?'':'checked') ?>>&nbsp;&nbsp;</label>
 	</div>
       </div>
 
@@ -281,7 +270,7 @@
       <select class="form-control" id="appointment" name="f_appointmentid">
 	<?php echo "<option value=0 ".(($faultsinfo['f_appointmentid']==0)?'selected':'') . ">Please select</option>";
 	  if ($faultsinfo['f_appointmentid']>0) {
-	    echo "<option value=".$faultsinfo['f_appointmentid'].">".$faultsinfo['date'].' '.$faultsinfo['timeslot']."</option>";
+	    echo "<option value=".$faultsinfo['f_appointmentid']." selected>".$faultsinfo['appointmentdate'].' '.$faultsinfo['appointmenttimeslot']."</option>";
           }
 	  foreach ($faultsinfo['tab_appointment'] as $row) 
           {
