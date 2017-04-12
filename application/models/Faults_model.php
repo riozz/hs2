@@ -143,7 +143,7 @@ class Faults_model extends CI_Model {
 	  $result = $this->db->query($sql);
 	  $data['tab_transferto'] = $result->result_array();
 
-	  $sql = "select `id`,`date`, timeslot, quota, quotaused from square_fault_appointment where quota-quotaused>0 and `date`>=curdate()";
+	  $sql = "select `id`,`date`, timeslot, quota, quotaused from square_fault_appointment where quota-quotaused>0 and `date`>=curdate() order by date";
 	  $result = $this->db->query($sql);
 	  $data['tab_appointment'] = $result->result_array();
           //$data['abc'][1] = 'AAA';

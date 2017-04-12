@@ -1,25 +1,19 @@
 <pre>
  <?php 
+    echo validation_errors(); 
     echo json_encode($faultsinfo); 
-    //$qresult = isset($faultsinfo['name'])?true:false; 
     if ($faultsinfo['faultid']>0) {
       $qresult=true;
     } else {
       $qresult=false;
     }
-    /*
-    foreach ($faultsinfo['reportto'] as $row) {
-      echo '<br>'.$row['id'].'<br>'.$row['content'].'<br>';
-    }
-    */
  ?>
 <p>
 </pre>
 <?php 
-  echo validation_errors(); 
   echo form_open(base_url().'index.php/faults/change/'.$faultsinfo['orderid'], 'class="form-horizontal" id="faultForm"');
 ?>
-<div class="thumbnail collapse" id="faultinfo">
+<div class="thumbnail" id="faultinfo_content">
   <div class="caption-full">
     <h4>Part I: CS/TS Staff Profile </h4><br/>
       <div class="form-group" id="part1">
@@ -83,7 +77,7 @@
       </div>
       <label class="col-sm-2 control-label">Working location</label>
       <div class="col-sm-4">
-        <input class="form-control" id="focusedInput" type="text" value="<?php echo $faultsinfo['c_workingloc']; ?>" name="c_workingloc">
+        <input class="form-control" id="focusedInput" type="text" value="<?php echo $faultsinfo['c_workingloc']; ?>" name="c_workingloc" required>
       </div>
     </div>
     <div class="form-group">
@@ -103,7 +97,7 @@
       </div>
       <label class="col-sm-2 control-label">Contact Email</label>
       <div class="col-sm-4">
-        <input class="form-control" id="focusedInput" type="text" value="<?php echo $faultsinfo['c_email']; ?>" name="c_email">
+        <input class="form-control" id="c_email" type="text" value="<?php echo $faultsinfo['c_email']; ?>" name="c_email" type="email" required>
       </div>
     </div>
 
@@ -221,8 +215,8 @@
       <label class="col-sm-1 control-label"></label>
       <label class="col-sm-3 control-label">[ Item Type ]</label>
       <div class="col-sm-8"> 
-        <select class="form-control" id="itemtype" name="f_itemtypeid">
-	  <?php echo "<option value=0 ".(($faultsinfo['f_itemtypeid']==0)?'selected':'') . ">Please select</option>";
+        <select class="form-control" id="itemtype" name="f_itemtypeid" required>
+	  <?php echo "<option value=''".(($faultsinfo['f_itemtypeid']==0)?'selected':'') . ">Please select</option>";
 	    foreach ($faultsinfo['tab_itemtype'] as $row) 
             {
 	    echo "<option value=".$row['id']." ".(($row['id']==$faultsinfo['f_itemtypeid'])?'selected':'') . ">".$row['content']."</option>";
@@ -285,7 +279,7 @@
   <div class="form-group">
     <label class="col-sm-1 control-label"></label>
     <label class="col-sm-3 control-label">[ Fault Details ]</label>
-    <div class="col-sm-8"> <textarea class="form-control" id="faultdetail" row="5" id="faultdetail" name="f_details" ><?php echo $faultsinfo['f_details']; ?></textarea> </div>
+    <div class="col-sm-8"> <textarea class="form-control" id="faultdetail" row="5" id="faultdetail" name="f_details" required><?php echo $faultsinfo['f_details']; ?></textarea> </div>
   </div>
 
   <div class="form-group">

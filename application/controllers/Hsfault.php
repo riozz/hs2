@@ -9,6 +9,7 @@
       $this->load->library('staffInfo');
       $this->load->library('faultInfo');
       $this->load->library('session');
+      $this->load->library('form_validation');
     }
 
     public function index($oid = 0, $fid = 0)
@@ -51,29 +52,6 @@
 	}
     }
 
-/*
-    public function index2($oid = 0, $fid = 0)
-    {
-	$page = 'index2';
-        if ( ! file_exists(APPPATH.'views/hsfault/'.$page.'.php'))
-        {
-                // Whoops, we don't have a page for that!
-                show_404();
-        }
-
-        $data['staffid'] = $this->session->userdata('s_staffid');
-	if (isset($data['action'])) {
-          $this->staffinfo->getStaffInfo($data['staffid'],$data['orderid']);
-	} else {
-	  $data['staffid'] = $this->session->userdata('s_staffid');
-	  $data['orderid'] = $this->session->userdata('s_orderid');
-        } 
-	
-        $this->load->view('templates/header', $data);
-        $this->load->view('hsfault/'.$page, $data);
-        $this->load->view('templates/footer', $data);
-    }
-*/
 
     public function view($page = 'index')
     {
@@ -91,24 +69,5 @@
         $this->load->view('templates/footer', $data);
     }
  
-    /* 
-    public function change()
-    {
-      $this->load->helper('form');
-      $this->load->library('form_validation');      
-      $data['title'] = 'Change fault';
-      $this->form_validation->set_rules('staffnumer','Staff Number','requred');
-      $this->form_validation->set_rules('customername','Customer Name','requred');
-      $this->form_validation->set_rules('optcert','Certificate','requred');
-      $this->form_validation->set_rules('certno','Certificate','requred');
-      $this->form_validation->set_rules('contactnumber','Contact Number','requred');
-      $this->form_validation->set_rules('f_faultto_id','Fault Report to',' Number','requred');
-      if ($this->form_validation->run() != FAlSE) 
-      {
-	$this->faults_model->set_faults();
-      }
-    }
-	*/
-
 }
 

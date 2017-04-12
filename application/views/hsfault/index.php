@@ -3,18 +3,42 @@
 
             <div class="col-md-9">
 	   	<div class="row">
-    			<div class="alert alert-info"><h3>Fault Management<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#faultinfo">+</button></h3></div>
+    			<div class="alert alert-info"><h3>Fault Management&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#faultinfo">Fault Info</button></h3></div>
 		</div>
 
-
+<!--
   	      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+//  -->
+              <script src="<?php echo base_url("js/jquery.min.js"); ?>"></script>
+              <script src="<?php echo base_url("js/jquery.validate.min.js"); ?>"></script>
+	      <script>
+	        $.validator.setDefaults({
+		  debug:true,
+		  submitHandler: function() {
+		    alert("submitted!");
+		  }
+		});
+		$().ready(function() {
+		  $("#faultForm").validate({
+		    rules: {
+		      c_email: {
+			required: true,
+			email: true
+		      }
+		    }
+		  });
+		});
+
+	      </script>
 	      <script>
 	        var fiid = <?php echo $faultid ?>; 
 		//var url = "faults/"+<?php echo $orderid; ?>;
 		//get fault history
-		var furl = "/dev/hs2/index.php/faults/index/" + "<?php echo '/'.$orderid; ?>";
+		//var furl = "/dev/hs2/index.php/faults/index/" + "<?php echo '/'.$orderid; ?>";
+		//var fiurl = "/dev/hs2/index.php/faults/view/" + "<?php echo $orderid; ?>/<?php echo $faultid; ?>";
+		var furl = "<?php echo base_url(); ?>" + "index.php/faults/index/" + "<?php echo '/'.$orderid; ?>";
+		var fiurl = "<?php echo base_url(); ?>" + "index.php/faults/view/" + "<?php echo $orderid; ?>/<?php echo $faultid; ?>";
 		//get fault detail
-		var fiurl = "/dev/hs2/index.php/faults/view/" + "<?php echo $orderid; ?>/<?php echo $faultid; ?>";
 		//alert ("furl="+furl);	
 		//alert ("fiurl="+fiurl);	
 		$(document).ready(function(){
@@ -56,9 +80,9 @@
 	      </script>
 
 <!-- fault info by ajax -->
-		<div class="thumbnail">
+		<div class="thumbnail" id="faultinfoarea">
 		  <div class="caption-full"></div>
-		    <div id="faultinfo">
+		    <div class="collapse in" id="faultinfo">
 		    </div>
 	 	</div>	
 <!-- ^fault info by ajax -->
@@ -77,10 +101,7 @@
 
     </div>
 
-    <!-- jQuery -->
-    <script src="<?php echo base_url("js/jquery.js"); ?>></script>
-
     <!-- Bootstrap Core JavaScript -->
-    <script src="<?php echo base_url("js/bootstrap.min.js"); ?>></script>
-    <script src="<?php echo base_url("js/bootstrap-table.js"); ?>></script>
+    <script src="<?php echo base_url("js/bootstrap.min.js"); ?>"></script>
+    <script src="<?php echo base_url("js/bootstrap-table.js"); ?>"></script>
 

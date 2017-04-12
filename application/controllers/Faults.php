@@ -46,43 +46,34 @@
       $orderid = $this->input->post('orderid');
       $faultid = $this->input->post('faultid');
       log_message('debug', 'zzz[Faults]48:orderid='.$orderid.'/faultid='.$faultid);
-      $this->form_validation->set_rules('staffnumer','Staff Number','required');
-      $this->form_validation->set_rules('customername','Customer Name','required');
-      $this->form_validation->set_rules('optcert','Certificate','required');
-      $this->form_validation->set_rules('certno','Certificate','required');
-      $this->form_validation->set_rules('contactnumber','Contact Number','required');
-      $this->form_validation->set_rules('f_faultto_id','Fault Report to','required');
+      //$this->form_validation->set_rules('staffnumer','Staff Number','required');
+      //$this->form_validation->set_rules('customername','Customer Name','required');
+      //$this->form_validation->set_rules('optcert','Certificate','required');
+      //$this->form_validation->set_rules('certno','Certificate','required');
+      $this->form_validation->set_rules('c_contact','Contact Number','required');
+      $this->form_validation->set_rules('c_email','Email address','required');
+      //$this->form_validation->set_rules('f_faultto_id','Fault Report to','required');
       $data['staffid'] = $this->session->userdata('s_staffid');
       $data['orderid'] = $orderid;
       $data['faultid'] = $faultid;
       $data['userlogin'] = 1;
-      if ($this->form_validation->run() === FALSE)
-      {
-	$this->load->view('templates/header', $data);
-	$this->load->view('hsfault/index', $data);
-	$this->load->view('templates/footer', $data);
-	//redirect('http://www.yahoo.com');
-        //$this->load->view('templates/header');
-        //$this->faults_model->set_faults();
-	//redirect(base_url()."index.php/hsfault/index/".$orderid."/".$faultid);
-	//$this->load->view(base_url().'index.php/hsfault/index/'.$orderid.'/'.$faultid);
-      } else {
-
-	//check login or not
-	if (strlen($data['staffid'])>0) {	
+      //check login or not
+      if (strlen($data['staffid'])>0) {	
+        if ($this->form_validation->run() === true)
+        {
+          log_message('debug', 'zzz[Faults]64:validation=true');
           //$data['staffid'] = $this->session->userdata('s_staffid');
           //$data['orderid'] = $orderid;
           //$data['faultid'] = $faultid;
           //$data['userlogin'] = 1;
 	  $this->faults_model->set_faults();
-	  $this->load->view('templates/header', $data);
-	  $this->load->view('hsfault/index', $data);
-	  $this->load->view('templates/footer', $data);
-	} else {
-	  redirect(HS_V1);
-	}
-	
-      } 
+        } 
+	$this->load->view('templates/header', $data);
+	$this->load->view('hsfault/index', $data);
+	$this->load->view('templates/footer', $data);
+      } else {
+	redirect(HS_V1);
+      }
     }
 
 }
