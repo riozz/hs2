@@ -76,5 +76,11 @@
       }
     }
 
+    public function check_appointmentquota($id = 0) {
+      $this->load->model("z_mymodel");
+      $ret = $this->z_mymodel->check_appointmentquota($id);
+      $data['ret']=$ret;
+      $this->load->view('hsfault/v_faultcheckappointment',$data);
+    }
 }
 

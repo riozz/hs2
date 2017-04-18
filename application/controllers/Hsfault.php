@@ -8,7 +8,7 @@
       $this->load->library('session');
       $this->load->library('staffInfo');
       $this->load->library('faultInfo');
-      $this->load->library('session');
+      //$this->load->library('session');
       $this->load->library('form_validation');
     }
 

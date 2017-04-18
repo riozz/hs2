@@ -4,6 +4,9 @@
       parent::__construct();
       $this->load->helper('url_helper');
       $this->load->helper('url');
+      $this->load->library('session');
+      $this->load->library('staffInfo');
+      $this->load->library('form_validation');
     }
 
     public function index($page = 'index')

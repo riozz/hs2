@@ -10,9 +10,61 @@
  ?>
 <p>
 </pre>
+<script>
+  $(document).ready(function() {
+    $('#faultForm').validate({
+      rules: {
+        c_email: {
+          required: true,
+          email: true
+        }
+      }
+    });
+
+    var id = document.getElementById("appointment_msg").id;
+    showErrMsg(id,''); 
+
+    $('#faultSubmit').click(function() {
+      var appointmentid = document.getElementById("appointment").value;
+      var id = document.getElementById("appointment_msg").id;
+      if (appointmentid>0) {
+        //alert("appointmentid="+appointmentid);
+	$.get("<?php echo base_url(); ?>"+ "index.php/faults/check_appointmentquota/"+appointmentid, function(data, status) {
+	  //alert("data="+data);
+	  if (data <= 0) {
+	    showErrMsg(id, "Please select / Quota Full");
+	    //windows.location.hash = '#appointment';
+	  } 
+	});
+      } else {
+	showErrMsg(id, "Please select / Quota Full");
+	//windows.location.hash = '#appointment';
+      }
+      //return false;
+    });
+  });
+
+  function showErrMsg(id, errmsg) {
+    var s = document.getElementById(id);
+    //alert("id="+id);
+    s.innerHTML = errmsg;
+    //$('#appointment_msg').text(errmsg);
+    //$('#appointment_msg').css('color', 'red');
+  }
+</script>
 <?php 
   echo form_open(base_url().'index.php/faults/change/'.$faultsinfo['orderid'], 'class="form-horizontal" id="faultForm"');
 ?>
+<div class="thumbnail" id="faultinfo_content">
+  <div class="caption-full">
+    <div class="form-group" id="key">
+      <label class="col-sm-2 control-label"></label>
+      <label class="col-sm-4 control-label">Order ID: <?php echo $faultsinfo['orderid'];?></label>
+      <label class="col-sm-3 control-label"><?php echo ($faultsinfo['faultid']>0)?"Fault ID:".$faultsinfo['faultid']:'';?></label>
+      <label class="col-sm-3 control-label"></label>
+    </div>
+  </div>
+</div>
 <div class="thumbnail" id="faultinfo_content">
   <div class="caption-full">
     <h4>Part I: CS/TS Staff Profile </h4><br/>
@@ -261,7 +313,7 @@
       <label class="col-sm-1 control-label"></label>
       <label class="col-sm-3 control-label">[ Appointment ]</label>
       <div class="col-sm-8"> 
-      <select class="form-control" id="appointment" name="f_appointmentid">
+      <select class="form-control" id="appointment" name="f_appointmentid" required>
 	<?php echo "<option value=0 ".(($faultsinfo['f_appointmentid']==0)?'selected':'') . ">Please select</option>";
 	  if ($faultsinfo['f_appointmentid']>0) {
 	    echo "<option value=".$faultsinfo['f_appointmentid']." selected>".$faultsinfo['appointmentdate'].' '.$faultsinfo['appointmenttimeslot']."</option>";
@@ -274,6 +326,8 @@
       </select>
       <input type="hidden" name="f_o_appointmentid" value=<?php echo $faultsinfo['f_appointmentid']; ?>>
     </div>
+      <label class="col-sm-3 control-label"></label>
+      <label class="col-sm-8 control-label" id="appointment_msg"></label>
   </div>
 
   <div class="form-group">

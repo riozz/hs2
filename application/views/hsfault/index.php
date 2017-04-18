@@ -12,23 +12,14 @@
               <script src="<?php echo base_url("js/jquery.min.js"); ?>"></script>
               <script src="<?php echo base_url("js/jquery.validate.min.js"); ?>"></script>
 	      <script>
+		/*
 	        $.validator.setDefaults({
 		  debug:true,
 		  submitHandler: function() {
 		    alert("submitted!");
 		  }
 		});
-		$().ready(function() {
-		  $("#faultForm").validate({
-		    rules: {
-		      c_email: {
-			required: true,
-			email: true
-		      }
-		    }
-		  });
-		});
-
+		*/
 	      </script>
 	      <script>
 	        var fiid = <?php echo $faultid ?>; 
@@ -47,6 +38,7 @@
 		    //alert("hrefpath = "+window.location.pathname);
 		    //alert("url = "+furl);
 		    //alert ("fiurl="+fiurl);	
+
 		    $('#history').html("<b><center>Loading ... </center></b>");
 	 	    $.ajax({
 		      type:'POST',
