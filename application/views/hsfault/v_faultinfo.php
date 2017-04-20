@@ -10,17 +10,55 @@
  ?>
 <p>
 </pre>
+<script src="<?php echo base_url("js/jquery.min.js"); ?>"></script>
+<script src="<?php echo base_url("js/jquery.validate.min.js"); ?>"></script>
+
 <script>
+  //jQuery.validator.setDefaults({
+    //debug: true,
+    //success: "valid"
+  //});
+  function showCustomAttr(attr) {
+    var x = document.forms[0];
+    alert("x = "+ x);
+    var i;
+    var txt = "";
+    for (i=0; i< x.length; i++) {
+      //txt = txt + x[i].id + ";";
+      txt = txt + x[i].getAttribute("fid") + ";";
+      alert("txt = "+txt);
+    } 
+    var s = document.getElementById("c_email");
+    //alert("s = "+s);
+    var cattr = s.getAttribute("fid");
+    alert("fid = "+ cattr);
+    s.setAttribute("readonly", true);
+    //alert("fid = "+attr.innerHTML + " is a " + cattr + ".");
+  };
+
   $(document).ready(function() {
     $('#faultForm').validate({
       rules: {
+	c_name: { 
+	  required: true,
+	  minlength: 5
+	},
         c_email: {
           required: true,
           email: true
-        }
+        },
+	transferto: {
+	  required: true
+	},
+	appointment: {
+	  //var rurl = <?php echo base_url(); ?>+"index.php/faults/check_appointmentquota/"+document.getElementById("appointment").value;
+	  required: true,
+	  remote: "http://10.39.8.113/dev/hs2/index.php/faults/check_appointmentquota/8"
+	}
       }
     });
 
+/*
     var id = document.getElementById("appointment_msg").id;
     showErrMsg(id,''); 
 
@@ -42,6 +80,11 @@
       }
       //return false;
     });
+*/
+    $('#faultSubmit').click(function() {
+      showCustomAttr(this);
+    });
+  
   });
 
   function showErrMsg(id, errmsg) {
@@ -98,7 +141,7 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">Customer Name</label>
       <div class="col-sm-4">
-     	<input class="form-control" id="focusedInput" type="text" value="<?php echo $faultsinfo['c_name']; ?>" name="c_name">
+     	<input class="form-control" id="c_name" type="text" fid="5" value="<?php echo $faultsinfo['c_name']; ?>" name="c_name">
       </div>
       <label class="col-sm-2 control-label"></label>
       <!--
@@ -129,7 +172,7 @@
       </div>
       <label class="col-sm-2 control-label">Working location</label>
       <div class="col-sm-4">
-        <input class="form-control" id="focusedInput" type="text" value="<?php echo $faultsinfo['c_workingloc']; ?>" name="c_workingloc" required>
+        <input class="form-control" id="focusedInput" type="text" value="<?php echo $faultsinfo['c_workingloc']; ?>" name="c_workingloc" >
       </div>
     </div>
     <div class="form-group">
@@ -149,7 +192,7 @@
       </div>
       <label class="col-sm-2 control-label">Contact Email</label>
       <div class="col-sm-4">
-        <input class="form-control" id="c_email" type="text" value="<?php echo $faultsinfo['c_email']; ?>" name="c_email" type="email" required>
+        <input class="form-control" id="c_email" type="text" fid="5" value="<?php echo $faultsinfo['c_email']; ?>" name="c_email" type="email" >
       </div>
     </div>
 
@@ -267,7 +310,7 @@
       <label class="col-sm-1 control-label"></label>
       <label class="col-sm-3 control-label">[ Item Type ]</label>
       <div class="col-sm-8"> 
-        <select class="form-control" id="itemtype" name="f_itemtypeid" required>
+        <select class="form-control" id="itemtype" name="f_itemtypeid" >
 	  <?php echo "<option value=''".(($faultsinfo['f_itemtypeid']==0)?'selected':'') . ">Please select</option>";
 	    foreach ($faultsinfo['tab_itemtype'] as $row) 
             {
@@ -297,11 +340,11 @@
       <label class="col-sm-1 control-label"></label>
       <label class="col-sm-3 control-label">[ Transfer To ]</label>
       <div class="col-sm-8"> 
-        <select class="form-control" id="transferto" name="f_transfertoid">
-	  <?php echo "<option value=0 ".(($faultsinfo['f_transfertoid']==0)?'selected':'') . ">Please select</option>";
+        <select class="form-control" id="transferto" name="transferto">
+	  <?php echo "<option value='' ".(($faultsinfo['f_transfertoid']==0)?'selected':'') . ">Please select</option>";
 	    foreach ($faultsinfo['tab_transferto'] as $row) 
             {
-	    echo "<option value=".$row['id']." ".(($row['id']==$faultsinfo['f_transfertoid'])?'selected':'') . ">".$row['content']."</option>";
+	    echo "<option value='".$row['id']."' ".(($row['id']==$faultsinfo['f_transfertoid'])?'selected':'') . ">".$row['content']."</option>";
             }
 	  ?>
         </select>
@@ -313,14 +356,14 @@
       <label class="col-sm-1 control-label"></label>
       <label class="col-sm-3 control-label">[ Appointment ]</label>
       <div class="col-sm-8"> 
-      <select class="form-control" id="appointment" name="f_appointmentid" required>
-	<?php echo "<option value=0 ".(($faultsinfo['f_appointmentid']==0)?'selected':'') . ">Please select</option>";
+      <select class="form-control" id="appointment" name="appointment" >
+	<?php echo "<option value='' ".(($faultsinfo['f_appointmentid']==0)?'selected':'') . ">Please select</option>";
 	  if ($faultsinfo['f_appointmentid']>0) {
-	    echo "<option value=".$faultsinfo['f_appointmentid']." selected>".$faultsinfo['appointmentdate'].' '.$faultsinfo['appointmenttimeslot']."</option>";
+	    echo "<option value='".$faultsinfo['f_appointmentid']."' selected>".$faultsinfo['appointmentdate'].' '.$faultsinfo['appointmenttimeslot']."</option>";
           }
 	  foreach ($faultsinfo['tab_appointment'] as $row) 
           {
-	    echo "<option value=".$row['id']." ".(($row['id']==$faultsinfo['f_appointmentid'])?'selected':'') . ">".$row['date'].' '.$row['timeslot']."</option>";
+	    echo "<option value='".$row['id']."' ".(($row['id']==$faultsinfo['f_appointmentid'])?'selected':'') . ">".$row['date'].' '.$row['timeslot']."</option>";
           }
 	?>
       </select>
@@ -333,7 +376,7 @@
   <div class="form-group">
     <label class="col-sm-1 control-label"></label>
     <label class="col-sm-3 control-label">[ Fault Details ]</label>
-    <div class="col-sm-8"> <textarea class="form-control" id="faultdetail" row="5" id="faultdetail" name="f_details" required><?php echo $faultsinfo['f_details']; ?></textarea> </div>
+    <div class="col-sm-8"> <textarea class="form-control" id="faultdetail" row="5" id="faultdetail" name="f_details" ><?php echo $faultsinfo['f_details']; ?></textarea> </div>
   </div>
 
   <div class="form-group">

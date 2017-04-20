@@ -77,9 +77,14 @@
     }
 
     public function check_appointmentquota($id = 0) {
+      $aid = $this->input->get('appointment');
+      $id = $aid;
+      //log_message('debug', 'zzz[Faults]82:id='.$id);
       $this->load->model("z_mymodel");
       $ret = $this->z_mymodel->check_appointmentquota($id);
-      $data['ret']=$ret;
+      //log_message('debug', 'zzz[Faults]85:ret='.$ret);
+      if ($ret>0) $v=true; else $v="Quota Full, please select again";
+      $data['ret']=$v;
       $this->load->view('hsfault/v_faultcheckappointment',$data);
     }
 }
