@@ -23,11 +23,21 @@
 	      </script>
 	      <script>
 	        var fiid = <?php echo $faultid ?>; 
+		<?php
+		  if (isset($result)) {
+		    $actionfaultid = $result['faultid'];
+		  } else {
+		    $actionfaultid = 0;
+		  }
+		?>
 		//var url = "faults/"+<?php echo $orderid; ?>;
 		//get fault history
 		//var furl = "/dev/hs2/index.php/faults/index/" + "<?php echo '/'.$orderid; ?>";
 		//var fiurl = "/dev/hs2/index.php/faults/view/" + "<?php echo $orderid; ?>/<?php echo $faultid; ?>";
-		var furl = "<?php echo base_url(); ?>" + "index.php/faults/index/" + "<?php echo '/'.$orderid; ?>";
+		//get fault history of orderid and action faultid
+		//var furl = "<?php echo base_url(); ?>" + "index.php/faults/index/" + "<?php echo '/'.$orderid; ?>";
+		var furl = "<?php echo base_url(); ?>" + "index.php/faults/index/" + "<?php echo '/'.$orderid; ?>/<?php echo $actionfaultid; ?>";
+		//get fault detail of orderid
 		var fiurl = "<?php echo base_url(); ?>" + "index.php/faults/view/" + "<?php echo $orderid; ?>/<?php echo $faultid; ?>";
 		//get fault detail
 		//alert ("furl="+furl);	
@@ -86,6 +96,14 @@
 		    </div>
 		</div>
 <!-- ^history by ajax -->
+
+<!-- 
+		<div class="thumbnail">
+	      <?php
+	         echo 'zzz[index]94:'.$result['faultid'];
+	      ?>
+		</div>
+// -->
 
             </div>
 

@@ -20,6 +20,9 @@
                 // Whoops, we don't have a page for that!
                 show_404();
         }
+	//if (isset($data['ret'])) {
+	  //log_mesasge('debug', 'zzz[Hsfaults]24"'.json_encode($ret));
+	//}
 
         if (strlen($oid)>2)  $data['orderid'] = $oid;
         else $data['orderid'] = $this->input->post('orderid');

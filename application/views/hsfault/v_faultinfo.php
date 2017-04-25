@@ -14,10 +14,12 @@
 <script src="<?php echo base_url("js/jquery.validate.min.js"); ?>"></script>
 
 <script>
-  //jQuery.validator.setDefaults({
-    //debug: true,
-    //success: "valid"
-  //});
+  /*
+  jQuery.validator.setDefaults({
+    debug: true,
+    success: "valid"
+  });
+  */
   function showCustomAttr(attr) {
     var x = document.forms[0];
     alert("x = "+ x);
@@ -39,21 +41,70 @@
   $(document).ready(function() {
     $('#faultForm').validate({
       rules: {
+	/*
 	c_name: { 
 	  required: true,
 	  minlength: 5
+	},
+	c_certtype: {
+	  required: true
+	},
+	c_certno: {
+	  required: true,
+	  minlength: 3
+	},
+	c_contact: {
+	  required: true,
+	  digits: true
+	},
+	c_ndcontact: {
+	  required: false,
+	  digits: true
+	},
+	c_officetel: {
+	  required: false,
+	  digits: true
 	},
         c_email: {
           required: true,
           email: true
         },
-	transferto: {
+	f_faulttoid: {
 	  required: true
 	},
+	f_transfertoid: {
+	  required: true
+	},
+	f_symptomid: {
+	  required: true
+	},
+	f_itemtypeid: {
+	  required: true
+	},
+	f_model: {
+	  required: true,
+	  minlength: 3
+	},
+	f_quantity: {
+	  required: true,
+	  digits: true
+	},
+	f_serial: {
+	  required: true,
+	  minlength: 3
+	},
+	f_transfertoid: {
+	  required: true
+	},
+	*/
 	appointment: {
 	  //var rurl = <?php echo base_url(); ?>+"index.php/faults/check_appointmentquota/"+document.getElementById("appointment").value;
 	  required: true,
 	  remote: "http://10.39.8.113/dev/hs2/index.php/faults/check_appointmentquota/8"
+	},
+	f_details: {
+	  required: true,
+	  minlength: 3
 	}
       }
     });
@@ -81,10 +132,11 @@
       //return false;
     });
 */
+/*
     $('#faultSubmit').click(function() {
       showCustomAttr(this);
     });
-  
+*/  
   });
 
   function showErrMsg(id, errmsg) {
@@ -141,7 +193,7 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">Customer Name</label>
       <div class="col-sm-4">
-     	<input class="form-control" id="c_name" type="text" fid="5" value="<?php echo $faultsinfo['c_name']; ?>" name="c_name">
+     	<input class="form-control" id="c_name" type="text" wid="5" rid="5" value="<?php echo $faultsinfo['c_name']; ?>" name="c_name">
       </div>
       <label class="col-sm-2 control-label"></label>
       <!--
@@ -168,21 +220,21 @@
       </label>
 
       <div class="col-sm-3">
-        <input class="form-control" id="focusedInput" type="text" value="<?php echo (strlen($uid_no)>0)?$uid_no:''; ?>" name="c_certno" data-toggle="tooltip" data-placement="right" title="Hooray!">
+        <input class="form-control" id="c_certno" type="text" value="<?php echo (strlen($uid_no)>0)?$uid_no:''; ?>" name="c_certno" data-toggle="tooltip" data-placement="right" title="Hooray!">
       </div>
       <label class="col-sm-2 control-label">Working location</label>
       <div class="col-sm-4">
-        <input class="form-control" id="focusedInput" type="text" value="<?php echo $faultsinfo['c_workingloc']; ?>" name="c_workingloc" >
+        <input class="form-control" id="c_workingloc" type="text" value="<?php echo $faultsinfo['c_workingloc']; ?>" name="c_workingloc" >
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">Contact Number</label>
       <div class="col-sm-4">
-     	<input class="form-control" id="focusedInput" type="text" value="<?php echo $faultsinfo['c_contact']; ?>" name="c_contact">
+     	<input class="form-control" id="c_contact" type="text" value="<?php echo $faultsinfo['c_contact']; ?>" name="c_contact">
       </div>
       <label class="col-sm-2 control-label">2nd Contact Number</label>
       <div class="col-sm-4">
-        <input class="form-control" id="focusedInput" type="text" value="<?php echo $faultsinfo['c_ndcontact']; ?>" name="c_ndcontact">
+        <input class="form-control" id="c_ndcontact" type="text" value="<?php echo $faultsinfo['c_ndcontact']; ?>" name="c_ndcontact">
       </div>
     </div>
     <div class="form-group">
@@ -268,7 +320,7 @@
 	  <?php foreach ($faultsinfo['reportto'] as $row) 
 	    {
               //echo "<label class='radio-inline'><input type='radio' name='faultto' value='".$row['id']."' >".$row['desc']."</label>";
-              echo "<label class='radio-inline'><input type='radio' name='f_faulttoid' value='".$row['id']."' ". (($row['id']==$faultsinfo['f_reporttoid'])?'checked':'')  .">".$row['content']."</label>";
+              echo "<label class='radio-inline'><input type='radio' name='f_faulttoid' value='".$row['id']."' ". (($row['id']==$faultsinfo['f_reporttoid'])?'checked':'')  ." />".$row['content']."</label>";
 	    }
 	  ?>
 	</div>
@@ -288,10 +340,10 @@
         <label class="col-sm-3 control-label">[ Fault Symptom ]</label>
         <div class="col-sm-8"> 
           <select class="form-control" id="faultsym" name="f_symptomid">
-	    <?php echo "<option value=0 ".(($faultsinfo['f_symptomid']==0)?'selected':'') . ">Please select</option>";
+	    <?php echo "<option value='' ".(($faultsinfo['f_symptomid']==0)?'selected':'') . ">Please select</option>";
 	      foreach ($faultsinfo['tab_symptom'] as $row) 
               {
-	        echo "<option value=".$row['id']." ".(($row['id']==$faultsinfo['f_symptomid'])?'selected':'') . ">".$row['content']."</option>";
+	        echo "<option value='".$row['id']."' ".(($row['id']==$faultsinfo['f_symptomid'])?'selected':'') . ">".$row['content']."</option>";
               }
             ?> 
 	  </select>
@@ -311,10 +363,10 @@
       <label class="col-sm-3 control-label">[ Item Type ]</label>
       <div class="col-sm-8"> 
         <select class="form-control" id="itemtype" name="f_itemtypeid" >
-	  <?php echo "<option value=''".(($faultsinfo['f_itemtypeid']==0)?'selected':'') . ">Please select</option>";
+	  <?php echo "<option value='' ".(($faultsinfo['f_itemtypeid']==0)?'selected':'') . ">Please select</option>";
 	    foreach ($faultsinfo['tab_itemtype'] as $row) 
             {
-	    echo "<option value=".$row['id']." ".(($row['id']==$faultsinfo['f_itemtypeid'])?'selected':'') . ">".$row['content']."</option>";
+	    echo "<option value='".$row['id']."' ".(($row['id']==$faultsinfo['f_itemtypeid'])?'selected':'') . ">".$row['content']."</option>";
             }
 	  ?>
 	</select>
@@ -340,7 +392,7 @@
       <label class="col-sm-1 control-label"></label>
       <label class="col-sm-3 control-label">[ Transfer To ]</label>
       <div class="col-sm-8"> 
-        <select class="form-control" id="transferto" name="transferto">
+        <select class="form-control" id="f_transfertoid" name="f_transfertoid">
 	  <?php echo "<option value='' ".(($faultsinfo['f_transfertoid']==0)?'selected':'') . ">Please select</option>";
 	    foreach ($faultsinfo['tab_transferto'] as $row) 
             {

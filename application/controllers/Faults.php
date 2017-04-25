@@ -15,13 +15,14 @@
     }
 
     //get all fault regarding the order id
-    public function index($oid = "H201702000000")
+    public function index($oid = "H201702000000", $afid="0")
     {
         //echo "oid = $oid<br>";
 	$orderid = substr($oid, -6);
         //echo "orderid = $orderid";
 	$data['faults'] = $this->faults_model->getFaultHistory($orderid);
         $data['title'] = 'Fault History';
+	$data['afid'] = $afid;
         //$data['faults']['id'] = 0;
 	$this->load->view('hsfault/v_faulthistory', $data);
     } 
@@ -35,43 +36,48 @@
 	  //$data['faultsinfo']['name'] = "NULL";
 	//}
 	$data['faultsinfo']['orderid'] = substr($oid, -6);
+	//$data['faultsinfo']['afid'] = $afid;
         $data['title'] = 'Fault Info';
         //$data['title'] = $data['faultsinfo']['name'];
 	$this->load->view('hsfault/v_faultinfo', $data);
     } 
-   
+
+    //make change (update/ insert of fault)   
     public function change($oid = 0)
     {
-      $data['title'] = 'Change fault';
-      $orderid = $this->input->post('orderid');
-      $faultid = $this->input->post('faultid');
-      log_message('debug', 'zzz[Faults]48:orderid='.$orderid.'/faultid='.$faultid);
-      //$this->form_validation->set_rules('staffnumer','Staff Number','required');
-      //$this->form_validation->set_rules('customername','Customer Name','required');
-      //$this->form_validation->set_rules('optcert','Certificate','required');
-      //$this->form_validation->set_rules('certno','Certificate','required');
-      $this->form_validation->set_rules('c_contact','Contact Number','required');
-      $this->form_validation->set_rules('c_email','Email address','required');
-      //$this->form_validation->set_rules('f_faultto_id','Fault Report to','required');
-      $data['staffid'] = $this->session->userdata('s_staffid');
-      $data['orderid'] = $orderid;
-      $data['faultid'] = $faultid;
+      //$data['title'] = 'Change fault';
+      $data['orderid'] = $this->input->post('orderid');
+      $data['faultid'] = $this->input->post('faultid');
       $data['userlogin'] = 1;
+      //$data['action'] = $this->input->post('action');
+      $data['staffid'] = $this->session->userdata('s_staffid');
+      log_message('debug', 'zzz[Faults]51:orderid-faultid='.$data['orderid'].'-'.$data['faultid']);
+      //$this->form_validation->set_rules('certno','Certificate','required');
+      //$this->form_validation->set_rules('c_email','Email address','required');
+      //$this->form_validation->set_rules('f_faultto_id','Fault Report to','required');
+      //$data['staffid'] = $this->session->userdata('s_staffid');
+      //$data['orderid'] = $orderid;
+      //$data['faultid'] = $faultid;
+      //$data['userlogin'] = 1;
+      //$staffid = $this->session->userdata('s_staffid');
       //check login or not
       if (strlen($data['staffid'])>0) {	
-        if ($this->form_validation->run() === true)
-        {
+        //if ($this->form_validation->run() === true)
+        //{
           log_message('debug', 'zzz[Faults]64:validation=true');
           //$data['staffid'] = $this->session->userdata('s_staffid');
           //$data['orderid'] = $orderid;
           //$data['faultid'] = $faultid;
           //$data['userlogin'] = 1;
-	  $this->faults_model->set_faults();
-        } 
+	  $ret = $this->faults_model->set_faults();
+        //} 
+	$data['result']=$ret;
+	log_message('debug', 'zzz[Faults]72:'.json_encode($data));
 	$this->load->view('templates/header', $data);
 	$this->load->view('hsfault/index', $data);
 	$this->load->view('templates/footer', $data);
       } else {
+	//can't get login info, redirect to V1
 	redirect(HS_V1);
       }
     }
