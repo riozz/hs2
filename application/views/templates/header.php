@@ -14,6 +14,7 @@
     <!-- Bootstrap Core CSS -->
     <link href="<?php echo base_url(); ?>css/bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo base_url(); ?>css/bootstrap-table.css" rel="stylesheet">
+    <link href="<?php echo base_url(); ?>css/hktp.css" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="<?php echo base_url(); ?>css/shop-item.css" rel="stylesheet">
@@ -53,12 +54,18 @@
                     <li>
                         <a href="#">Welcome, <?php echo $this->session->userdata('s_name'); ?></a>
                     </li>
+		<!--
                     <li>
                         <a href="#">About</a>
                     </li>
                     <li>
                         <a href="#">Contact</a>
                     </li>
+		// -->
+                    <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                    <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                    <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                    <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
                     <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
                     <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
                     <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
@@ -77,7 +84,7 @@
                     <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
                     <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
                     <li>
-                        <a href="#">Logout</a>
+                        <?php echo '<a href='. base_url() .'index.php/hsfault/logout>Logout</a>'; ?>
                     </li>
                 </ul>
             </div>
@@ -93,9 +100,15 @@
             <div class="col-md-3">
                 <p class="lead">Menu</p>
                 <div class="list-group">
+		    <!--
                     <a href="<?php echo HS_V1; ?>" class="list-group-item active">Add order</a>
                     <a href="<?php echo HS_V1; ?>" class="list-group-item">Search</a>
                     <a href="<?php echo HS_V1; ?>" class="list-group-item">ITC Request</a>
-                    <a href="<?php echo HS_V1; ?>" class="list-group-item">Admin</a>
+                    <a href="<?php echo HS_V1; ?>" class="list-group-item">Admin</a>a
+		    //  -->
+		    <form id='HSV1_Form' action='<?php echo HS_V1.'/mainpage.php'; ?>' method='post'><button class="list-group-item" type='sumit' name='actions' value='A'>Add order</button></form>
+		    <form id='HSV1_Form' action='<?php echo HS_V1.'/mainpage.php'; ?>' method='post'><button class="list-group-item" type='sumit' name='actions' value='S'>Search</button></form>
+		    <form id='HSV1_Form' action='<?php echo HS_V1.'/mainpage.php'; ?>' method='post'><button class="list-group-item" type='sumit' name='actions' value='itcRequest'>ITC Request</button></form>
+		    <form id='HSV1_Form' action='<?php echo HS_V1.'/mainpage.php'; ?>' method='post'><button class="list-group-item" type='sumit' name='actions' value='Admin'>Admin</button></form>
                 </div>
             </div>

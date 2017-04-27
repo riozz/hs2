@@ -85,4 +85,7 @@ defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automat
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 
 // for HKTP constants
-defined('HS_V1')	       OR define('HS_V1', 'http://10.39.8.113/dev/hs/mainpage.php');	 
+// DEV
+defined('HS_V1')	       OR define('HS_V1', 'http://10.39.8.113/dev/hs');	 
+// PRO
+//defined('HS_V1')	       OR define('HS_V1', 'http://10.39.8.113/dev/hs/mainpage.php');	 

@@ -1,0 +1,11 @@
+.btn-link {
+  border:none;
+  outline:none;
+  background:none;
+  cursor:pointer;
+  color:#0000EE;
+  padding:0;
+  text-decoration:none;
+  font-family:inherit;
+  font-size:inherit;
+}

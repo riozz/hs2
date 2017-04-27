@@ -22,19 +22,22 @@ class Faults_model extends CI_Model {
 	  $this->maildb=$this->load->database('maildb', TRUE);
 	}
 
-        public function getFaultHistory($orderid = '000000') {
+        public function getFaultHistory($oid = 'H201702000000') {
 	  //$sql="select f.id, f.orders_id, f.staff_id, s.name, o.customer_id, c.customer_name, f.createddate from square_fault f join devhktp.staff s on f.staff_id = s.staffid join orders o on f.orders_id = o.id join customers c on o.customer_id = c.customer_id where o.id = right(?,6) order by f.createddate desc";
-	  $sql="select f.id, f.orders_id, f.staff_id, s.name, o.customer_id, f.c_name customer_name, f.createddate from square_fault f join devhktp.staff s on f.staff_id = s.staffid join orders o on f.orders_id = o.id where o.id = right(?,6) order by f.updatetime desc";
+	  $orderid = substr($oid, -6);
+	  $sql="select f.id, f.orders_id, f.forder_id, f.staff_id, s.name, o.customer_id, f.c_name customer_name, f.createddate from square_fault f join devhktp.staff s on f.staff_id = s.staffid join orders o on f.orders_id = o.id where o.id = right(?,6) order by f.updatetime desc";
 	  $results = $this->db->query($sql, array($orderid));
 	  //return an array of result
 	  return $results->result_array();
         }
 
-        public function getFaultInfo($orderid, $faultid = '0') {
+        public function getFaultInfo($oid, $faultid = '0') {
+	  $orderid = substr($oid, -6); 
 	  log_message('debug', 'zzz[Faults_model]34:orderid-faultid='.$orderid.'-'.$faultid);
           if ($faultid > 0) {
 	    $sql=" SELECT 
 		sf.orders_id orderid,
+		sf.forder_id forderid,
 		sf.id faultid, 
 		sf.staff_id staffid, 
 		staff.name staffname, 
@@ -83,6 +86,7 @@ class Faults_model extends CI_Model {
           } else {
 	    $sql = "select
 		o.id orderid, 
+		o.serial forderid,
 		0 faultid, 
 		0 staffid, 
 		'' staffname, 
@@ -157,7 +161,8 @@ class Faults_model extends CI_Model {
 	  //update/insert table
 	  //$customername = url_title($this->input->post('customername'), 'underscore' ,TRUE);
 	  
-          $orderid = $this->input->post('orderid');
+          $forderid = $this->input->post('orderid');
+          $orderid = substr($this->input->post('orderid'),-6);
           $faultid = $this->input->post('faultid');
           $action = $this->input->post('action');
           $staffid = $this->input->post('staffid');
@@ -204,38 +209,55 @@ class Faults_model extends CI_Model {
           $f_o_appointmentid = $this->input->post('f_o_appointmentid');
           $f_details = $this->input->post('f_details');
 
-	  $ret['orderid']=$orderid;
+	  $ret['orderid']=$forderid;
 	  $ret['faultid']=$faultid;
-	  $ret['message']='';
-	
-	  if ($f_appointmentid-$f_o_appointmentid!=0) {
-	    //quotaused ++
-	    log_message('debug', 'zzz[Faults_model]208:quotaused++'.$orderid.'-'.$faultid.'-'.$f_appointmentid);
-	    $sql = "update square_fault_appointment set quotaused=quotaused+1 where id=".$f_appointmentid;
-	    $presult = $this->db->query($sql);
-	    //$this->db->set('quotaused', 'quotaused+1');
-	    //$this->db->where('id', $f_appointmentid);
-	    //$presult = $this->db->update('square_fault_appointment');
-	    if (!$presult) {
-	      $ret['message']="ERR220: database error, Failed to modify quota table, please contact system administrator";
-	      return $ret;
-	    } 
+	  $ret['msg']='DONE';
 
-	    if ($presult) {
-	      if ($f_o_appointmentid>0) {
-	        // quotaused -- for old quota
-	        log_message('debug', 'zzz[Faults_model]216:quotaused--'.$orderid.'-'.$faultid.'-'.$f_o_appointmentid);
-	        $this->db->set('quotaused', 'quotaused-1');
-	        $this->db->where('id', $f_o_appointmentid);
-	        $presult = $this->db->update('square_fault_appointment');
-	        if (!$presult) {
-	          $ret['message']="ERR232: database error, Failed to modify quota table, please contact system administrator";
-	          return $ret;
-	        } 
+	  log_message('debug', 'zzz[Faults_model]215(orderid-faultid-appointmentid-o_appointmentid):'.$orderid.'-'.$faultid.'-'.$f_appointmentid.'-'.$f_o_appointmentid);
+
+	  //check appointment quota	
+	  $appointmentquota = 0;
+	  $sql = "select quotaused+1<=quota c from square_fault_appointment where id=?";
+	  log_message('debug', 'zzz[Faults_model]220:check quota'.$sql);
+	  $results = $this->db->query($sql, array($f_appointmentid));
+	  if ($results->num_rows() > 0) {
+	    $row = $results->row_array();
+	    $appointmentquota = $row['c'];
+	  } 
+
+	  if ($appointmentquota>0) {
+	    if ($f_appointmentid-$f_o_appointmentid!=0) {
+	      //quotaused ++
+	      log_message('debug', 'zzz[Faults_model]218:quotaused++'.$orderid.'-'.$faultid.'-'.$f_appointmentid);
+	      $sql = "update square_fault_appointment set quotaused=quotaused+1 where id=".$f_appointmentid;
+	      $presult = $this->db->query($sql);
+	      //$this->db->set('quotaused', 'quotaused+1');
+	      //$this->db->where('id', $f_appointmentid);
+	      //$presult = $this->db->update('square_fault_appointment');
+	      if (!$presult) {
+	        $ret['msg']="ERR236: database error, Failed to modify quota table, please contact system administrator";
+	        return $ret;
+	      } 
+  
+	      if ($presult) {
+	        if ($f_o_appointmentid>0) {
+	          // quotaused -- for old quota
+	          log_message('debug', 'zzz[Faults_model]216:quotaused--'.$orderid.'-'.$faultid.'-'.$f_o_appointmentid);
+	          $this->db->set('quotaused', 'quotaused-1');
+	          $this->db->where('id', $f_o_appointmentid);
+	          $presult = $this->db->update('square_fault_appointment');
+	          if (!$presult) {
+	            $ret['msg']="ERR248: database error, Failed to modify quota table, please contact system administrator";
+	            return $ret;
+	          } 
+	        }
 	      }
+	    } else {
+	      $presult = true;
 	    }
 	  } else {
-	    $presult = true;
+	    $ret['msg']="ERR257: Quota Full";
+	    return $ret;
 	  }
 
 	  $data = array (
@@ -243,6 +265,7 @@ class Faults_model extends CI_Model {
 		'staff_teamcode' => $staffteamcode,
                 'staff_channel' => $staffchannel,
 		'orders_id' => $orderid,
+		'forder_id' => $forderid,
 		'report_to' => $f_faulttoid,
 		'category' => $f_category, 
 		'symptomid' => $f_symptomid, 
@@ -283,12 +306,13 @@ class Faults_model extends CI_Model {
 		  $row = $this->email('HS - fault','ringo.wc.lau@pccw.com','HS - Fault', json_encode($data));
                   $row = $this->db->insert('square_fault', $data);
 	          if ($row==0) {
-	            $ret['message']="ERR232: database error, Failed to insert fault, please contact system administrator";
+	            $ret['msg']="ERR232: database error, Failed to insert fault, please contact system administrator";
 	            return $ret;
 	          } 
 		  $ret['faultid'] = $this->db->insert_id();
 	          log_message('debug', 'zzz[Faults_model]290:row='.$row);
 	          log_message('debug', 'zzz[Faults_model]291:actionfaultid='.$ret['faultid']);
+		  $ret['msg']='New Record Added Successfully.';
 	        }
   	      }
 	    } else {
@@ -300,10 +324,11 @@ class Faults_model extends CI_Model {
 	        $row = $this->db->update('square_fault', $data);
 	        log_message('debug', 'zzz[Faults_model]286:row='.$row);
 	        if ($row==0) {
-	          $ret['message']="ERR232: database error, Failed to update fault, please contact system administrator";
+	          $ret['msg']="ERR232: database error, Failed to update fault, please contact system administrator";
 	          return $ret;
 	        } 
 	        log_message('debug', 'zzz[Faults_model]287:actionfaultid='.$ret['faultid']);
+		$ret['msg']='Record Updated Successfully.';
 	      }
 	    }
 	    $ret['line']='309';

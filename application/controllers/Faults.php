@@ -18,9 +18,9 @@
     public function index($oid = "H201702000000", $afid="0")
     {
         //echo "oid = $oid<br>";
-	$orderid = substr($oid, -6);
+	//$orderid = substr($oid, -6);
         //echo "orderid = $orderid";
-	$data['faults'] = $this->faults_model->getFaultHistory($orderid);
+	$data['faults'] = $this->faults_model->getFaultHistory($oid);
         $data['title'] = 'Fault History';
 	$data['afid'] = $afid;
         //$data['faults']['id'] = 0;
@@ -30,12 +30,13 @@
     // fault detail 
     public function view($oid = 0, $fid = "0")
     {
-	//$orderid = substr($oid, -6);
-	$data['faultsinfo'] = $this->faults_model->getFaultInfo(substr($oid,-6), $fid);
+	//$data['faultsinfo'] = $this->faults_model->getFaultInfo(substr($oid,-6), $fid);
+	$data['faultsinfo'] = $this->faults_model->getFaultInfo($oid, $fid);
 	//if (empty($data['faultsinfo'])) {
 	  //$data['faultsinfo']['name'] = "NULL";
 	//}
-	$data['faultsinfo']['orderid'] = substr($oid, -6);
+	//$data['faultsinfo']['orderid'] = substr($oid, -6);
+	$data['faultsinfo']['orderid'] = $oid;
 	//$data['faultsinfo']['afid'] = $afid;
         $data['title'] = 'Fault Info';
         //$data['title'] = $data['faultsinfo']['name'];
@@ -83,13 +84,20 @@
     }
 
     public function check_appointmentquota($id = 0) {
-      $aid = $this->input->get('appointment');
+      //$aid = $this->input->get('appointment');
+      $aid = $this->input->post('appointment');
+      $oaid = $this->input->post('o_appointment');
       $id = $aid;
-      //log_message('debug', 'zzz[Faults]82:id='.$id);
-      $this->load->model("z_mymodel");
-      $ret = $this->z_mymodel->check_appointmentquota($id);
-      //log_message('debug', 'zzz[Faults]85:ret='.$ret);
-      if ($ret>0) $v=true; else $v="Quota Full, please select again";
+      log_message('debug', 'zzz[Faults]89:appointmentid='.$id.'-'.$oaid);
+      //won't check if selection is same as before
+      if ($id === $oaid) {
+	$v = true;
+      } else {
+        $this->load->model("z_mymodel");
+        $ret = $this->z_mymodel->check_appointmentquota($id);
+        //log_message('debug', 'zzz[Faults]85:ret='.$ret);
+        if ($ret>0) $v=true; else $v="Quota Full, please select again";
+      }
       $data['ret']=$v;
       $this->load->view('hsfault/v_faultcheckappointment',$data);
     }

@@ -24,10 +24,13 @@
 	      <script>
 	        var fiid = <?php echo $faultid ?>; 
 		<?php
+		  //get the faultid after update action
 		  if (isset($result)) {
 		    $actionfaultid = $result['faultid'];
+		    $actionmsg = $result['msg'];	
 		  } else {
 		    $actionfaultid = 0;
+		    $actionmsg = '';
 		  }
 		?>
 		//var url = "faults/"+<?php echo $orderid; ?>;
@@ -36,6 +39,7 @@
 		//var fiurl = "/dev/hs2/index.php/faults/view/" + "<?php echo $orderid; ?>/<?php echo $faultid; ?>";
 		//get fault history of orderid and action faultid
 		//var furl = "<?php echo base_url(); ?>" + "index.php/faults/index/" + "<?php echo '/'.$orderid; ?>";
+		var actionmsg = "<?php echo $actionmsg; ?>";
 		var furl = "<?php echo base_url(); ?>" + "index.php/faults/index/" + "<?php echo '/'.$orderid; ?>/<?php echo $actionfaultid; ?>";
 		//get fault detail of orderid
 		var fiurl = "<?php echo base_url(); ?>" + "index.php/faults/view/" + "<?php echo $orderid; ?>/<?php echo $faultid; ?>";
@@ -77,6 +81,10 @@
 		    .fail(function() {
 		      alert(" Loading error. ");
 		    });
+		    if (actionmsg.length>0) {
+		      $("#actionmsg").collapse('show');
+		      $("#faultinfo").collapse('hide');
+		    }
 		    return false;	
 		});
 	      </script>
@@ -88,7 +96,15 @@
 		    </div>
 	 	</div>	
 <!-- ^fault info by ajax -->
-		  
+		 
+<!-- action message -->
+                <div class="collapse" id="actionmsg">
+		  <div class="alert alert-success">
+		    <label><center><?php echo "System Message: ".$actionmsg; ?></center></label>
+		  </div>
+		</div>
+<!-- ^action message -->
+ 
 <!-- history by ajax -->
                 <div class="thumbnail">
 		  <div class="alert alert-warning"><h3>Fault History</h3></div>

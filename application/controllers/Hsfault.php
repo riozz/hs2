@@ -51,7 +51,7 @@
           $this->load->view('hsfault/'.$page, $data);
           $this->load->view('templates/footer', $data);
 	} else {
-	  redirect(HS_V1);
+	  redirect(HS_V1.'/mainpage.php');
 	}
     }
 
@@ -70,6 +70,13 @@
         $this->load->view('templates/header', $data);
         $this->load->view('hsfault/'.$page, $data);
         $this->load->view('templates/footer', $data);
+    }
+
+    public function logout()
+    {
+      $array_items = array('s_id','s_name','s_ccc','s_location','s_staffid','s_teamcode','s_channel','s_orderid');
+      $this->session->unset_userdata($array_items);
+      redirect(HS_V1.'/logout.php');
     }
  
 }
