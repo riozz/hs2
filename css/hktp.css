@@ -9,3 +9,8 @@
   font-family:inherit;
   font-size:inherit;
 }
+
+label.error, textarea.error, input.error {
+  color: red !important;
+  font-weight: normal !important;
+}

@@ -1,10 +1,36 @@
-    <!-- Page Content -->
-       <!-- menu in header.php -->
+<!-- Page Content -->
+<!-- menu in header.php -->
+<script src="<?php echo base_url("js/jquery.min.js"); ?>"></script>
+<script src="<?php echo base_url("js/jquery.validate.min.js"); ?>"></script>
+<script src="<?php echo base_url("js/bootstrap.min.js"); ?>"></script>
+<script src="<?php echo base_url("js/bootstrap-table.js"); ?>"></script>
 
-              <div class="col-md-9">
-	   	<div class="row">
-    			<div class="alert alert-info"><h3>Warranty Management</h3></div>
-		</div>
+<div class="col-md-9">
+  <div class="row">
+    <div class="alert alert-info"><h3>Warranty Management</h3>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#warrantyinfo">Warranty Info</button>&nbsp;&nbsp;&nbsp;
+      <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#upgradeinfo">Upgrade Info</button>&nbsp;&nbsp;&nbsp;
+      <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#tcassignmentinfo">TC Assignment Info</button>&nbsp;&nbsp;&nbsp;
+      <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#tccompletioninfo">TC Completion Info</button>
+    </div>
+  </div>
+
+  <div class="thumbnail">
+    <div class="caption-full">
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Order ID:</label>
+        <div class="col-sm-4">
+          <input class="form-control" id="disabledInput" type="text" name="staffid" value="" placeholder="" disabled>
+        </div>
+        <label class="col-sm-2 control-label">Warranty ID:</label>
+        <div class="col-sm-4">
+          <input class="form-control" id="disabledInput" type="text" name="staffid" value="" placeholder="" disabled>
+        </div>
+      </div>
+      <h4></h4><br/>
+    </div>
+  </div>
 
                 <div class="thumbnail">
                   <div class="caption-full">
@@ -13,7 +39,7 @@
     		    <div class="form-group">
       		      <label class="col-sm-2 control-label">Staff ID:</label>
       		      <div class="col-sm-5">
-        	        <input class="form-control" id="disabledInput" type="text" name="staffid" value="" placeholder="" disabled>
+        	        <input class="form-control" id="disabledInput" type="text" name="staffid" value="" placeholder="" readonly>
       		      </div>
       		      <label class="col-sm-5 control-label">&nbsp;</label>
 		    </div>
@@ -21,7 +47,7 @@
   		    <div class="form-group">
       		      <label class="col-sm-2 control-label">Staff Name:</label>
       		      <div class="col-sm-5">
-        		<input class="form-control" id="disabledInput" type="text" name="staffname" value="" placeholder="" disabled>
+        		<input class="form-control" id="disabledInput" type="text" name="staffname" value="" placeholder="" readonly>
       		      </div>
       		      <label class="col-sm-5 control-label">&nbsp;</label>
     		    </div>
@@ -29,7 +55,7 @@
     		    <div class="form-group">
       		      <label class="col-sm-2 control-label">Order Status:</label>
       		      <div class="col-sm-5">
-        	        <input class="form-control" id="disabledInput" type="text" name="orderstatus" value="Cancelled" placeholder="" disabled>
+        	        <input class="form-control" id="disabledInput" type="text" name="orderstatus" value="Cancelled" placeholder="" readonly>
       		      </div>
       		      <label class="col-sm-5 control-label">&nbsp;</label>
 		    </div>
@@ -115,8 +141,8 @@
 			  </div>
 
     			  <div class="form-group">
-			    <div class="col-sm-10">&nbsp;</div>
-                            <div class="col-sm-2"><button type="submit" class="btn btn-info" action="addwarranty">Add Warranty</button></div>
+			    <div class="col-sm-9">&nbsp;</div>
+                            <div class="col-sm-3"><button type="submit" class="btn btn-info" action="addwarranty">Add Warranty</button></div>
 			    <input type="hidden" name="action" value="addwarranty">
 			  </div>
 <!-- zzz  -->
@@ -210,8 +236,8 @@
 			  </div>
 
     			  <div class="form-group">
-			    <div class="col-sm-10">&nbsp;</div>
-                            <div class="col-sm-2"><button type="submit" class="btn btn-info" action="addupgrade">Add Upgrade</button></div>
+			    <div class="col-sm-9">&nbsp;</div>
+                            <div class="col-sm-3"><button type="submit" class="btn btn-info" action="addupgrade">Add Upgrade</button></div>
 			    <input type="hidden" name="action" value="addupgrade">
 			  </div>
 <!-- zzz  -->
@@ -311,7 +337,7 @@
 
                 <div class="thumbnail">
                     <div class="caption-full">
-                        <h4>Technical Consultant Task Compeletion</h4><br/>
+                        <h4>Technical Consultant Task Completion</h4><br/>
 
   			<form class="form-horizontal">
     			  <div class="form-group">

@@ -8,7 +8,6 @@
       $this->load->library('session');
       $this->load->library('staffInfo');
       $this->load->library('faultInfo');
-      //$this->load->library('session');
       $this->load->library('form_validation');
     }
 
@@ -38,7 +37,7 @@
 	  $data['orderid'] = $this->session->userdata('s_orderid');
         } 
         // for testing
-  	/*		
+  	/*			
         $data['orderid'] = "H201702001907";
         $data['staffid'] = "1352731";
         $data['userlogin'] = "1";

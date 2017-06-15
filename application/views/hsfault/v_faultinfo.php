@@ -141,7 +141,26 @@
     $('#faultSubmit').click(function() {
       showCustomAttr(this);
     });
-*/  
+*/ 
+/*
+    $('#faultForm').submit(function(e) {
+      var submiturl = "<?php echo base_url(); ?>" + "index.php/faults/change/" + "<?php echo $faultsinfo['orderid'] ?>";
+      e.preventDefault();
+      $.ajax({
+        url: submiturl,
+	type: 'POST',
+	data: $(this).serialize()
+      })
+      .done(function(data) {
+	$('#faultForm').fadeOut('slow', function() {
+	  $('#faultForm').fadeIn('slow').html(data);
+	});
+      })
+      .fail(function() {
+	alert('Data Submission Failed');
+      });
+    }); 
+*/
   });
 
   function showErrMsg(id, errmsg) {

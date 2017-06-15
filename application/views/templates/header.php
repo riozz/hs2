@@ -52,7 +52,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="#">Welcome, <?php echo $this->session->userdata('s_name'); ?></a>
+                        <a href="#">(UAT) Welcome, <?php echo $this->session->userdata('s_name'); ?></a>
                     </li>
 		<!--
                     <li>
@@ -98,7 +98,7 @@
         <div class="row">
 
             <div class="col-md-3">
-                <p class="lead">Menu</p>
+                <p class="lead">Menu (UAT)</p>
                 <div class="list-group">
 		    <!--
                     <a href="<?php echo HS_V1; ?>" class="list-group-item active">Add order</a>
