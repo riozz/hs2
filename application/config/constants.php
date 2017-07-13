@@ -86,6 +86,14 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 
 // for HKTP constants
 // DEV
-defined('HS_V1')	       OR define('HS_V1', 'http://10.39.8.113/dev/hs');	 
+defined('HS_V1')	       OR define('HS_V1', 'http://10.39.8.113/dev/hs');
+defined('HKTP')		       OR define('HKTP', 'devhktp'); 
+defined('ENV')		       OR define('ENV', 'DEV');
+// UAT
+//defined('HS_V1')	       OR define('HS_V1', 'http://10.39.8.101/uat/hs');
+//defined('HKTP')		       OR define('HKTP', 'uathktp'); 
+//defined('ENV')		       OR define('ENV', 'UAT');
 // PRO
-//defined('HS_V1')	       OR define('HS_V1', 'http://10.39.8.113/dev/hs/mainpage.php');	 
+//defined('HS_V1')	       OR define('HS_V1', 'hs');	 
+//defined('HKTP')		       OR define('HKTP', 'hktp'); 
+//defined('ENV')		       OR define('ENV', '');

@@ -25,7 +25,7 @@ class Faults_model extends CI_Model {
         public function getFaultHistory($oid = 'H201702000000') {
 	  //$sql="select f.id, f.orders_id, f.staff_id, s.name, o.customer_id, c.customer_name, f.createddate from square_fault f join devhktp.staff s on f.staff_id = s.staffid join orders o on f.orders_id = o.id join customers c on o.customer_id = c.customer_id where o.id = right(?,6) order by f.createddate desc";
 	  $orderid = substr($oid, -6);
-	  $sql="select f.id, f.orders_id, f.forder_id, f.staff_id, s.name, o.customer_id, f.c_name customer_name, f.createddate from square_fault f join devhktp.staff s on f.staff_id = s.staffid join orders o on f.orders_id = o.id where o.id = right(?,6) order by f.updatetime desc";
+	  $sql="select f.id, f.orders_id, f.forder_id, f.staff_id, s.name, o.customer_id, f.c_name customer_name, f.createddate from square_fault f join ".HKTP.".staff s on f.staff_id = s.staffid join orders o on f.orders_id = o.id where o.id = right(?,6) order by f.updatetime desc";
 	  $results = $this->db->query($sql, array($orderid));
 	  //return an array of result
 	  return $results->result_array();
@@ -77,7 +77,7 @@ class Faults_model extends CI_Model {
 		sf.createdby f_createdby, 
 		sf.createddate f_createddate
 		FROM `square_fault` sf
-		join devhktp.staff staff on sf.staff_id = staff.staffid
+		join ".HKTP.".staff staff on sf.staff_id = staff.staffid
 		left join square_fault_appointment a on sf.appointmentid = a.id
 		where sf.id = ?";
 	    log_message('debug', 'zzz[Faults_model]43:'.$sql);
