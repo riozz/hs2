@@ -1,15 +1,13 @@
 <!-- Page Content -->
 <!-- menu in header.php -->
-<!--
 <script src="<?php echo base_url("js/jquery.min.js"); ?>"></script>
 <script src="<?php echo base_url("js/jquery.validate.min.js"); ?>"></script>
 <script src="<?php echo base_url("js/bootstrap.min.js"); ?>"></script>
 <script src="<?php echo base_url("js/bootstrap-table.js"); ?>"></script>
-// -->
 
 <div class="col-md-9">
   <div class="row">
-    <div class="alert alert-info"><h3>Warranty Management</h3>
+    <div class="alert alert-info"><h3>Upgrade Management</h3>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#warrantyinfo">Warranty Info</button>&nbsp;&nbsp;&nbsp;
       <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#upgradeinfo">Upgrade Info</button>&nbsp;&nbsp;&nbsp;
