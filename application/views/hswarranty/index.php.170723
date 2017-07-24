@@ -17,24 +17,6 @@
     </div>
   </div>
 
-  <script>
-    var wiid = <?php echo $warrantyid ?>;
-    <?php
-      //get warrantyid after update action
-      if (isset($result)) {
-	$actionwarrantyid = $result['warrantyid'];
-	$actionmsg = $result['msg'];
-      } else {
-	$actionwarrantyid = 0;
-	$actionmsg = '';
-      }
-    ?>
-    var actionmsg = "<?php echo $actionmsg; ?>";
-    var wurl = "<?php echo base_url(); ?>" + "index.php/faults/index/" + "<?php echo '/'.$orderid; ?>/<?php echo $actionfaultid; ?>";
-    //get fault detail of orderid
-    var wiurl = "<?php echo base_url(); ?>" + "index.php/faults/view/" + "<?php echo $orderid; ?>/<?php echo $faultid; ?>";
-
-
   <div class="thumbnail">
     <div class="caption-full">
       <div class="form-group">

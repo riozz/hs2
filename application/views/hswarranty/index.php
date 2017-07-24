@@ -1,22 +1,39 @@
 <!-- Page Content -->
 <!-- menu in header.php -->
-<!--
+
 <script src="<?php echo base_url("js/jquery.min.js"); ?>"></script>
 <script src="<?php echo base_url("js/jquery.validate.min.js"); ?>"></script>
 <script src="<?php echo base_url("js/bootstrap.min.js"); ?>"></script>
 <script src="<?php echo base_url("js/bootstrap-table.js"); ?>"></script>
-// -->
 
 <div class="col-md-9">
   <div class="row">
     <div class="alert alert-info"><h3>Warranty Management</h3>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#warrantyinfo">Warranty Info</button>&nbsp;&nbsp;&nbsp;
-      <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#upgradeinfo">Upgrade Info</button>&nbsp;&nbsp;&nbsp;
+      <!--<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#upgradeinfo">Upgrade Info</button>&nbsp;&nbsp;&nbsp;-->
       <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#tcassignmentinfo">TC Assignment Info</button>&nbsp;&nbsp;&nbsp;
       <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#tccompletioninfo">TC Completion Info</button>
     </div>
   </div>
+
+  <script>
+    var wiid = <?php echo $warrantyid ?>;
+    <?php
+      //get warrantyid after update action
+      if (isset($result)) {
+	$actionwarrantyid = $result['warrantyid'];
+	$actionmsg = $result['msg'];
+      } else {
+	$actionwarrantyid = 0;
+	$actionmsg = '';
+      }
+    ?>
+    var actionmsg = "<?php echo $actionmsg; ?>";
+    var wurl = "<?php echo base_url(); ?>" + "index.php/faults/index/" + "<?php echo '/'.$orderid; ?>/<?php echo $actionfaultid; ?>";
+    //get fault detail of orderid
+    var wiurl = "<?php echo base_url(); ?>" + "index.php/faults/view/" + "<?php echo $orderid; ?>/<?php echo $faultid; ?>";
+
 
   <div class="thumbnail">
     <div class="caption-full">
