@@ -26,7 +26,7 @@ class Warrantys_model extends CI_Model {
 	  //return data array
 	  $orderid = substr($oid, -6);
 	  //$sql="select f.id, f.orders_id, f.forder_id, f.staff_id, s.name, o.customer_id, f.c_name customer_name, f.createddate from square_fault f join ".HKTP.".staff s on f.staff_id = s.staffid join orders o on f.orders_id = o.id where o.id = right(?,6) order by f.updatetime desc";
-	  $sql="select sw.id, sw.orders_id, sw.fullorder_id, sw.staff_id, s.name, sw.tc_staff_id, tc.name tcname, sw.com_staff_id, com.name comname, sw.createddate from square_warranty sw join ".HKTP.".staff s on sw.staff_id = s.staffid join ".HKTP.".staff tc on sw.tc_staff_id = tc.staffid join ".HKTP.".staff com on sw.com_staff_id = com.staffid where sw.orders_id=right(?,6) order by sw.createddate desc";
+	  $sql="select sw.id, sw.orders_id, sw.fullorder_id, sw.staff_id, s.name, sw.tc_staff_id, tc.name tcname, sw.com_staff_id, com.name comname, sw.createddate from square_warranty sw join ".HKTP.".staff s on sw.staff_id = s.staffid left join ".HKTP.".staff tc on sw.tc_staff_id = tc.staffid left join ".HKTP.".staff com on sw.com_staff_id = com.staffid where sw.orders_id=right(?,6) order by sw.createddate desc";
 	  $results = $this->db->query($sql, array($orderid));
 	  //return an array of result
 	  return $results->result_array();
@@ -73,8 +73,8 @@ class Warrantys_model extends CI_Model {
 		join `square_warranty_package` swp on sw.w_package = swp.id 
 		join `square_warranty_category` swc on sw.w_category = swc.id 
 		join ".HKTP.".staff staff on staff.staffid = sw.staff_id 
-		join ".HKTP.".staff tcstaff on tcstaff.staffid = sw.tc_staff_id 
-		join ".HKTP.".staff comstaff on comstaff.staffid = sw.com_staff_id 
+		left join ".HKTP.".staff tcstaff on tcstaff.staffid = sw.tc_staff_id 
+		left join ".HKTP.".staff comstaff on comstaff.staffid = sw.com_staff_id 
 		where sw.id=?";
 	    log_message('debug', 'zzz[Warrantys_model]43:'.$sql);
 	    $result = $this->db->query($sql, array($warrantyid));
@@ -154,26 +154,27 @@ class Warrantys_model extends CI_Model {
 	  $wsmno = $this->input->post('wsmno');
 	  $weffdate = $this->input->post('weffdate');
 	  $tcstaffid = $this->input->post('tcstaffid');
-	  $tcdate = $this->input->post('tcdate');
-	  $tctime = $this->input->post('tctime');
-	  $comstaffid = $this->input->post('comstaffid');
-	  $comremark = $this->input->post('comremark');
-	  $createdby = $this->input->post('createdby');
-	  $modifiedby = $this->input->post('modifiedby');
 	  $tcname = $this->input->post('tcname');
 	  $tcteamcode = $this->input->post('tcteamcode');
-	  $tctelno = $this->input->post('tctelno');
 	  $tcchannel = $this->input->post('tcchannel');
+	  $tctelno = $this->input->post('tctelno');
+	  $tcdate = $this->input->post('tcdate');
+	  $tctime = $this->input->post('tctime');
+	  $completeddate = $this->input->post('completeddate');
+	  $comstaffid = $this->input->post('comstaffid');
 	  $comname = $this->input->post('comname');
 	  $comteamcode = $this->input->post('comteamcode');
-	  $comtelno = $this->input->post('comtelno');
 	  $comchannel = $this->input->post('comchannel');
+	  $comremark = $this->input->post('comremark');
+	  //$createdby = $this->input->post('createdby');
+	  //$modifiedby = $this->input->post('modifiedby');
+	  //$comtelno = $this->input->post('comtelno');
 
 	  $ret['orderid']=$fullorderid;
 	  $ret['warrantyid']=$warrantyid;
 	  $ret['msg']='DONE';
 
-	  log_message('debug', 'zzz[Warrantys_model]215(orderid-warrantyid-appointmentid-o_appointmentid):'.$orderid.'-'.$warrantyid);
+	  log_message('debug', 'zzz[Warrantys_model]215(orderid-warrantyid):'.$orderid.'-'.$warrantyid);
 
 	  //check appointment quota	
 	/*
@@ -244,11 +245,12 @@ class Warrantys_model extends CI_Model {
 		'com_staff_id' => $comstaffid,
 		'com_staff_teamcode' => $comteamcode,
 		'com_staff_channel' => $comchannel,
-		'com_staff_telno' => $comtelno,
+		//'com_staff_telno' => $comtelno,
 		'com_remark' => $comremark,
 		'createdby' => $this->session->userdata('s_staffid'), 
 		'modifiedby' => $this->session->userdata('s_staffid'), 
-		'createddate' => date("Y-m-d")
+		'createddate' => date("Y-m-d"),
+		'completeddate' => $completeddate
 	  );
 	  if ($presult) {
  	    if ($warrantyid == 0) {
@@ -297,7 +299,7 @@ class Warrantys_model extends CI_Model {
 	  $raw['c_uid'] = 'XXXXXX';
 	  $raw['c_contact'] = 'XXXXXXXX';
 	  if (strlen($other)>0) 
-	    $d = '{faultid:'.$other.'},'.json_encode($raw);
+	    $d = '{warrantyid:'.$other.'},'.json_encode($raw);
   	  else 
 	    $d = json_encode($raw);
 	  $data = array (

@@ -144,7 +144,7 @@
 */ 
 /*
     $('#faultForm').submit(function(e) {
-      var submiturl = "<?php echo base_url(); ?>" + "index.php/faults/change/" + "<?php echo $faultsinfo['orderid'] ?>";
+      var submiturl = "<?php echo base_url(); ?>" + "index.php/faults/change/" + "<?php echo $upgradesinfo['orderid'] ?>";
       e.preventDefault();
       $.ajax({
         url: submiturl,
@@ -239,7 +239,7 @@
       <div class="form-group">
         <label class="col-sm-2 control-label">Upgrade Router Quantity: </label>
         <div class="col-sm-5"> 
-	  <input class="form-control" id="uquantity" type="text" name="uquantity" wid="5" rid="5" value="<?php echo $upgradesinfo['uquantity']; ?>"> </div>
+	  <input class="form-control" id="uquantity" type="text" name="uquantity" wid="5" rid="5" value="<?php echo $upgradesinfo['uquantity']; ?>"> 
 	</div>
         <label class="col-sm-5 control-label">&nbsp;&nbsp;</label>
       </div>
@@ -314,10 +314,10 @@
 
       <div class="form-group">
         <label class="col-sm-3 control-label">Appointment Date/Time:</label>
-        <div class="col-sm-3"> 
+        <div class="col-sm-5"> 
 	  <input class="form-control" id="udate" type="text" name="udate" wid="5" rid="5" value="<?php echo $upgradesinfo['udate']; ?>"> 
 	</div>
-        <div class="col-sm-3"> 
+        <div class="col-sm-4"> 
 	  <input class="form-control" id="utime" type="text" name="utime" wid="5" rid="5" value="<?php echo $upgradesinfo['utime']; ?>"> 
 	<!--
 	  <select class="form-control" id="tctime" name="tctime" sid="5" rid="5">
@@ -336,7 +336,6 @@
 	  </select>
 	//-->
 	</div>
-        <label class="col-sm-3 control-label">&nbsp;</label>
       </div>
 
       <div class="form-group">
@@ -347,6 +346,7 @@
         <div class="col-sm-2"><button type="submit" class="btn btn-info" action="assign" id="upgradeAssign">Assign</button>
 	</div>
       </div>
+    </div>
   </div>
 
 <!---Part IV -->
@@ -383,8 +383,8 @@
 	</div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label">TC Remark:</label>
-        <div class="col-sm-10"> <textarea class="form-control" row="5" id="uremark" name="uremark"  wid="5" rid="5"><?php echo $upgradesinfo['uremark']; ?></textarea></div>
+        <label class="col-sm-3 control-label">TC Remark:</label>
+        <div class="col-sm-9"> <textarea class="form-control" row="5" id="uremark" name="uremark"  wid="5" rid="5"><?php echo $upgradesinfo['uremark']; ?></textarea></div>
       </div>
       <div class="form-group">
         <div class="col-sm-10">&nbsp;</div>

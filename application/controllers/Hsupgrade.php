@@ -26,7 +26,7 @@
       $data['staffid'] = $this->input->post('staffid');
       $data['userlogin'] = $this->input->post('login');
       $data['action'] = $this->input->post('actions');
-      $data['upgrade'] = $uid;
+      $data['upgradeid'] = $uid;
       if (isset($data['action'])) {
         $this->staffinfo->getStaffInfo($data['staffid'],$data['orderid']);
       } else {

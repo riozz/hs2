@@ -174,7 +174,7 @@
 <?php 
   echo form_open(base_url().'index.php/warrantys/change/'.$warrantysinfo['orderid'], 'class="form-horizontal" id="warrantyForm"');
 ?>
-<div class="thumbnail" id="warrantyinfo_content">
+<div class="thumbnail" >
   <div class="caption-full">
     <div class="form-group" id="key">
       <label class="col-sm-2 control-label">Order ID</label>
@@ -219,42 +219,43 @@
 //-->
 
 <!---Part II -->
-  <div class="thumbnail">
-    <div class="caption-full">
-      <h4>Part II: Smart Living Warranty Checking List</h4><br/>
-      <div class="form-group">
-        <label class="col-sm-2 control-label">Maintenance Category: </label>
-        <div class="col-sm-5 dropdown"> 
-	  <select class="form-control" id="category" name="category" sid="5" rid="5">
-	    <?php echo "<option value='' ".(($warrantysinfo['wcategoryid']==0)?'selected':'') .">Please select</option>";
-	    foreach ($warrantysinfo['tab_category'] as $row) 
-	    {
-              echo "<option value='".$row['id']."' ".(($row['id']==$warrantysinfo['wcategoryid'])?'selected':'') . ">".$row['category']."</option>";
-	    }
-	    ?>
-	  </select>
-	</div>
-      </div>
+<div class="thumbnail" id="tc_assignment_info">
+  <div class="caption-full">
+    <h4>Part II: Smart Living Warranty Checking List</h4><br/>
+     <div class="form-group">
+       <label class="col-sm-2 control-label">Maintenance Category: </label>
+       <div class="col-sm-5 dropdown"> 
+	  <select class="form-control" id="category" name="wcategoryid" sid="5" rid="5">
+	  <?php echo "<option value='' ".(($warrantysinfo['wcategoryid']==0)?'selected':'') .">Please select</option>";
+	  foreach ($warrantysinfo['tab_category'] as $row) 
+	  {
+            echo "<option value='".$row['id']."' ".(($row['id']==$warrantysinfo['wcategoryid'])?'selected':'') . ">".$row['category']."</option>";
+	  }
+	  ?>
+	 </select>
+       </div>
+     </div>
 
-      <div class="form-group">
-        <label class="col-sm-2 control-label">Warranty Package: </label>
-        <div class="col-sm-5 dropdown"> 
-	  <select class="form-control" id="package" name="package" sid="5" rid="5">
-	    <?php echo "<option value='' ".(($warrantysinfo['wpackageid']==0)?'selected':'') .">Please select</option>";
+     <div class="form-group">
+       <label class="col-sm-2 control-label">Warranty Package: </label>
+       <div class="col-sm-5 dropdown"> 
+	  <select class="form-control" id="package" name="wpackageid" sid="5" rid="5">
+          <?php echo "<option value='' ".(($warrantysinfo['wpackageid']==0)?'selected':'') .">Please select</option>";
 	    foreach ($warrantysinfo['tab_package'] as $row) 
 	    {
               echo "<option value='".$row['id']."' ".(($row['id']==$warrantysinfo['wpackageid'])?'selected':'') . ">".$row['package']."</option>";
 	    }
-	    ?>
+	  ?>
 	  </select>
-	</div>
-      </div>
+        </div>
+     </div>
 
-      <div class="form-group">
-        <label class="col-sm-2 control-label">Extra offer:</label>
-        <div class="col-sm-6"> 
-	  <input class="form-control" id="woffer" type="text" name="woffer" wid="5" rid="5" value="<?php echo $warrantysinfo['woffer']; ?>"> </div>
-        <label class="col-sm-4 control-label"># (Please Contact Marketing)</label>
+     <div class="form-group">
+       <label class="col-sm-2 control-label">Extra offer:</label>
+       <div class="col-sm-6"> 
+         <input class="form-control" id="woffer" type="text" name="woffer" wid="5" rid="5" value="<?php echo $warrantysinfo['woffer']; ?>"> 
+       </div>
+         <label class="col-sm-4 control-label"># (Please Contact Marketing)</label>
       </div>
 
       <div class="form-group">
@@ -281,42 +282,42 @@
 </div>
 
 <!---Part III -->
-  <div class="thumbnail">
-    <div class="caption-full">
-      <h4>Part III: Technical Consultant Assignment</h4><br/>
-      <div class="form-group">
-        <label class="col-sm-3 control-label">Technical Consultant Staff No.:</label>
-        <div class="col-sm-3"> 
-	  <input class="form-control" id="tcstaffid" type="text" name="tcstaffid" wid="5" rid="5" value="<?php echo $warrantysinfo['tcstaffid']; ?>"> 
-	</div>
-        <label class="col-sm-3 control-label">Technical Consultant Staff Name:</label>
-        <div class="col-sm-3"> 
-	  <input class="form-control" id="tcname" type="text" name="tcname" wid="5" rid="5" value="<?php echo $warrantysinfo['tcname']; ?>"> 
-	</div>
-      </div>
+<div class="thumbnail" id="tc_completion_info">
+  <div class="caption-full">
+    <h4>Part III: Technical Consultant Assignment</h4><br/>
+    <div class="form-group">
+       <label class="col-sm-3 control-label">Technical Consultant Staff No.:</label>
+       <div class="col-sm-3"> 
+         <input class="form-control" id="tcstaffid" type="text" name="tcstaffid" wid="5" rid="5" value="<?php echo $warrantysinfo['tcstaffid']; ?>"> 
+       </div>
+       <label class="col-sm-3 control-label">Technical Consultant Staff Name:</label>
+       <div class="col-sm-3"> 
+         <input class="form-control" id="tcname" type="text" name="tcname" wid="5" rid="5" value="<?php echo $warrantysinfo['tcname']; ?>"> 
+       </div>
+     </div>
 
-      <div class="form-group">
-        <label class="col-sm-3 control-label">Technical Consultant Team Code:</label>
-        <div class="col-sm-3"> 
-	  <input class="form-control" id="tcteamcode" type="text" name="tcteamcode" wid="5" rid="5" value="<?php echo $warrantysinfo['tcteamcode']; ?>"> 
-	</div>
-        <label class="col-sm-3 control-label">Channel:</label>
-        <div class="col-sm-3"> 
-	  <input class="form-control" id="tcchannel" type="text" name="tcchannel" wid="5" rid="5" value="<?php echo $warrantysinfo['tcchannel']; ?>"> 
-	</div>
-      </div>
+     <div class="form-group">
+       <label class="col-sm-3 control-label">Technical Consultant Team Code:</label>
+       <div class="col-sm-3"> 
+         <input class="form-control" id="tcteamcode" type="text" name="tcteamcode" wid="5" rid="5" value="<?php echo $warrantysinfo['tcteamcode']; ?>"> 
+       </div>
+       <label class="col-sm-3 control-label">Channel:</label>
+       <div class="col-sm-3"> 
+         <input class="form-control" id="tcchannel" type="text" name="tcchannel" wid="5" rid="5" value="<?php echo $warrantysinfo['tcchannel']; ?>"> 
+       </div>
+     </div>
 
-      <div class="form-group">
-        <label class="col-sm-3 control-label">Technical Consultant Phone No.:</label>
-        <div class="col-sm-3"> 
-	  <input class="form-control" id="tctelno" type="text" name="tctelno" wid="5" rid="5" value="<?php echo $warrantysinfo['tctelno']; ?>"> 
-	</div>
+     <div class="form-group">
+       <label class="col-sm-3 control-label">Technical Consultant Phone No.:</label>
+       <div class="col-sm-3"> 
+	 <input class="form-control" id="tctelno" type="text" name="tctelno" wid="5" rid="5" value="<?php echo $warrantysinfo['tctelno']; ?>"> 
+       </div>
         <label class="col-sm-6 control-label">&nbsp;</label>
-      </div>
+     </div>
 
       <div class="form-group">
         <label class="col-sm-3 control-label">Appointment Date/Time:</label>
-        <div class="col-sm-3"> 
+        <div class="col-sm-6"> 
 	  <input class="form-control" id="tcdate" type="text" name="tcdate" wid="5" rid="5" value="<?php echo $warrantysinfo['tcdate']; ?>"> 
 	</div>
         <div class="col-sm-3"> 
@@ -338,7 +339,6 @@
 	  </select>
 	//-->
 	</div>
-        <label class="col-sm-3 control-label">&nbsp;</label>
       </div>
 
       <div class="form-group">
@@ -349,7 +349,8 @@
         <div class="col-sm-2"><button type="submit" class="btn btn-info" action="assign" id="warrantyAssign">Assign</button>
 	</div>
       </div>
-  </div>
+   </div>
+ </div>
 
 <!---Part IV -->
   <div class="thumbnail">
