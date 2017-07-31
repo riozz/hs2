@@ -27,32 +27,32 @@
 		*/
 	      </script>
 	      <script>
-	        var uiid = <?php echo $upgradeid ?>; 
+	        var uiid = <?php echo $id ?>;  //upgradeid
 		<?php
-		  //get the warrantyid after update action
+		  //get the upgradeid after update action
 		  if (isset($result)) {
-		    $actionupgradeid = $result['upgradeid'];
+		    $actionupgradeid = $result['id']; //upgradeid
 		    $actionmsg = $result['msg'];	
 		  } else {
 		    $actionupgradeid = 0;
 		    $actionmsg = '';
 		  }
 		?>
-		//var url = "faults/"+<?php echo $orderid; ?>;
+		//var url = "upgrades/"+<?php echo $fullorder_id; ?>;
 		//get fault history
-		//var wurl = "/dev/hs2/index.php/upgrades/index/" + "<?php echo '/'.$orderid; ?>";
-		//var wiurl = "/dev/hs2/index.php/upgrades/view/" + "<?php echo $orderid; ?>/<?php echo $upgradeid; ?>";
-		//get warranty history of orderid and action upgradeid
-		//var wurl = "<?php echo base_url(); ?>" + "index.php/upgrades/index/" + "<?php echo '/'.$orderid; ?>";
+		//var wurl = "/dev/hs2/index.php/upgrades/index/" + "<?php echo '/'.$fullorder_id; ?>";
+		//var wiurl = "/dev/hs2/index.php/upgrades/view/" + "<?php echo $fullorder_id; ?>/<?php echo $id; ?>";
+		//get upgrade history of orderid and action upgradeid
+		//var wurl = "<?php echo base_url(); ?>" + "index.php/upgrades/index/" + "<?php echo '/'.$fullorder_id; ?>";
 		var actionmsg = "<?php echo $actionmsg; ?>";
-		var uurl = "<?php echo base_url(); ?>" + "index.php/upgrades/index/" + "<?php echo '/'.$orderid; ?>/<?php echo $actionupgradeid; ?>";
+		var uurl = "<?php echo base_url(); ?>" + "index.php/upgrades/index/" + "<?php echo '/'.$fullorder_id; ?>/<?php echo $actionupgradeid; ?>";
 		//get fault detail of orderid
-		var uiurl = "<?php echo base_url(); ?>" + "index.php/upgrades/view/" + "<?php echo $orderid; ?>/<?php echo $upgradeid; ?>";
+		var uiurl = "<?php echo base_url(); ?>" + "index.php/upgrades/view/" + "<?php echo $fullorder_id; ?>/<?php echo $id; ?>"; //upgradeid
 		//get fault detail
 		alert ("uurl="+uurl);	
 		alert ("uiurl="+uiurl);	
 		$(document).ready(function(){
-		    //alert("<?php echo "orderid=".$orderid; ?>");
+		    //alert("<?php echo "fullorder_id=".$fullorder_id; ?>");
 		    //alert("href = "+window.location.href);
 		    //alert("hrefpath = "+window.location.pathname);
 		    //alert("url = "+wurl);
@@ -121,7 +121,7 @@
 <!-- 
 		<div class="thumbnail">
 	      <?php
-	         echo 'zzz[index]94:'.$result['upgradeid'];
+	         echo 'zzz[index]94:'.$result['id']; //upgradeid
 	      ?>
 		</div>
 // -->

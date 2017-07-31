@@ -11,10 +11,9 @@
       $this->load->library('form_validation');
       //$this->load->helper('form');
       //$this->load->library('staffInfo');
-      //$this->load->library('faultInfo');
     }
 
-    //get all fault regarding the order id
+    //get all upgrade regarding the order id
     public function index($oid = "H201702000000", $auid="0")
     {
         //echo "oid = $oid<br>";
@@ -27,7 +26,7 @@
 	$this->load->view('hsupgrade/v_upgradehistory', $data);
     } 
 
-    // fault detail 
+    // upgrade detail 
     public function view($oid = 0, $uid = "0")
     {
 	//$data['faultsinfo'] = $this->faults_model->getFaultInfo(substr($oid,-6), $fid);
@@ -43,16 +42,16 @@
 	$this->load->view('hsupgrade/v_upgradeinfo', $data);
     } 
 
-    //make change (update/ insert of fault)   
+    //make change (update/ insert of upgrade)   
     public function change($oid = 0)
     {
-      //$data['title'] = 'Change fault';
-      $data['orderid'] = $this->input->post('orderid');
-      $data['warrantyid'] = $this->input->post('warrantyid');
+      //$data['title'] = 'Change upgrade';
+      $data['fullorder_id'] = $this->input->post('fullorder_id');
+      $data['id'] = $this->input->post('id'); //upgradeid
       $data['userlogin'] = 1;
       //$data['action'] = $this->input->post('action');
       $data['staffid'] = $this->session->userdata('s_staffid');
-      log_message('debug', 'zzz[Warrantys]51:orderid-warrantyid='.$data['orderid'].'-'.$data['warrantyid']);
+      log_message('debug', 'zzz[Upgrades]51:orderid-upgradeid='.$data['fullorder_id'].'-'.$data['id']);
       //$this->form_validation->set_rules('certno','Certificate','required');
       //$this->form_validation->set_rules('c_email','Email address','required');
       //$this->form_validation->set_rules('f_faultto_id','Fault Report to','required');
@@ -65,17 +64,17 @@
       if (strlen($data['staffid'])>0) {	
         //if ($this->form_validation->run() === true)
         //{
-          log_message('debug', 'zzz[Warrantys]64:validation=true');
+          log_message('debug', 'zzz[Upgrades]64:validation=true');
           //$data['staffid'] = $this->session->userdata('s_staffid');
           //$data['orderid'] = $orderid;
           //$data['faultid'] = $faultid;
           //$data['userlogin'] = 1;
-	  $ret = $this->warrantys_model->set_faults();
+	  $ret = $this->upgrades_model->set_upgrades();
         //} 
 	$data['result']=$ret;
-	log_message('debug', 'zzz[Warrantys]72:'.json_encode($data));
+	log_message('debug', 'zzz[Upgrades]75:'.json_encode($data));
 	$this->load->view('templates/header', $data);
-	$this->load->view('hsfault/index', $data);
+	$this->load->view('hsupgrade/index', $data);
 	$this->load->view('templates/footer', $data);
       } else {
 	//can't get login info, redirect to V1
@@ -88,7 +87,7 @@
       $aid = $this->input->post('appointment');
       $oaid = $this->input->post('o_appointment');
       $id = $aid;
-      log_message('debug', 'zzz[Warrantys]89:appointmentid='.$id.'-'.$oaid);
+      log_message('debug', 'zzz[Upgrades]89:appointmentid='.$id.'-'.$oaid);
       //won't check if selection is same as before
       if ($id === $oaid) {
 	$v = true;

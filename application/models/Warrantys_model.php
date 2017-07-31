@@ -249,7 +249,7 @@ class Warrantys_model extends CI_Model {
 		'com_remark' => $comremark,
 		'createdby' => $this->session->userdata('s_staffid'), 
 		'modifiedby' => $this->session->userdata('s_staffid'), 
-		'createddate' => date("Y-m-d"),
+		'createddate' => date("Y-m-d H:i:s"),
 		'completeddate' => $completeddate
 	  );
 	  if ($presult) {

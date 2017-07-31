@@ -25,8 +25,8 @@ class Upgrades_model extends CI_Model {
         public function getUpgradeHistory($oid = 'H201702000000') {
 	  //return data array
 	  $orderid = substr($oid, -6);
-	  //$sql="select sw.id, sw.orders_id, sw.fullorder_id, sw.staff_id, s.name, sw.tc_staff_id, tc.name tcname, sw.com_staff_id, com.name comname, sw.createddate from square_warranty sw join ".HKTP.".staff s on sw.staff_id = s.staffid join ".HKTP.".staff tc on sw.tc_staff_id = tc.staffid join ".HKTP.".staff com on sw.com_staff_id = com.staffid where sw.orders_id=right(?,6) order by sw.createddate desc";
-	  $sql="select su.id, su.orders_id, su.fullorder_id, su.staff_id, s.name, su.tc_staff_id, tc.name tcname, su.com_staff_id, com.name comname, su.createddate from square_upgrade su join ".HKTP.".staff s on su.staff_id = s.staffid join ".HKTP.".staff tc on su.tc_staff_id = tc.staffid join ".HKTP.".staff com on su.com_staff_id = com.staffid where su.orders_id=right(?,6) order by su.createddate desc";
+	  //$sql="select su.id, su.orders_id, su.fullorder_id, su.staff_id, s.name, su.tc_staff_id, tc.name tcname, su.com_staff_id, com.name comname, su.createddate from square_upgrade su join ".HKTP.".staff s on su.staff_id = s.staffid join ".HKTP.".staff tc on su.tc_staff_id = tc.staffid join ".HKTP.".staff com on su.com_staff_id = com.staffid where su.orders_id=right(?,6) order by su.createddate desc";
+	$sql="select su.id, su.orders_id, su.fullorder_id, su.staff_id, su.staff_name, su.tc_staff_id, su.tc_staff_name, su.com_staff_id, com_staff_name, su.createddate from square_upgrade su where su.orders_id=right(?,6) order by su.createddate desc";
 	  $results = $this->db->query($sql, array($orderid));
 	  //return an array of result
 	  return $results->result_array();
@@ -36,61 +36,15 @@ class Upgrades_model extends CI_Model {
 	  $orderid = substr($oid, -6); 
 	  log_message('debug', 'zzz[Upgrades_model]34:orderid-upgradeid='.$orderid.'-'.$upgradeid);
           if ($upgradeid > 0) {
-	    $sql="SELECT 
-		`su`.`id` upgradeid, 
-		`su`.`staff_id` staffid, 
-		staff.name staffname, 
-		staff.teamcode staffteamcode, 
-		staff.channel staffchannel, 
-		`su`.`orders_id` orderid, 
-		`su`.`fullorder_id` fullorderid, 
-		`su`.`u_model` umodelid, 
-		sum.model umodel, 
-		`su`.`u_quantity` uquantity, 
-		`su`.`u_appointmentdate` udate, 
-		`su`.`u_appointmenttime` utime, 
-		`su`.`u_smno` usmno, 
-		`su`.`u_remark` uremark, 
-		`su`.`tc_staff_id` tcstaffid,
-		`su`.`com_staff_id` comstaffid, 
-		`su`.`com_remark` comremark,
-		`su`.`updatetime`, 
-		`su`.`createdby`, 
-		`su`.`modifiedby`, 
-		`su`.`createddate`, 
-		`su`.`completeddate`,
-		tcstaff.name tcname, 
-		tcstaff.teamcode tcteamcode, 
-		tcstaff.telno tctelno, 
-		tcstaff.channel tcchannel, 
-		comstaff.name comname, 
-		comstaff.teamcode comteamcode, 
-		comstaff.telno comtelno, 
-		comstaff.channel comchannel
+	    $sql="SELECT `su`.`id`, `su`.`staff_id`, `su`.staff_name, `su`.staff_teamcode, `su`.staff_channel, `su`.`orders_id`, `su`.`fullorder_id`, `su`.`u_model`, sum.model modelname, `su`.`u_quantity`, `su`.`u_appointmentdate`, `su`.`u_appointmenttime`, `su`.`u_smno`, `su`.`u_remark`, `su`.`tc_staff_id`, `su`.`tc_staff_name`, `su`.`tc_staff_teamcode`, `su`.`tc_staff_channel`, `su`.`tc_staff_telno`, `su`.`tc_appointmentdate`, `su`.`tc_appointmenttime`, `su`.`com_staff_id`, `su`.`com_staff_name`, `su`.`com_staff_teamcode`,`su`.`com_staff_channel`,`su`.`com_staff_telno`, `su`.`com_remark`, `su`.`updatetime`, `su`.`createdby`, `su`.`modifiedby`, `su`.`createddate`, `su`.`com_date`
 		FROM `square_upgrade` su 
 		join `square_upgrade_model` sum on su.u_model = sum.id
-		join ".HKTP.".staff staff on staff.staffid = su.staff_id 
-		join ".HKTP.".staff tcstaff on tcstaff.staffid = su.tc_staff_id 
-		join ".HKTP.".staff comstaff on comstaff.staffid = su.com_staff_id 
 		where su.id=?";
 	    log_message('debug', 'zzz[Upgrades_model]43:'.$sql);
 	    $result = $this->db->query($sql, array($upgradeid));
 	    $data = $result->row_array();
           } else {
-            $sql="SELECT
-                0 upgradeid, 0 staffid,
-                '' staffname, '' staffteamcode, '' staffchannel,
-                id orderid, serial fullorderid,
-                0 umodelid, '' umodel, 0 uquantity,
-                '' udate, '' utime,
-                '' usmno, '' uremark, 0 tcstaffid,
-                0 comstaffid, '' comremark,
-                '' `createdby`, '' `modifiedby`, 
-		'' `createddate`,'' `completeddate`,
-                '' tcname, '' tcteamcode, '' tctelno, '' tcchannel,
-                '' comname, '' comteamcode, '' comtelno, '' comchannel
-                FROM orders o
-                where id=?";
+	    $sql="SELECT 0 id, 0 staff_id, '' staff_name, '' staff_teamcode, '' staff_channel, id `orders_id`, serial fullorder_id , 0 `u_model`, '' modelname, 0 `u_quantity`, '' `u_appointmentdate`, '' `u_appointmenttime`, '' `u_smno`, '' `u_remark`, 0 `tc_staff_id`, '' `tc_staff_name`, '' `tc_staff_teamcode`, '' `tc_staff_channel`, '' `tc_staff_telno`, '' `tc_appointmentdate`, '' `tc_appointmenttime`, 0 `com_staff_id`, '' `com_staff_name`, '' `com_staff_teamcode`,'' `com_staff_channel`,'' `com_staff_telno`, '' `com_remark`, '' `updatetime`, '' `createdby`, '' `modifiedby`, '' `createddate`, '' `com_date` FROM orders o where id=?";
 
 	    log_message('debug', 'zzz[Upgrades_model]53:'.$sql);
 	    $result = $this->db->query($sql, array($orderid));
@@ -101,13 +55,6 @@ class Upgrades_model extends CI_Model {
 	  $result = $this->db->query($sql);
 	  $data['tab_model'] = $result->result_array();
 
-	  //$sql = "select `id`,`package` from square_warranty_package";
-	  //$result = $this->db->query($sql);
-	  //$data['tab_package'] = $result->result_array();
-
-	  //$sql = "select `id`,`date`, timeslot, quota, quotaused from square_fault_appointment where quota-quotaused>0 and `date`>=curdate() order by date";
-	  //$result = $this->db->query($sql);
-	  //$data['tab_appointment'] = $result->result_array();
 	  return $data;
         }
 
@@ -116,38 +63,42 @@ class Upgrades_model extends CI_Model {
 	  //update/insert table
 	  //$customername = url_title($this->input->post('customername'), 'underscore' ,TRUE);
 	  
-          $fullorderid = $this->input->post('orderid');
-          $orderid = substr($this->input->post('orderid'),-6);
-          $upgradeid = $this->input->post('upgradeid');
+          $id = $this->input->post('id'); //upgrade id
+          $staff_id = $this->input->post('staff_id');
+          $staff_name = $this->input->post('staff_name');
+          $staff_teamcode = $this->input->post('staff_teamcode');
+          $staff_channel = $this->input->post('staff_channel');
+          $fullorder_id = $this->input->post('fullorder_id');
+          $orders_id = substr($this->input->post('fullorder_id'),-6);
+	  $u_model = $this->input->post('u_model');
+	  $u_quantity = $this->input->post('u_quantity');
+	  $u_appointmentdate = $this->input->post('u_appointmentdate');
+	  $u_appointmenttime = $this->input->post('u_appointmenttime');
+	  $u_smno = $this->input->post('u_smno');
+	  $u_remark = $this->input->post('u_remark');
+	  $tc_staff_id = $this->input->post('tc_staff_id');
+	  $tc_staff_name = $this->input->post('tc_staff_name');
+	  $tc_staff_teamcode = $this->input->post('tc_staff_teamcode');
+	  $tc_staff_channel = $this->input->post('tc_staff_channel');
+	  $tc_staff_telno = $this->input->post('tc_staff_telno');
+	  $tc_appointmentdate = $this->input->post('tc_appointmentdate');
+	  $tc_appointmenttime= $this->input->post('tc_appointmenttime');
+	  $com_staff_id = $this->input->post('com_staff_id');
+	  $com_staff_name = $this->input->post('com_staff_name');
+	  $com_staff_teamcode = $this->input->post('com_staff_teamcode');
+	  $com_staff_telno = $this->input->post('com_staff_telno');
+	  $com_staff_channel = $this->input->post('com_staff_channel');
+	  $com_remark = $this->input->post('com_remark');
+	  //$createdby = $this->input->post('createdby');
+	  //$modifiedby = $this->input->post('modifiedby');
+	  $com_date = $this->input->post('com_date');
           $action = $this->input->post('action');
-          $staffid = $this->input->post('staffid');
-          $staffname = $this->input->post('staffname');
-          $staffteamcode = $this->input->post('staffteamcode');
-          $staffchannel = $this->input->post('staffchannel');
-	  $umodelid = $this->input->post('umodelid');
-	  $uquantity = $this->input->post('uquantity');
-	  $udate = $this->input->post('udate');
-	  $utime = $this->input->post('utime');
-	  $usmno = $this->input->post('usmno');
-	  $uremark = $this->input->post('uremark');
-	  $comstaffid = $this->input->post('comstaffid');
-	  $comremark = $this->input->post('comremark');
-	  $createdby = $this->input->post('createdby');
-	  $modifiedby = $this->input->post('modifiedby');
-	  $tcname = $this->input->post('tcname');
-	  $tcteamcode = $this->input->post('tcteamcode');
-	  $tctelno = $this->input->post('tctelno');
-	  $tcchannel = $this->input->post('tcchannel');
-	  $comname = $this->input->post('comname');
-	  $comteamcode = $this->input->post('comteamcode');
-	  $comtelno = $this->input->post('comtelno');
-	  $comchannel = $this->input->post('comchannel');
 
-	  $ret['orderid']=$fullorderid;
-	  $ret['upgradeid']=$upgradeid;
+	  $ret['fullorder_id']=$fullorder_id;
+	  $ret['id']=$id; //upgrade id
 	  $ret['msg']='DONE';
 
-	  log_message('debug', 'zzz[Upgrades_model]215(orderid-upgradeid-appointmentid-o_appointmentid):'.$orderid.'-'.$upgradeid);
+	  log_message('debug', 'zzz[Upgrades_model]215(orderid-upgradeid):'.$orders_id.'-'.$id);
 
 	  //check appointment quota	
 	/*
@@ -199,33 +150,38 @@ class Upgrades_model extends CI_Model {
 	$presult = true;
 
 	  $data = array (
-		'staff_id' => $staffid,
-		'staff_teamcode' => $staffteamcode,
-                'staff_channel' => $staffchannel,
-		'orders_id' => $orderid,
-		'fullorder_id' => $fullorderid,
-		'u_model' => $umodelid,
-		'u_quantity' => $uquantity,
-	        'u_appointmentdate' => $udate,
-		'u_appointmenttime' => $utime,
-		'u_smno' => $usmno,
-		'u_remark' => $uremark,
-		'tc_staff_teamcode' => $tcname,
-		'tc_staff_channel' => $tcchannel,
-		'tc_staff_telno' => $tctelno,
-		'tc_appointmentdate' => $tcdate,
-		'tc_appointmenttime' => $tctime,
-		'com_staff_id' => $comstaffid,
-		'com_staff_teamcode' => $comteamcode,
-		'com_staff_channel' => $comchannel,
-		'com_staff_telno' => $comtelno,
-		'com_remark' => $comremark,
+		'staff_id' => $staff_id,
+		'staff_name' => $staff_name,
+		'staff_teamcode' => $staff_teamcode,
+                'staff_channel' => $staff_channel,
+		'orders_id' => $orders_id,
+		'fullorder_id' => $fullorder_id,
+		'u_model' => $u_model,
+		'u_quantity' => $u_quantity,
+	        'u_appointmentdate' => $u_appointmentdate,
+		'u_appointmenttime' => $u_appointmenttime,
+		'u_smno' => $u_smno,
+		'u_remark' => $u_remark,
+		'tc_staff_id' => $tc_staff_id,
+		'tc_staff_name' => $tc_staff_name,
+		'tc_staff_teamcode' => $tc_staff_teamcode,
+		'tc_staff_channel' => $tc_staff_channel,
+		'tc_staff_telno' => $tc_staff_telno,
+		'tc_appointmentdate' => $tc_appointmentdate,
+		'tc_appointmenttime' => $tc_appointmenttime,
+		'com_staff_id' => $com_staff_id,
+		'com_staff_name' => $com_staff_name,
+		'com_staff_teamcode' => $com_staff_teamcode,
+		'com_staff_channel' => $com_staff_channel,
+		'com_staff_telno' => $com_staff_telno,
+		'com_remark' => $com_remark,
+		'com_date' => $com_date,
 		'createdby' => $this->session->userdata('s_staffid'), 
 		'modifiedby' => $this->session->userdata('s_staffid'), 
-		'createddate' => date("Y-m-d")
+		'createddate' => date("Y-m-d H:i:s")
 	  );
 	  if ($presult) {
- 	    if ($upgradeid == 0) {
+ 	    if ($id == 0) { //upgradeid
 	      if ($data['staff_id'] != null)  {
 	        log_message('debug', 'zzz[Upgrades_model]261/insert:'.json_encode($data));
 	        $row = $this->insert_log('upgrade','insert',$data,'');
@@ -244,17 +200,17 @@ class Upgrades_model extends CI_Model {
   	      }
 	    } else {
 	      log_message('debug', 'zzz[Upgrades_model]248/update:'.json_encode($data));
-	      $row = $this->insert_log('upgrade','update',$data,$upgradeid);
+	      $row = $this->insert_log('upgrade','update',$data,$id);
 	      if ($row == 1) {
 	        //$row = $this->email('HS - fault','ringo.wc.lau@pccw.com','HS - Fault', json_encode($data));
-	        $this->db->where('id', $upgradeid);
+	        $this->db->where('id', $id);
 	        $row = $this->db->update('square_upgrade', $data);
 	        log_message('debug', 'zzz[Upgrades_model]286:row='.$row);
 	        if ($row==0) {
 	          $ret['msg']="ERR232: database error, Failed to update upgrade, please contact system administrator";
 	          return $ret;
 	        } 
-	        log_message('debug', 'zzz[Upgrades]287:actionupgradeid='.$ret['upgradeid']);
+	        log_message('debug', 'zzz[Upgrades]287:actionupgradeid='.$ret['id']);
 		$ret['msg']='Record Updated Successfully.';
 	      }
 	    }
@@ -268,10 +224,10 @@ class Upgrades_model extends CI_Model {
 
         public function insert_log($section, $action, $raw, $other) {
 	  $staffid = $raw['staff_id'];
-	  $raw['c_uid'] = 'XXXXXX';
-	  $raw['c_contact'] = 'XXXXXXXX';
+	  //$raw['c_uid'] = 'XXXXXX';
+	  //$raw['c_contact'] = 'XXXXXXXX';
 	  if (strlen($other)>0) 
-	    $d = '{faultid:'.$other.'},'.json_encode($raw);
+	    $d = '{upgradeid:'.$other.'},'.json_encode($raw);
   	  else 
 	    $d = json_encode($raw);
 	  $data = array (

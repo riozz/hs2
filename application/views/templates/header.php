@@ -43,7 +43,7 @@
                 </button>
 <!--
                 <a class="navbar-brand" href="#">Welcome, 
-<?php echo $staffid."orderid=".$orderid."userlogin=".$userlogin; ?></a>
+<?php echo $staff_id."fullorder_id=".$fullorder_id."userlogin=".$userlogin; ?></a>
 //-->
 <label class="navbar-brand">
 </label>

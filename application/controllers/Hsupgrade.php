@@ -20,21 +20,21 @@
         show_404();
       }
 
-      if (strlen($oid)>2) $data['orderid'] = $oid;
-      else $data['orderid'] = $this->input->post('orderid');
+      if (strlen($oid)>2) $data['fullorder_id'] = $oid;
+      else $data['fullorder_id'] = $this->input->post('orderid');
       $data['title'] = ucfirst($page); // Capitalize the first letter
-      $data['staffid'] = $this->input->post('staffid');
+      $data['staff_id'] = $this->input->post('staffid');
       $data['userlogin'] = $this->input->post('login');
       $data['action'] = $this->input->post('actions');
-      $data['upgradeid'] = $uid;
+      $data['id'] = $uid; //upgradeid
       if (isset($data['action'])) {
-        $this->staffinfo->getStaffInfo($data['staffid'],$data['orderid']);
+        $this->staffinfo->getStaffInfo($data['staff_id'],$data['fullorder_id']);
       } else {
-        $data['staffid'] = $this->session->userdata('s_staffid');
-        $data['orderid'] = $this->session->userdata('s_orderid');
+        $data['staff_id'] = $this->session->userdata('s_staffid');
+        $data['fullorder_id'] = $this->session->userdata('s_orderid');
       }
 
-      if (strlen($data['staffid'])>0) {
+      if (strlen($data['staff_id'])>0) {
         $this->load->view('templates/header', $data);
         $this->load->view('hsupgrade/'.$page, $data);
         $this->load->view('templates/footer', $data);
@@ -46,7 +46,7 @@
     public function view($page = 'home')
     {
 	$this->load->helper('url');
-        if ( ! file_exists(APPPATH.'views/hswarranty/'.$page.'.php'))
+        if ( ! file_exists(APPPATH.'views/hsupgrade/'.$page.'.php'))
         {
                 // Whoops, we don't have a page for that!
                 show_404();
@@ -55,7 +55,7 @@
         $data['title'] = ucfirst($page); // Capitalize the first letter
 
         $this->load->view('templates/header', $data);
-        $this->load->view('hswarranty/'.$page, $data);
+        $this->load->view('hsupgrade/'.$page, $data);
         $this->load->view('templates/footer', $data);
     }
 

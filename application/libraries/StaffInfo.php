@@ -25,7 +25,7 @@ class StaffInfo {
   	}
 
         public function getStaffInfo($staffid, $orderid) {
-	  $sql = "SELECT id,name,staffid,ccc,location,'HKT' teamcode, 'CHANNEL' channel FROM staff where staffid=?";
+	  $sql = "SELECT id,name,staffid,ccc,location,teamcode,channel FROM staff where staffid=?";
 	  $results = $this->hktp_db->query($sql, array($staffid));
           $staffMetadata = $results -> row();
  	  $data['s_id'] = $staffMetadata->id;
