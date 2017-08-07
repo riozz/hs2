@@ -63,6 +63,7 @@ $route['hswarranty/(:any)/(:num)'] = 'warranty/view/$1/$2';
 $route['warrantys'] = 'warrantys';
 $route['warrantys/(:any)'] = 'warrantys/index/$1';
 $route['warrantys/view/(:any)'] = 'warrantys/view/$1';
+//$route['warrantys/get_staffinfo/(:any)'] = 'warrantys/get_staffinfo/$1';
 $route['hsupgrade'] = 'hsupgrade';
 $route['hsupgrade/(:any)/{:num}'] = 'upgrade/view/$1/$2';
 $route['upgrades'] = 'upgrades';

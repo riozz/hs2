@@ -25,99 +25,47 @@ class Warrantys_model extends CI_Model {
         public function getWarrantyHistory($oid = 'H201702000000') {
 	  //return data array
 	  $orderid = substr($oid, -6);
-	  //$sql="select f.id, f.orders_id, f.forder_id, f.staff_id, s.name, o.customer_id, f.c_name customer_name, f.createddate from square_fault f join ".HKTP.".staff s on f.staff_id = s.staffid join orders o on f.orders_id = o.id where o.id = right(?,6) order by f.updatetime desc";
-	  $sql="select sw.id, sw.orders_id, sw.fullorder_id, sw.staff_id, s.name, sw.tc_staff_id, tc.name tcname, sw.com_staff_id, com.name comname, sw.createddate from square_warranty sw join ".HKTP.".staff s on sw.staff_id = s.staffid left join ".HKTP.".staff tc on sw.tc_staff_id = tc.staffid left join ".HKTP.".staff com on sw.com_staff_id = com.staffid where sw.orders_id=right(?,6) order by sw.createddate desc";
+	  //$sql="select sw.id, sw.orders_id, sw.fullorder_id, sw.staff_id, s.name, sw.tc_staff_id, tc.name tcname, sw.com_staff_id, com.name comname, sw.createddate from square_warranty sw join ".HKTP.".staff s on sw.staff_id = s.staffid left join ".HKTP.".staff tc on sw.tc_staff_id = tc.staffid left join ".HKTP.".staff com on sw.com_staff_id = com.staffid where sw.orders_id=right(?,6) order by sw.createddate desc";
+	  $sql="select id, orders_id, fullorder_id, staff_id, staff_name, tc_staff_id, tc_staff_name, com_staff_id, com_staff_name, createddate from square_warranty where orders_id=right(?,6) order by createddate desc";
 	  $results = $this->db->query($sql, array($orderid));
 	  //return an array of result
 	  return $results->result_array();
         }
 
         public function getWarrantyInfo($oid, $warrantyid = '0') {
-	  $orderid = substr($oid, -6); 
-	  log_message('debug', 'zzz[Warrantys_model]34:orderid-warrantyid='.$orderid.'-'.$warrantyid);
-          if ($warrantyid > 0) {
+	  $fullorder_id = $oid;
+	  $orders_id = substr($oid, -6); 
+	  $id = $warrantyid;
+	  log_message('debug', 'zzz[Warrantys_model]34:orderid-warrantyid='.$fullorder_id.'-'.$id);
+          if ($id > 0) { //warrantyid
 	    $sql="SELECT 
-		`sw`.`id` warrantyid, 
-		`sw`.`staff_id` staffid, 
-		staff.name staffname, 
-		sw.staff_teamcode staffteamcode, 
-		sw.staff_channel staffchannel, 
-		`sw`.`orders_id` orderid, 
-		`sw`.`fullorder_id` fullorderid, 
-		`sw`.`w_category` wcategoryid, 
-		swc.category wcategory, 
-		`sw`.`w_package` wpackageid, 
-		swp.package wpackage, 
-		`sw`.`w_offer` woffer, 
-		`sw`.`w_smno` wsmno, 
-		`sw`.`w_effdate` weffdate, 
-		`sw`.`tc_staff_id` tcstaffid, 
-		sw.tc_staff_teamcode tcteamcode,
-		sw.tc_staff_channel tcchannel,
-		sw.tc_staff_telno tctelno,
-		`sw`.`tc_appointmentdate` tcdate, 
-		`sw`.`tc_appointmenttime` tctime, 
-		`sw`.`com_staff_id` comstaffid, 
-		sw.com_staff_teamcode comteamcode,
-		sw.com_staff_channel comchannel,
-		sw.com_staff_telno comtelno,
-		`sw`.`com_remark` comremark,
-		`sw`.`updatetime`, 
-		`sw`.`createdby`, 
-		`sw`.`modifiedby`, 
-		`sw`.`createddate`, 
-		`sw`.`completeddate`,
-		tcstaff.name tcname, 
-		comstaff.name comname 
+		sw.`id`, sw.`staff_id`, sw.staff_name, 
+		sw.staff_teamcode, sw.staff_channel, 
+		sw.`orders_id`, sw.`fullorder_id`,
+		sw.`w_category`, swc.category category_name, 
+		sw.`w_package`, swp.package package_name, 
+		sw.`w_offer`, sw.`w_smno`, sw.`w_effdate`,
+		sw.`tc_staff_id`, sw.tc_staff_name, sw.tc_staff_teamcode, 
+		sw.tc_staff_channel, sw.tc_staff_telno,
+		sw.`tc_appointmentdate`, sw.`tc_appointmenttime`,
+		sw.`tc_appointmentdatetime`,
+		sw.`com_staff_id`, sw.com_staff_name, sw.com_staff_teamcode,
+		sw.com_staff_channel,  sw.com_staff_telno,
+		sw.`com_remark`, sw.`updatetime`, sw.`createdby`, 
+		sw.`modifiedby`, sw.`createddate`, sw.`com_date`
 		FROM `square_warranty` sw
-		join `square_warranty_package` swp on sw.w_package = swp.id 
-		join `square_warranty_category` swc on sw.w_category = swc.id 
-		join ".HKTP.".staff staff on staff.staffid = sw.staff_id 
-		left join ".HKTP.".staff tcstaff on tcstaff.staffid = sw.tc_staff_id 
-		left join ".HKTP.".staff comstaff on comstaff.staffid = sw.com_staff_id 
+		left join `square_warranty_package` swp on sw.w_package = swp.id 
+		left join `square_warranty_category` swc on sw.w_category = swc.id 
 		where sw.id=?";
 	    log_message('debug', 'zzz[Warrantys_model]43:'.$sql);
-	    $result = $this->db->query($sql, array($warrantyid));
+	    //$result = $this->db->query($sql, array($id)); //warrantyid
+	    $result = $this->db->query($sql,$id); //warrantyid
 	    $data = $result->row_array();
           } else {
-	    $sql = "select
-                0 warrantyid,
-                0 staffid,
-                '' staffname,
-                '' staffteamcode,
-                '' staffchannel,
-                id orderid,
-                serial fullorderid,
-                0 wcategoryid,
-                '' wcategory,
-                0 wpackageid,
-                '' wpackage,
-                '' woffer,
-                '' wsmno,
-                '' weffdate,
-                0 tcstaffid,
-                '' tcdate,
-                '' tctime,
-                0 comstaffid,
-                '' comremark,
-                '' updatetime,
-                '' createdby,
-                '' modifiedby,
-                '' createddate,
-		'' completeddate,
-                '' tcname,
-                '' tcteamcode,
-                '' tctelno,
-                '' tcchannel,
-                '' comname,
-                '' comteamcode,
-                '' comtelno,
-                '' comchannel
-                FROM orders o
-		where id=?";
+	    $sql="SELECT 0 `id`, 0 `staff_id`, '' staff_name, '' staff_teamcode, '' staff_channel, id `orders_id`, serial `fullorder_id`, 0 `w_category`, '' category_name, 0 `w_package`, '' package_name, '' `w_offer`, '' `w_smno`, '' `w_effdate`, 0 `tc_staff_id`, '' tc_staff_name, '' tc_staff_teamcode, '' tc_staff_channel, '' tc_staff_telno, '' `tc_appointmentdate`, '' `tc_appointmenttime`, '' `tc_appointmentdatetime`, 0 `com_staff_id`, '' com_staff_name, '' com_staff_teamcode, '' com_staff_channel,  '' com_staff_telno, '' `com_remark`, '' `updatetime`, '' `createdby`, '' `modifiedby`, '' `createddate`, '' `com_date` FROM orders where id=?";
 
 	    log_message('debug', 'zzz[Warrantys_model]53:'.$sql);
-	    $result = $this->db->query($sql, array($orderid));
+	    $result = $this->db->query($sql, array($orders_id));
 	    $data = $result->row_array();
           }
 
@@ -140,41 +88,42 @@ class Warrantys_model extends CI_Model {
 	  //update/insert table
 	  //$customername = url_title($this->input->post('customername'), 'underscore' ,TRUE);
 	  
-          $fullorderid = $this->input->post('orderid');
-          $orderid = substr($this->input->post('orderid'),-6);
-          $warrantyid = $this->input->post('warrantyid');
+          $id = $this->input->post('id'); //warrantyid
+          $staff_id = $this->input->post('staff_id');
+          $staff_name = $this->input->post('staff_name');
+          $staff_teamcode = $this->input->post('staff_teamcode');
+          $staff_channel = $this->input->post('staff_channel');
+          $fullorder_id = $this->input->post('fullorder_id');
+          $orders_id = substr($this->input->post('fullorder_id'),-6);
+	  $w_category = $this->input->post('w_category'); //id
+	  $w_package = $this->input->post('w_package'); //id
+	  $w_offer = $this->input->post('w_offer');
+	  $w_smno = $this->input->post('w_smno');
+	  $w_effdate = $this->input->post('w_effdate');
+	  $tc_staff_id = $this->input->post('tc_staff_id');
+	  $tc_staff_name = $this->input->post('tc_staff_name');
+	  $tc_staff_teamcode = $this->input->post('tc_staff_teamcode');
+	  $tc_staff_channel = $this->input->post('tc_staff_channel');
+	  $tc_staff_telno = $this->input->post('tc_staff_telno');
+	  //$tc_appointmentdate = $this->input->post('tc_appointmentdate');
+	  //$tc_appointmenttime = $this->input->post('tc_appointmenttime');
+	  $tc_appointmentdatetime = $this->input->post('tc_appointmentdatetime');
+	  $com_staff_id = $this->input->post('com_staff_id');
+	  $com_staff_name = $this->input->post('com_staff_name');
+	  $com_staff_teamcode = $this->input->post('com_staff_teamcode');
+	  $com_staff_channel = $this->input->post('com_staff_channel');
+	  $com_staff_telno = $this->input->post('com_staff_telno');
+	  $com_remark = $this->input->post('com_remark');
+	  $com_date = $this->input->post('com_date');
           $action = $this->input->post('action');
-          $staffid = $this->input->post('staffid');
-          $staffname = $this->input->post('staffname');
-          $staffteamcode = $this->input->post('staffteamcode');
-          $staffchannel = $this->input->post('staffchannel');
-	  $wcategoryid = $this->input->post('wcategoryid');
-	  $wpackageid = $this->input->post('wpackageid');
-	  $woffer = $this->input->post('woffer');
-	  $wsmno = $this->input->post('wsmno');
-	  $weffdate = $this->input->post('weffdate');
-	  $tcstaffid = $this->input->post('tcstaffid');
-	  $tcname = $this->input->post('tcname');
-	  $tcteamcode = $this->input->post('tcteamcode');
-	  $tcchannel = $this->input->post('tcchannel');
-	  $tctelno = $this->input->post('tctelno');
-	  $tcdate = $this->input->post('tcdate');
-	  $tctime = $this->input->post('tctime');
-	  $completeddate = $this->input->post('completeddate');
-	  $comstaffid = $this->input->post('comstaffid');
-	  $comname = $this->input->post('comname');
-	  $comteamcode = $this->input->post('comteamcode');
-	  $comchannel = $this->input->post('comchannel');
-	  $comremark = $this->input->post('comremark');
 	  //$createdby = $this->input->post('createdby');
 	  //$modifiedby = $this->input->post('modifiedby');
-	  //$comtelno = $this->input->post('comtelno');
 
-	  $ret['orderid']=$fullorderid;
-	  $ret['warrantyid']=$warrantyid;
+	  $ret['fullorder_id']=$fullorder_id;
+	  $ret['id']=$id; //warrantyid
 	  $ret['msg']='DONE';
 
-	  log_message('debug', 'zzz[Warrantys_model]215(orderid-warrantyid):'.$orderid.'-'.$warrantyid);
+	  log_message('debug', 'zzz[Warrantys_model]215(orderid-warrantyid):'.$fullorder_id.'-'.$id);
 
 	  //check appointment quota	
 	/*
@@ -226,34 +175,38 @@ class Warrantys_model extends CI_Model {
 	$presult = true;
 
 	  $data = array (
-		'staff_id' => $staffid,
-		'staff_teamcode' => $staffteamcode,
-                'staff_channel' => $staffchannel,
-		'orders_id' => $orderid,
-		'fullorder_id' => $fullorderid,
-		'w_category' => $wcategoryid,
-		'w_package' => $wpackageid,
-	        'w_offer' => $woffer,
-		'w_smno' => $wsmno,
-		'w_effdate' => $weffdate,
-		'tc_staff_id' => $tcstaffid,
-		'tc_staff_teamcode' => $tcname,
-		'tc_staff_channel' => $tcchannel,
-		'tc_staff_telno' => $tctelno,
-		'tc_appointmentdate' => $tcdate,
-		'tc_appointmenttime' => $tctime,
-		'com_staff_id' => $comstaffid,
-		'com_staff_teamcode' => $comteamcode,
-		'com_staff_channel' => $comchannel,
-		//'com_staff_telno' => $comtelno,
-		'com_remark' => $comremark,
+		'staff_id' => $staff_id,
+		'staff_name' => $staff_name,
+		'staff_teamcode' => $staff_teamcode,
+                'staff_channel' => $staff_channel,
+		'orders_id' => $orders_id,
+		'fullorder_id' => $fullorder_id,
+		'w_category' => $w_category,
+		'w_package' => $w_package,
+	        'w_offer' => $w_offer,
+		'w_smno' => $w_smno,
+		'w_effdate' => $w_effdate,
+		'tc_staff_id' => $tc_staff_id,
+		'tc_staff_name' => $tc_staff_name,
+		'tc_staff_teamcode' => $tc_staff_teamcode,
+		'tc_staff_channel' => $tc_staff_channel,
+		'tc_staff_telno' => $tc_staff_telno,
+		//'tc_appointmentdate' => $tc_appointmentdate,
+		//'tc_appointmenttime' => $tc_appointmenttime,
+		'tc_appointmentdatetime' => $tc_appointmentdatetime,
+		'com_staff_id' => $com_staff_id,
+		'com_staff_name' => $com_staff_name,
+		'com_staff_teamcode' => $com_staff_teamcode,
+		'com_staff_channel' => $com_staff_channel,
+		'com_staff_telno' => $com_staff_telno,
+		'com_remark' => $com_remark,
 		'createdby' => $this->session->userdata('s_staffid'), 
 		'modifiedby' => $this->session->userdata('s_staffid'), 
 		'createddate' => date("Y-m-d H:i:s"),
-		'completeddate' => $completeddate
+		'com_date' => $com_date
 	  );
 	  if ($presult) {
- 	    if ($warrantyid == 0) {
+ 	    if ($id == 0) { //warrantyid
 	      if ($data['staff_id'] != null)  {
 	        log_message('debug', 'zzz[Warrantys_model]261/insert:'.json_encode($data));
 	        $row = $this->insert_log('warranty','insert',$data,'');
@@ -264,25 +217,25 @@ class Warrantys_model extends CI_Model {
 	            $ret['msg']="ERR232: database error, Failed to insert warranty, please contact system administrator";
 	            return $ret;
 	          } 
-		  $ret['warrantyid'] = $this->db->insert_id();
+		  $ret['id'] = $this->db->insert_id(); //warrantyid
 	          log_message('debug', 'zzz[Warrantys_model]290:row='.$row);
-	          log_message('debug', 'zzz[Warrantys_model]291:actionwarrantyid='.$ret['warrantyid']);
+	          log_message('debug', 'zzz[Warrantys_model]291:actionwarrantyid='.$ret['id']);
 		  $ret['msg']='New Record Added Successfully.';
 	        }
   	      }
 	    } else {
 	      log_message('debug', 'zzz[Warrantys_model]248/update:'.json_encode($data));
-	      $row = $this->insert_log('warranty','update',$data,$warrantyid);
+	      $row = $this->insert_log('warranty','update',$data,$id); //warrantyid
 	      if ($row == 1) {
 	        //$row = $this->email('HS - fault','ringo.wc.lau@pccw.com','HS - Fault', json_encode($data));
-	        $this->db->where('id', $warrantyid);
+	        $this->db->where('id', $id); //warrantyid
 	        $row = $this->db->update('square_warranty', $data);
 	        log_message('debug', 'zzz[Warrantys_model]286:row='.$row);
 	        if ($row==0) {
 	          $ret['msg']="ERR232: database error, Failed to update warranty, please contact system administrator";
 	          return $ret;
 	        } 
-	        log_message('debug', 'zzz[Warrantys_model]287:actionwarrantyid='.$ret['warrantyid']);
+	        log_message('debug', 'zzz[Warrantys_model]287:actionwarrantyid='.$ret['id']); //warrantyid
 		$ret['msg']='Record Updated Successfully.';
 	      }
 	    }
@@ -296,8 +249,8 @@ class Warrantys_model extends CI_Model {
 
         public function insert_log($section, $action, $raw, $other) {
 	  $staffid = $raw['staff_id'];
-	  $raw['c_uid'] = 'XXXXXX';
-	  $raw['c_contact'] = 'XXXXXXXX';
+	  //$raw['c_uid'] = 'XXXXXX';
+	  //$raw['c_contact'] = 'XXXXXXXX';
 	  if (strlen($other)>0) 
 	    $d = '{warrantyid:'.$other.'},'.json_encode($raw);
   	  else 

@@ -50,7 +50,7 @@
       $data['id'] = $this->input->post('id'); //upgradeid
       $data['userlogin'] = 1;
       //$data['action'] = $this->input->post('action');
-      $data['staffid'] = $this->session->userdata('s_staffid');
+      $data['staff_id'] = $this->session->userdata('s_staffid');
       log_message('debug', 'zzz[Upgrades]51:orderid-upgradeid='.$data['fullorder_id'].'-'.$data['id']);
       //$this->form_validation->set_rules('certno','Certificate','required');
       //$this->form_validation->set_rules('c_email','Email address','required');
@@ -61,7 +61,7 @@
       //$data['userlogin'] = 1;
       //$staffid = $this->session->userdata('s_staffid');
       //check login or not
-      if (strlen($data['staffid'])>0) {	
+      if (strlen($data['staff_id'])>0) {	
         //if ($this->form_validation->run() === true)
         //{
           log_message('debug', 'zzz[Upgrades]64:validation=true');

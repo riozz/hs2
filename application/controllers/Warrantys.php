@@ -22,7 +22,7 @@
         //echo "orderid = $orderid";
 	$data['warrantys'] = $this->warrantys_model->getWarrantyHistory($oid);
         $data['title'] = 'Warranty History';
-	$data['awid'] = $awid;
+	$data['awid'] = $awid; //active warranty id
         //$data['warrantys']['id'] = 0;
 	$this->load->view('hswarranty/v_warrantyhistory', $data);
     } 
@@ -47,12 +47,12 @@
     public function change($oid = 0)
     {
       //$data['title'] = 'Change warranty';
-      $data['orderid'] = $this->input->post('orderid');
-      $data['warrantyid'] = $this->input->post('warrantyid');
+      $data['fullorder_id'] = $this->input->post('fullorder_id');
+      $data['id'] = $this->input->post('id'); //warrantyid
       $data['userlogin'] = 1;
       //$data['action'] = $this->input->post('action');
-      $data['staffid'] = $this->session->userdata('s_staffid');
-      log_message('debug', 'zzz[Warrantys]51:orderid-warrantyid='.$data['orderid'].'-'.$data['warrantyid']);
+      $data['staff_id'] = $this->session->userdata('s_staffid');
+      log_message('debug', 'zzz[Warrantys]51:orderid-warrantyid='.$data['fullorder_id'].'-'.$data['id']);
       //$this->form_validation->set_rules('certno','Certificate','required');
       //$this->form_validation->set_rules('c_email','Email address','required');
       //$this->form_validation->set_rules('f_warrantyto_id','Fault Report to','required');
@@ -62,7 +62,7 @@
       //$data['userlogin'] = 1;
       //$staffid = $this->session->userdata('s_staffid');
       //check login or not
-      if (strlen($data['staffid'])>0) {	
+      if (strlen($data['staff_id'])>0) {	
         //if ($this->form_validation->run() === true)
         //{
           log_message('debug', 'zzz[Warrantys]64:validation=true');
@@ -100,6 +100,19 @@
       }
       $data['ret']=$v;
       $this->load->view('hswarranty/v_warrantycheckappointment',$data);
+    }
+
+    public function get_staffinfo($staff_id = '0', $viewform='v_warrantyAssignment') {
+      //$staff_id = $this->input->post('tc_staff_id');
+      //$staff_id = "1352731";
+      log_message('debug', 'zzz[Warrantys]108:staff_id='.$staff_id);
+      log_message('debug', 'zzz[Warrantys]109:viewform='.$viewform);
+      //log_message('debug', 'zzz[Warrantys]107:staff_id='.$staff_id);
+      $this->load->model("z_staffinfo");
+      $ret = $this->z_staffinfo->getStaffInfoById($staff_id);
+      log_message('debug', 'zzz[Warrangys]110:result='.json_encode($ret));
+      $data = $ret;
+      $this->load->view('hswarranty/'.$viewform, $data);
     }
 }
 

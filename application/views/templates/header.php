@@ -13,6 +13,7 @@
 
     <!-- Bootstrap Core CSS -->
     <link href="<?php echo base_url(); ?>css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?php echo base_url(); ?>css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
     <link href="<?php echo base_url(); ?>css/bootstrap-table.css" rel="stylesheet">
     <link href="<?php echo base_url(); ?>css/hktp.css" rel="stylesheet">
 

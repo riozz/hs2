@@ -38,7 +38,7 @@ class Upgrades_model extends CI_Model {
           if ($upgradeid > 0) {
 	    $sql="SELECT `su`.`id`, `su`.`staff_id`, `su`.staff_name, `su`.staff_teamcode, `su`.staff_channel, `su`.`orders_id`, `su`.`fullorder_id`, `su`.`u_model`, sum.model modelname, `su`.`u_quantity`, `su`.`u_appointmentdate`, `su`.`u_appointmenttime`, `su`.`u_smno`, `su`.`u_remark`, `su`.`tc_staff_id`, `su`.`tc_staff_name`, `su`.`tc_staff_teamcode`, `su`.`tc_staff_channel`, `su`.`tc_staff_telno`, `su`.`tc_appointmentdate`, `su`.`tc_appointmenttime`, `su`.`com_staff_id`, `su`.`com_staff_name`, `su`.`com_staff_teamcode`,`su`.`com_staff_channel`,`su`.`com_staff_telno`, `su`.`com_remark`, `su`.`updatetime`, `su`.`createdby`, `su`.`modifiedby`, `su`.`createddate`, `su`.`com_date`
 		FROM `square_upgrade` su 
-		join `square_upgrade_model` sum on su.u_model = sum.id
+		left join `square_upgrade_model` sum on su.u_model = sum.id
 		where su.id=?";
 	    log_message('debug', 'zzz[Upgrades_model]43:'.$sql);
 	    $result = $this->db->query($sql, array($upgradeid));
