@@ -16,6 +16,11 @@
 //  -->
               <script src="<?php echo base_url("js/jquery.min.js"); ?>"></script>
               <script src="<?php echo base_url("js/jquery.validate.min.js"); ?>"></script>
+              <script type="text/javascript" charset="UTF-8" src="<?php echo base_url("js/bootstrap-datetimepicker.js"); ?>"></script>
+              <!-- Bootstrap Core JavaScript
+              <script src="<?php echo base_url("js/bootstrap.min.js"); ?>"></script>
+              // -->
+              <script src="<?php echo base_url("js/bootstrap-table.js"); ?>"></script>
 	      <script>
 		/*
 	        $.validator.setDefaults({
@@ -48,9 +53,9 @@
 		var uurl = "<?php echo base_url(); ?>" + "index.php/upgrades/index/" + "<?php echo '/'.$fullorder_id; ?>/<?php echo $actionupgradeid; ?>";
 		//get fault detail of orderid
 		var uiurl = "<?php echo base_url(); ?>" + "index.php/upgrades/view/" + "<?php echo $fullorder_id; ?>/<?php echo $id; ?>"; //upgradeid
-		//get fault detail
-		alert ("uurl="+uurl);	
-		alert ("uiurl="+uiurl);	
+		//get fault detail zzz
+		//alert ("uurl="+uurl);	
+		//alert ("uiurl="+uiurl);	
 		$(document).ready(function(){
 		    //alert("<?php echo "fullorder_id=".$fullorder_id; ?>");
 		    //alert("href = "+window.location.href);
@@ -132,7 +137,4 @@
 
     </div>
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="<?php echo base_url("js/bootstrap.min.js"); ?>"></script>
-    <script src="<?php echo base_url("js/bootstrap-table.js"); ?>"></script>
 

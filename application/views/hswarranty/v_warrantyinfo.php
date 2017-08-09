@@ -39,6 +39,7 @@
   };
   
   function getstaffinfo(str, vform) {
+    //get staff info by staffid
     alert("str = "+str+" vform="+vform);
     if (str == "") {
       return;
@@ -521,7 +522,7 @@
           todayHighlight: 1,
           startView: 2,
           forceParse: 0,
-	  //minuteStep: 30,
+	  minuteStep: 60,
 	  startDate: sdate,
 	  endDate: edate
 	  //initalDate: today

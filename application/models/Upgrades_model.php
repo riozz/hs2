@@ -36,7 +36,7 @@ class Upgrades_model extends CI_Model {
 	  $orderid = substr($oid, -6); 
 	  log_message('debug', 'zzz[Upgrades_model]34:orderid-upgradeid='.$orderid.'-'.$upgradeid);
           if ($upgradeid > 0) {
-	    $sql="SELECT `su`.`id`, `su`.`staff_id`, `su`.staff_name, `su`.staff_teamcode, `su`.staff_channel, `su`.`orders_id`, `su`.`fullorder_id`, `su`.`u_model`, sum.model modelname, `su`.`u_quantity`, `su`.`u_appointmentdate`, `su`.`u_appointmenttime`, `su`.`u_smno`, `su`.`u_remark`, `su`.`tc_staff_id`, `su`.`tc_staff_name`, `su`.`tc_staff_teamcode`, `su`.`tc_staff_channel`, `su`.`tc_staff_telno`, `su`.`tc_appointmentdate`, `su`.`tc_appointmenttime`, `su`.`com_staff_id`, `su`.`com_staff_name`, `su`.`com_staff_teamcode`,`su`.`com_staff_channel`,`su`.`com_staff_telno`, `su`.`com_remark`, `su`.`updatetime`, `su`.`createdby`, `su`.`modifiedby`, `su`.`createddate`, `su`.`com_date`
+	    $sql="SELECT `su`.`id`, `su`.`staff_id`, `su`.staff_name, `su`.staff_teamcode, `su`.staff_channel, `su`.`orders_id`, `su`.`fullorder_id`, `su`.`u_model`, sum.model modelname, `su`.`u_quantity`, `su`.`u_appointmentdate`, `su`.`u_appointmenttime`, `su`.`u_appointmentdatetime`, `su`.`u_smno`, `su`.`u_remark`, `su`.`tc_staff_id`, `su`.`tc_staff_name`, `su`.`tc_staff_teamcode`, `su`.`tc_staff_channel`, `su`.`tc_staff_telno`, `su`.`tc_appointmentdate`, `su`.`tc_appointmenttime`, `su`.`tc_appointmentdatetime`, `su`.`com_staff_id`, `su`.`com_staff_name`, `su`.`com_staff_teamcode`,`su`.`com_staff_channel`,`su`.`com_staff_telno`, `su`.`com_remark`, `su`.`updatetime`, `su`.`createdby`, `su`.`modifiedby`, `su`.`createddate`, `su`.`com_date`
 		FROM `square_upgrade` su 
 		left join `square_upgrade_model` sum on su.u_model = sum.id
 		where su.id=?";
@@ -44,7 +44,7 @@ class Upgrades_model extends CI_Model {
 	    $result = $this->db->query($sql, array($upgradeid));
 	    $data = $result->row_array();
           } else {
-	    $sql="SELECT 0 id, 0 staff_id, '' staff_name, '' staff_teamcode, '' staff_channel, id `orders_id`, serial fullorder_id , 0 `u_model`, '' modelname, 0 `u_quantity`, '' `u_appointmentdate`, '' `u_appointmenttime`, '' `u_smno`, '' `u_remark`, 0 `tc_staff_id`, '' `tc_staff_name`, '' `tc_staff_teamcode`, '' `tc_staff_channel`, '' `tc_staff_telno`, '' `tc_appointmentdate`, '' `tc_appointmenttime`, 0 `com_staff_id`, '' `com_staff_name`, '' `com_staff_teamcode`,'' `com_staff_channel`,'' `com_staff_telno`, '' `com_remark`, '' `updatetime`, '' `createdby`, '' `modifiedby`, '' `createddate`, '' `com_date` FROM orders o where id=?";
+	    $sql="SELECT 0 id, 0 staff_id, '' staff_name, '' staff_teamcode, '' staff_channel, id `orders_id`, serial fullorder_id , 0 `u_model`, '' modelname, 0 `u_quantity`, '' `u_appointmentdate`, '' `u_appointmenttime`, '' `u_appointmentdatetime`, '' `u_smno`, '' `u_remark`, 0 `tc_staff_id`, '' `tc_staff_name`, '' `tc_staff_teamcode`, '' `tc_staff_channel`, '' `tc_staff_telno`, '' `tc_appointmentdate`, '' `tc_appointmenttime`, '' `tc_appointmentdatetime`, 0 `com_staff_id`, '' `com_staff_name`, '' `com_staff_teamcode`,'' `com_staff_channel`,'' `com_staff_telno`, '' `com_remark`, '' `updatetime`, '' `createdby`, '' `modifiedby`, '' `createddate`, '' `com_date` FROM orders o where id=?";
 
 	    log_message('debug', 'zzz[Upgrades_model]53:'.$sql);
 	    $result = $this->db->query($sql, array($orderid));
@@ -74,6 +74,7 @@ class Upgrades_model extends CI_Model {
 	  $u_quantity = $this->input->post('u_quantity');
 	  $u_appointmentdate = $this->input->post('u_appointmentdate');
 	  $u_appointmenttime = $this->input->post('u_appointmenttime');
+	  $u_appointmentdatetime = $this->input->post('u_appointmentdatetime');
 	  $u_smno = $this->input->post('u_smno');
 	  $u_remark = $this->input->post('u_remark');
 	  $tc_staff_id = $this->input->post('tc_staff_id');
@@ -83,6 +84,7 @@ class Upgrades_model extends CI_Model {
 	  $tc_staff_telno = $this->input->post('tc_staff_telno');
 	  $tc_appointmentdate = $this->input->post('tc_appointmentdate');
 	  $tc_appointmenttime= $this->input->post('tc_appointmenttime');
+	  $tc_appointmentdatetime= $this->input->post('tc_appointmentdatetime');
 	  $com_staff_id = $this->input->post('com_staff_id');
 	  $com_staff_name = $this->input->post('com_staff_name');
 	  $com_staff_teamcode = $this->input->post('com_staff_teamcode');
@@ -160,6 +162,7 @@ class Upgrades_model extends CI_Model {
 		'u_quantity' => $u_quantity,
 	        'u_appointmentdate' => $u_appointmentdate,
 		'u_appointmenttime' => $u_appointmenttime,
+		'u_appointmentdatetime' => $u_appointmentdatetime,
 		'u_smno' => $u_smno,
 		'u_remark' => $u_remark,
 		'tc_staff_id' => $tc_staff_id,
@@ -169,6 +172,7 @@ class Upgrades_model extends CI_Model {
 		'tc_staff_telno' => $tc_staff_telno,
 		'tc_appointmentdate' => $tc_appointmentdate,
 		'tc_appointmenttime' => $tc_appointmenttime,
+		'tc_appointmentdatetime' => $tc_appointmentdatetime,
 		'com_staff_id' => $com_staff_id,
 		'com_staff_name' => $com_staff_name,
 		'com_staff_teamcode' => $com_staff_teamcode,

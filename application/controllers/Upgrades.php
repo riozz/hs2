@@ -100,5 +100,18 @@
       $data['ret']=$v;
       $this->load->view('hsfault/v_faultcheckappointment',$data);
     }
+
+    public function get_staffinfo($staff_id = '0', $viewform='v_upgradeAssignment') {
+      //$staff_id = $this->input->post('tc_staff_id');
+      //$staff_id = "1352731";
+      log_message('debug', 'zzz[Upgrades]108:staff_id='.$staff_id);
+      log_message('debug', 'zzz[Upgrades]109:viewform='.$viewform);
+      //log_message('debug', 'zzz[Warrantys]107:staff_id='.$staff_id);
+      $this->load->model("z_staffinfo");
+      $ret = $this->z_staffinfo->getStaffInfoById($staff_id);
+      log_message('debug', 'zzz[Upgrades]110:result='.json_encode($ret));
+      $data = $ret;
+      $this->load->view('hsupgrade/'.$viewform, $data);
+    }
 }
 
