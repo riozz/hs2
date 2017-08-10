@@ -25,7 +25,10 @@ class StaffInfo {
   	}
 
         public function getStaffInfo($staffid, $orderid) {
-	  $sql = "SELECT id,name,staffid,ccc,location,teamcode,channel FROM staff where staffid=?";
+	  //$systemid = 1; //Home solution
+	  $systemid = SYSID;
+	  //$sql = "SELECT id,name,staffid,ccc,location,teamcode,channel FROM staff where staffid=?";
+	  $sql="SELECT s.id,s.name,s.staffid,s.ccc,s.location,s.teamcode,s.channel, sr.right_id FROM staff s left join system_right sr on s.id=sr.staff_sysid where s.staffid=? and sr.system_id=$systemid";
 	  $results = $this->hktp_db->query($sql, array($staffid));
           $staffMetadata = $results -> row();
  	  $data['s_id'] = $staffMetadata->id;
@@ -36,6 +39,7 @@ class StaffInfo {
  	  $data['s_teamcode'] = $staffMetadata->teamcode;
  	  $data['s_channel'] = $staffMetadata->channel;
  	  $data['s_orderid'] = $orderid;
+	  $data['s_rightid'] = $staffMetadata->right_id;
           $this->CI->session->set_userdata($data);
         }
 }

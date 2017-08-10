@@ -1,6 +1,7 @@
  <?php 
     echo validation_errors(); 
     //echo json_encode($faultsinfo); 
+    $rightid=$this->session->userdata('s_rightid');
     if ($warrantysinfo['id']>0) { //warrantyid
       $qresult=true;
     } else {
@@ -21,21 +22,31 @@
   });
   */
   function showCustomAttr(attr) {
-    var x = document.forms[0];
-    alert("x = "+ x);
-    var i;
-    var txt = "";
-    for (i=0; i< x.length; i++) {
-      //txt = txt + x[i].id + ";";
-      txt = txt + x[i].getAttribute("wid") + ";";
-      alert("txt = "+txt);
-    } 
-    var s = document.getElementById("c_email");
-    //alert("s = "+s);
-    var cattr = s.getAttribute("wid");
-    alert("wid = "+ cattr);
-    s.setAttribute("readonly", true);
-    //alert("wid = "+attr.innerHTML + " is a " + cattr + ".");
+    var checkAttr = "<?php echo $warrantysinfo['id'] ?>"; //warrantyid
+    var rightid = "<?php echo $rightid ?>";
+    //alert("x = "+ x);
+    if (checkAttr>0) {
+      var x = document.forms['warrantyform'];
+      var i;
+      var txt = "";
+      for (i=0; i< x.length; i++) {
+        //txt = txt + x[i].id + ";";
+	componentname= x[i].getAttribute("name");
+	componentvalue=x[i].getAttribute("wid");
+        //txt = txt + x[i].getAttribute("wid") + ";";
+        //alert("txt = "+txt);
+	if (componentvalue) {
+	  if (rightid < componentvalue) {
+	    x[i].setAttribute("readonly", true);
+	  }
+	}
+      } 
+      //var s = document.getElementById("c_email");
+      //var cattr = s.getAttribute("wid");
+      //alert("wid = "+ cattr);
+      //s.setAttribute("readonly", true);
+      //alert("wid = "+attr.innerHTML + " is a " + cattr + ".");
+    }
   };
   
   function getstaffinfo(str, vform) {
@@ -157,6 +168,7 @@
 	}
       }
     });
+    showCustomAttr(this);
 
 /*
     var id = document.getElementById("appointment_msg").id;
@@ -181,11 +193,11 @@
       //return false;
     });
 */
-/*
-    $('#faultSubmit').click(function() {
+
+    $('#warrantySubmit').click(function() {
       showCustomAttr(this);
     });
-*/ 
+ 
 /*
     $('#faultForm').submit(function(e) {
       var submiturl = "<?php echo base_url(); ?>" + "index.php/faults/change/" + "<?php echo $warrantysinfo['orderid'] ?>";
@@ -216,7 +228,7 @@
   }
 </script>
 <?php 
-  echo form_open(base_url().'index.php/warrantys/change/'.$warrantysinfo['fullorder_id'], 'class="form-horizontal" id="warrantyForm"');
+  echo form_open(base_url().'index.php/warrantys/change/'.$warrantysinfo['fullorder_id'], 'class="form-horizontal" id="warrantyForm" name="warrantyform"');
 ?>
 <div class="thumbnail" >
   <div class="caption-full">

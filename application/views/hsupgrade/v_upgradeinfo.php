@@ -1,6 +1,7 @@
  <?php 
     echo validation_errors(); 
     //echo json_encode($faultsinfo); 
+    $rightid = $this->session->userdata('s_rightid');
     if ($upgradesinfo['id']>0) {
       $qresult=true;
     } else {
@@ -21,21 +22,28 @@
   });
   */
   function showCustomAttr(attr) {
-    var x = document.forms[0];
-    alert("x = "+ x);
-    var i;
-    var txt = "";
-    for (i=0; i< x.length; i++) {
-      //txt = txt + x[i].id + ";";
-      txt = txt + x[i].getAttribute("uid") + ";";
-      alert("txt = "+txt);
+    var checkAttr = "<?php echo $upgradesinfo['id'] ?>"; //upgradeid
+    var rightid = "<?php echo $rightid ?>";
+    //var x = document.forms[0];
+    //alert("x = "+ x);
+    alert("checkAttr,rightid = "+ checkAttr+" "+rightid);
+    if (checkAttr>0) {
+      var x = document.forms['upgradeform'];
+      var i;
+      var txt = "";
+      for (i=0; i< x.length; i++) {
+        //txt = txt + x[i].id + ";";
+        componentname = x[i].getAttribute("name");
+        componentvalue = x[i].getAttribute("wid");
+        //txt = txt + x[i].getAttribute("uid") + ";";
+        //alert("txt = "+txt);
+        if (componentvalue) {
+          if (rightid < componentvalue) {
+            x[i].setAttribute("readonly", true);
+          }
+        }
+      }
     } 
-    var s = document.getElementById("c_email");
-    //alert("s = "+s);
-    var cattr = s.getAttribute("uid");
-    alert("uid = "+ cattr);
-    s.setAttribute("readonly", true);
-    //alert("wid = "+attr.innerHTML + " is a " + cattr + ".");
   };
 
   function getstaffinfo(str, vform) {
@@ -136,7 +144,7 @@
 	}
       }
     });
-
+    showCustomAttr(this);
 /*
     var id = document.getElementById("appointment_msg").id;
     showErrMsg(id,''); 
@@ -195,7 +203,7 @@
   }
 </script>
 <?php 
-  echo form_open(base_url().'index.php/upgrades/change/'.$upgradesinfo['fullorder_id'], 'class="form-horizontal" id="upgradeForm"');
+  echo form_open(base_url().'index.php/upgrades/change/'.$upgradesinfo['fullorder_id'], 'class="form-horizontal" id="upgradeForm" name="upgradeform"');
 ?>
 <div class="thumbnail" id="upgradeinfo_content">
   <div class="caption-full">

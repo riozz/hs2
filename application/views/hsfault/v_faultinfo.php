@@ -1,6 +1,7 @@
  <?php 
     echo validation_errors(); 
     //echo json_encode($faultsinfo); 
+    $rightid = $this->session->userdata('s_rightid');
     if ($faultsinfo['faultid']>0) {
       $qresult=true;
     } else {
@@ -18,21 +19,34 @@
   });
   */
   function showCustomAttr(attr) {
-    var x = document.forms[0];
-    alert("x = "+ x);
-    var i;
-    var txt = "";
-    for (i=0; i< x.length; i++) {
-      //txt = txt + x[i].id + ";";
-      txt = txt + x[i].getAttribute("wid") + ";";
-      alert("txt = "+txt);
-    } 
-    var s = document.getElementById("c_email");
-    //alert("s = "+s);
-    var cattr = s.getAttribute("wid");
-    alert("wid = "+ cattr);
-    s.setAttribute("readonly", true);
-    //alert("wid = "+attr.innerHTML + " is a " + cattr + ".");
+    var checkAttr = "<?php echo $faultsinfo['faultid'] ?>";
+    var rightid = "<?php echo $rightid ?>";
+    //var x = document.forms[0];
+    //if (checkAttr) {  
+    alert("checkAttr,rightid = "+ checkAttr+" "+rightid);
+    if (checkAttr>0) {  
+      var x = document.forms['faultform'];
+      //alert("x = "+ x);
+      var i;
+      var txt = "";
+      for (i=0; i< x.length; i++) {
+        //txt = txt + x[i].id + ";";
+	componentname = x[i].getAttribute("name");
+	componentvalue = x[i].getAttribute("wid");
+        //txt = txt + componentname+"~"+componentvalue + ";";
+        //alert("txt = "+txt);
+	if (componentvalue) {
+	  if (rightid < componentvalue) {
+	    x[i].setAttribute("readonly", true);
+	  }
+	}
+      } 
+      //var s = document.getElementById("c_email");
+      //var cattr = s.getAttribute("wid");
+      //alert("wid = "+ cattr);
+      //s.setAttribute("readonly", true);
+      //alert("wid = "+attr.innerHTML + " is a " + cattr + ".");
+    }
   };
 
   $(document).ready(function() {
@@ -113,6 +127,8 @@
 	}
       }
     });
+    //alert("ZZZ");
+    showCustomAttr(this);
 
 /*
     var id = document.getElementById("appointment_msg").id;
@@ -161,6 +177,7 @@
       });
     }); 
 */
+
   });
 
   function showErrMsg(id, errmsg) {
@@ -172,7 +189,7 @@
   }
 </script>
 <?php 
-  echo form_open(base_url().'index.php/faults/change/'.$faultsinfo['orderid'], 'class="form-horizontal" id="faultForm"');
+  echo form_open(base_url().'index.php/faults/change/'.$faultsinfo['orderid'], 'class="form-horizontal" id="faultForm" name="faultform"');
 ?>
 <div class="thumbnail" id="faultinfo_content">
   <div class="caption-full">
@@ -249,7 +266,7 @@
       </div>
       <label class="col-sm-2 control-label">Working location</label>
       <div class="col-sm-4">
-        <input class="form-control" id="c_workingloc" wid="5" rid="5" type="text" value="<?php echo $faultsinfo['c_workingloc']; ?>" name="c_workingloc" >
+        <input class="form-control" id="c_workingloc" wid="3" rid="5" type="text" value="<?php echo $faultsinfo['c_workingloc']; ?>" name="c_workingloc" >
       </div>
     </div>
     <div class="form-group">
@@ -259,17 +276,17 @@
       </div>
       <label class="col-sm-2 control-label">2nd Contact Number</label>
       <div class="col-sm-4">
-        <input class="form-control" id="c_ndcontact" wid="5" rid="5" type="text" value="<?php echo $faultsinfo['c_ndcontact']; ?>" name="c_ndcontact">
+        <input class="form-control" id="c_ndcontact" wid="3" rid="5" type="text" value="<?php echo $faultsinfo['c_ndcontact']; ?>" name="c_ndcontact">
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">Office Tel Number</label>
       <div class="col-sm-4">
-     	<input class="form-control" id="focusedInput" type="text" value="<?php echo $faultsinfo['c_officetel']; ?>" name="c_officetel" wid="5" rid="5">
+     	<input class="form-control" id="focusedInput" type="text" value="<?php echo $faultsinfo['c_officetel']; ?>" name="c_officetel" wid="3" rid="5">
       </div>
       <label class="col-sm-2 control-label">Contact Email</label>
       <div class="col-sm-4">
-        <input class="form-control" id="c_email" wid="5" rid="5" type="text" wid="5" value="<?php echo $faultsinfo['c_email']; ?>" name="c_email" type="email" >
+        <input class="form-control" id="c_email" wid="3" rid="5" type="text" wid="5" value="<?php echo $faultsinfo['c_email']; ?>" name="c_email" type="email" >
       </div>
     </div>
 
