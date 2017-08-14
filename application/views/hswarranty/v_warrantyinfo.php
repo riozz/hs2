@@ -1,7 +1,17 @@
  <?php 
     echo validation_errors(); 
     //echo json_encode($faultsinfo); 
-    $rightid=$this->session->userdata('s_rightid');
+    //$rightid=$this->session->userdata('s_rightid');
+    //foreach ($rightid as $row)
+    //{
+      //log_message('debug', 'zzz[v_warrantyinfo]:7~rightid='.$row['right_id']);
+    //}
+    $i = 0;  //convert php array to javascript array
+    foreach ($this->session->userdata('s_rightid') as $row) 
+    {
+	$rightids[$i] = $row['right_id'];
+	$i++;
+    }
     if ($warrantysinfo['id']>0) { //warrantyid
       $qresult=true;
     } else {
@@ -23,11 +33,14 @@
   */
   function showCustomAttr(attr) {
     var checkAttr = "<?php echo $warrantysinfo['id'] ?>"; //warrantyid
-    var rightid = "<?php echo $rightid ?>";
-    //alert("x = "+ x);
+    //var rightids = "<?php echo json_encode($this->session->userdata('s_rightid')) ?>";
+    //var rightids = "<?php echo str_replace("\"","",json_encode($rightids)) ?>";
+    var rightids = "<?php echo implode(",",$rightids) ?>";
+    //var rightids = ["3","5"];
+    //alert("rightids.length = "+ rightids.length);
     if (checkAttr>0) {
       var x = document.forms['warrantyform'];
-      var i;
+      var i, j;
       var txt = "";
       for (i=0; i< x.length; i++) {
         //txt = txt + x[i].id + ";";
@@ -35,9 +48,16 @@
 	componentvalue=x[i].getAttribute("wid");
         //txt = txt + x[i].getAttribute("wid") + ";";
         //alert("txt = "+txt);
-	if (componentvalue) {
-	  if (rightid < componentvalue) {
-	    x[i].setAttribute("readonly", true);
+	if (componentvalue) { //not null
+	  for (j=0; j<rightids.length; j++) {
+	    if (rightids[j] != ",") {
+	      if (rightids[j] != componentvalue) {
+	        x[i].setAttribute("readonly", true);
+	      }
+	      if (rightids[j] == componentvalue) {
+	        x[i].removeAttribute("readonly");
+	      }
+	    }
 	  }
 	}
       } 
@@ -369,25 +389,25 @@
        </div>
        <label class="col-sm-3 control-label">Technical Consultant Staff Name:</label>
        <div class="col-sm-3"> 
-         <input class="form-control" id="tc_staff_name" type="text" name="tc_staff_name" wid="5" rid="5" value="<?php echo $warrantysinfo['tc_staff_name']; ?>" readonly> 
+         <input class="form-control" id="tc_staff_name" type="text" name="tc_staff_name" wid="0" rid="5" value="<?php echo $warrantysinfo['tc_staff_name']; ?>" readonly> 
        </div>
      </div>
 
      <div class="form-group">
        <label class="col-sm-3 control-label">Technical Consultant Team Code:</label>
        <div class="col-sm-3"> 
-         <input class="form-control" id="tc_staff_teamcode" type="text" name="tc_staff_teamcode" wid="5" rid="5" value="<?php echo $warrantysinfo['tc_staff_teamcode']; ?>" readonly> 
+         <input class="form-control" id="tc_staff_teamcode" type="text" name="tc_staff_teamcode" wid="0" rid="5" value="<?php echo $warrantysinfo['tc_staff_teamcode']; ?>" readonly> 
        </div>
        <label class="col-sm-3 control-label">Channel:</label>
        <div class="col-sm-3"> 
-         <input class="form-control" id="tc_staff_channel" type="text" name="tc_staff_channel" wid="5" rid="5" value="<?php echo $warrantysinfo['tc_staff_channel']; ?>" readonly> 
+         <input class="form-control" id="tc_staff_channel" type="text" name="tc_staff_channel" wid="0" rid="5" value="<?php echo $warrantysinfo['tc_staff_channel']; ?>" readonly> 
        </div>
      </div>
 
      <div class="form-group">
        <label class="col-sm-3 control-label">Technical Consultant Phone No.:</label>
        <div class="col-sm-3"> 
-	 <input class="form-control" id="tc_staff_telno" type="text" name="tc_staff_telno" wid="5" rid="5" value="<?php echo $warrantysinfo['tc_staff_telno']; ?>" readonly> 
+	 <input class="form-control" id="tc_staff_telno" type="text" name="tc_staff_telno" wid="0" rid="5" value="<?php echo $warrantysinfo['tc_staff_telno']; ?>" readonly> 
        </div>
         <label class="col-sm-6 control-label">&nbsp;</label>
      </div>
@@ -473,18 +493,18 @@
 	</div>
         <label class="col-sm-3 control-label">Technical Consultant Staff Name:</label>
         <div class="col-sm-3"> 
-	  <input class="form-control" id="com_staff_name" type="text" name="com_staff_name" wid="5" rid="5" value="<?php echo $warrantysinfo['com_staff_name']; ?>" readonly> 
+	  <input class="form-control" id="com_staff_name" type="text" name="com_staff_name" wid="0" rid="5" value="<?php echo $warrantysinfo['com_staff_name']; ?>" readonly> 
 	</div>
       </div>
 
       <div class="form-group">
         <label class="col-sm-3 control-label">Technical Consultant Team Code:</label>
         <div class="col-sm-3"> 
-	  <input class="form-control" id="com_staff_teamcode" type="text" name="com_staff_teamcode" wid="5" rid="5" value="<?php echo $warrantysinfo['com_staff_teamcode']; ?>" readonly> 
+	  <input class="form-control" id="com_staff_teamcode" type="text" name="com_staff_teamcode" wid="0" rid="5" value="<?php echo $warrantysinfo['com_staff_teamcode']; ?>" readonly> 
 	</div>
         <label class="col-sm-3 control-label">Channel:</label>
         <div class="col-sm-3"> 
-	  <input class="form-control" id="com_staff_channel" type="text" name="com_staff_channel" wid="5" rid="5" value="<?php echo $warrantysinfo['com_staff_channel']; ?>" readonly> 
+	  <input class="form-control" id="com_staff_channel" type="text" name="com_staff_channel" wid="0" rid="5" value="<?php echo $warrantysinfo['com_staff_channel']; ?>" readonly> 
 	</div>
       </div>
      </div>

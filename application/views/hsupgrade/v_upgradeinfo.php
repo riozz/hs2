@@ -1,8 +1,14 @@
  <?php 
     echo validation_errors(); 
     //echo json_encode($faultsinfo); 
-    $rightid = $this->session->userdata('s_rightid');
-    if ($upgradesinfo['id']>0) {
+    //$rightid = $this->session->userdata('s_rightid');
+    $i = 0; //convert php array to javascript array
+    foreach ($this->session->userdata('s_rightid') as $row)
+    {
+      $rightids[$i] = $row['right_id'];
+      $i++;
+    }
+    if ($upgradesinfo['id']>0) { //upgradeid
       $qresult=true;
     } else {
       $qresult=false;
@@ -23,24 +29,55 @@
   */
   function showCustomAttr(attr) {
     var checkAttr = "<?php echo $upgradesinfo['id'] ?>"; //upgradeid
-    var rightid = "<?php echo $rightid ?>";
+    var rightids = "<?php echo implode(",",$rightids) ?>";
     //var x = document.forms[0];
-    //alert("x = "+ x);
-    alert("checkAttr,rightid = "+ checkAttr+" "+rightid);
+    //alert("checkAttr,rightid = "+ checkAttr+" "+rightid);
     if (checkAttr>0) {
       var x = document.forms['upgradeform'];
-      var i;
+      var i, j;
       var txt = "";
       for (i=0; i< x.length; i++) {
-        //txt = txt + x[i].id + ";";
         componentname = x[i].getAttribute("name");
         componentvalue = x[i].getAttribute("wid");
-        //txt = txt + x[i].getAttribute("uid") + ";";
+        //txt = txt + componentname + "~"+componentvalue+";";
         //alert("txt = "+txt);
         if (componentvalue) {
-          if (rightid < componentvalue) {
-            x[i].setAttribute("readonly", true);
-          }
+	  for (j=0; j<rightids.length; j++) {
+	    if (rightids[j] != ",") {
+              if (rightids[j] != componentvalue) {
+	 	switch(componentname) {
+		  case "u_model":
+                    //$("#u_model option").not(":selected").attr("disabled","disabled");
+		    x[i].setAttribute("disabled", true);
+		    break;
+		  case "u_appointmentdatetime":
+		    $('span.u_dt').hide();
+		    break;
+	          default:
+                    x[i].setAttribute("readonly", true);
+		}
+		//$("#u_appointmentdatetime").attr("disabled","disabled");
+		//$("#u_appointmentdatetime_button").hide();
+		//$("#u_model").attr('disabled',true);
+              }
+              if (rightids[j] == componentvalue) {
+		switch(componentname) {
+		  case "u_model":
+                    //$("#u_model option").not(":selected").attr("disabled","");
+		    x[i].removeAttribute("disabled");
+		    break;
+		  case "u_appointmentdatetime":
+		    $('span.u_dt').show();
+		    break;
+		  default:
+                    x[i].removeAttribute("readonly");
+		}
+		//$("#u_appointmentdatetime").attr("disabled","");
+		//$("#u_appointmentdatetime_button").show();
+		//$("#u_model").attr('disabled',true);
+              }
+	    }
+	  }
         }
       }
     } 
@@ -257,7 +294,7 @@
       <div class="form-group">
         <label class="col-sm-2 control-label">Upgrade Router Model: </label>
         <div class="col-sm-10 dropdown"> 
-	  <select class="form-control" id="u_model" name="u_model" sid="5" rid="5">
+	  <select class="form-control" id="u_model" name="u_model" wid="5" rid="5" >
 	    <?php echo "<option value='' ".(($upgradesinfo['u_model']==0)?'selected':'') .">Please select</option>";
 	    foreach ($upgradesinfo['tab_model'] as $row) 
 	    {
@@ -280,8 +317,8 @@
         <label for="dtp_u_appointment_input" class="col-sm-2 control-label">Appointment Date/Time:</label>
         <div class="input-group date form_appdatetime col-md-7" data-date-format="yyyy-mm-dd hh:ii" data-link-field="dtp_u_appointment_input">
           <input class="form-control" id="u_appointmentdatetime" size="10" type="text" name="u_appointmentdatetime" wid="5" rid="5" value="<?php echo $upgradesinfo['u_appointmentdatetime']; ?>" readonly>
-          <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-          <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+          <span class="input-group-addon u_dt" ><span class="glyphicon glyphicon-remove"></span></span>
+          <span class="input-group-addon u_dt" ><span class="glyphicon glyphicon-th"></span></span>
         </div>
         <input type="hidden" id="dtp_u_appointment_input" value="" /><br/>
       </div>
@@ -334,25 +371,25 @@
 	</div>
         <label class="col-sm-3 control-label">Technical Consultant Staff Name:</label>
         <div class="col-sm-3"> 
-	  <input class="form-control" id="tc_staff_name" type="text" name="tc_staff_name" wid="5" rid="5" value="<?php echo $upgradesinfo['tc_staff_name']; ?>" readonly> 
+	  <input class="form-control" id="tc_staff_name" type="text" name="tc_staff_name" wid="0" rid="5" value="<?php echo $upgradesinfo['tc_staff_name']; ?>" readonly> 
 	</div>
        </div>
 
        <div class="form-group">
         <label class="col-sm-3 control-label">Technical Consultant Team Code:</label>
         <div class="col-sm-3"> 
-	  <input class="form-control" id="tc_staff_teamcode" type="text" name="tc_staff_teamcode" wid="5" rid="5" value="<?php echo $upgradesinfo['tc_staff_teamcode']; ?>" readonly> 
+	  <input class="form-control" id="tc_staff_teamcode" type="text" name="tc_staff_teamcode" wid="0" rid="5" value="<?php echo $upgradesinfo['tc_staff_teamcode']; ?>" readonly> 
 	</div>
         <label class="col-sm-3 control-label">Channel:</label>
         <div class="col-sm-3"> 
-	  <input class="form-control" id="tc_staff_channel" type="text" name="tc_staff_channel" wid="5" rid="5" value="<?php echo $upgradesinfo['tc_staff_channel']; ?>" readonly> 
+	  <input class="form-control" id="tc_staff_channel" type="text" name="tc_staff_channel" wid="0" rid="5" value="<?php echo $upgradesinfo['tc_staff_channel']; ?>" readonly> 
 	</div>
        </div>
 
        <div class="form-group">
         <label class="col-sm-3 control-label">Technical Consultant Phone No.:</label>
         <div class="col-sm-3"> 
-	  <input class="form-control" id="tc_staff_telno" type="text" name="tc_staff_telno" wid="5" rid="5" value="<?php echo $upgradesinfo['tc_staff_telno']; ?>" readonly> 
+	  <input class="form-control" id="tc_staff_telno" type="text" name="tc_staff_telno" wid="0" rid="5" value="<?php echo $upgradesinfo['tc_staff_telno']; ?>" readonly> 
 	</div>
         <label class="col-sm-6 control-label">&nbsp;</label>
        </div>
@@ -429,18 +466,18 @@
 	</div>
         <label class="col-sm-3 control-label">Technical Consultant Staff Name:</label>
         <div class="col-sm-3"> 
-	  <input class="form-control" id="com_staff_name" type="text" name="com_staff_name" wid="5" rid="5" value="<?php echo $upgradesinfo['com_staff_name']; ?>" readonly> 
+	  <input class="form-control" id="com_staff_name" type="text" name="com_staff_name" wid="0" rid="5" value="<?php echo $upgradesinfo['com_staff_name']; ?>" readonly> 
 	</div>
       </div>
 
       <div class="form-group">
         <label class="col-sm-3 control-label">Technical Consultant Team Code:</label>
         <div class="col-sm-3"> 
-	  <input class="form-control" id="com_staff_teamcode" type="text" name="com_staff_teamcode" wid="5" rid="5" value="<?php echo $upgradesinfo['com_staff_teamcode']; ?>" readonly> 
+	  <input class="form-control" id="com_staff_teamcode" type="text" name="com_staff_teamcode" wid="0" rid="5" value="<?php echo $upgradesinfo['com_staff_teamcode']; ?>" readonly> 
 	</div>
         <label class="col-sm-3 control-label">Channel:</label>
         <div class="col-sm-3"> 
-	  <input class="form-control" id="com_staff_channel" type="text" name="com_staff_channel" wid="5" rid="5" value="<?php echo $upgradesinfo['com_staff_channel']; ?>" readonly> 
+	  <input class="form-control" id="com_staff_channel" type="text" name="com_staff_channel" wid="0" rid="5" value="<?php echo $upgradesinfo['com_staff_channel']; ?>" readonly> 
 	</div>
       </div>
      </div>

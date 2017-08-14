@@ -1,7 +1,13 @@
  <?php 
     echo validation_errors(); 
     //echo json_encode($faultsinfo); 
-    $rightid = $this->session->userdata('s_rightid');
+    //$rightid = $this->session->userdata('s_rightid');
+    $i = 0;
+    foreach ($this->session->userdata('s_rightid') as $row)
+    {
+      $rightids[$i] = $row['right_id'];
+      $i++;
+    }
     if ($faultsinfo['faultid']>0) {
       $qresult=true;
     } else {
@@ -20,14 +26,13 @@
   */
   function showCustomAttr(attr) {
     var checkAttr = "<?php echo $faultsinfo['faultid'] ?>";
-    var rightid = "<?php echo $rightid ?>";
     //var x = document.forms[0];
-    //if (checkAttr) {  
-    alert("checkAttr,rightid = "+ checkAttr+" "+rightid);
+    //alert("checkAttr,rightid = "+ checkAttr+" "+rightid);
+    var rightids = "<?php echo implode(",",$rightids) ?>";
     if (checkAttr>0) {  
       var x = document.forms['faultform'];
       //alert("x = "+ x);
-      var i;
+      var i, j;
       var txt = "";
       for (i=0; i< x.length; i++) {
         //txt = txt + x[i].id + ";";
@@ -35,9 +40,16 @@
 	componentvalue = x[i].getAttribute("wid");
         //txt = txt + componentname+"~"+componentvalue + ";";
         //alert("txt = "+txt);
-	if (componentvalue) {
-	  if (rightid < componentvalue) {
-	    x[i].setAttribute("readonly", true);
+	if (componentvalue) { //not null
+	  for (j=0; j<rightids.length; j++) {
+	    if ($rightids[j] != ",") {
+	      if (rightids[j] != componentvalue) {
+	        x[i].setAttribute("readonly", true);
+	      }
+	      if (rightids[j] == componentvalue) {
+	        x[i].removeAttribute("readonly");
+	      }
+	    } 
 	  }
 	}
       } 
