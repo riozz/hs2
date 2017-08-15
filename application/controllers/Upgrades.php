@@ -5,8 +5,8 @@
       parent::__construct();
       $this->load->helper('url_helper');
       $this->load->helper('url');
-      $this->load->model('upgrades_model');
-      $this->load->library('session');
+      if (!isset($this->upgrades_model)) $this->load->model('upgrades_model');
+      if (!isset($this->session)) $this->load->library('session');
       $this->load->helper('form');
       $this->load->library('form_validation');
       //$this->load->helper('form');
@@ -16,6 +16,7 @@
     //get all upgrade regarding the order id
     public function index($oid = "H201702000000", $auid="0")
     {
+        log_message('debug', 'zzz[Upgrades]19:index');
         //echo "oid = $oid<br>";
 	//$orderid = substr($oid, -6);
         //echo "orderid = $orderid";
@@ -29,6 +30,7 @@
     // upgrade detail 
     public function view($oid = 0, $uid = "0")
     {
+        log_message('debug', 'zzz[Upgrades]33:view');
 	//$data['faultsinfo'] = $this->faults_model->getFaultInfo(substr($oid,-6), $fid);
 	$data['upgradesinfo'] = $this->upgrades_model->getUpgradeInfo($oid, $uid);
 	//if (empty($data['faultsinfo'])) {
@@ -45,6 +47,7 @@
     //make change (update/ insert of upgrade)   
     public function change($oid = 0)
     {
+      log_message('debug', 'zzz[Upgrades]50:change');
       //$data['title'] = 'Change upgrade';
       $data['fullorder_id'] = $this->input->post('fullorder_id');
       $data['id'] = $this->input->post('id'); //upgradeid

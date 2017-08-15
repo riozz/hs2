@@ -32,6 +32,7 @@
     var rightids = "<?php echo implode(",",$rightids) ?>";
     //var x = document.forms[0];
     //alert("checkAttr,rightid = "+ checkAttr+" "+rightid);
+    //$('.form_appdatetime').datetimepicker('hide'); 
     if (checkAttr>0) {
       var x = document.forms['upgradeform'];
       var i, j;
@@ -47,11 +48,25 @@
               if (rightids[j] != componentvalue) {
 	 	switch(componentname) {
 		  case "u_model":
+                    $("#u_model option:not(:selected)").prop("disabled","true");
                     //$("#u_model option").not(":selected").attr("disabled","disabled");
-		    x[i].setAttribute("disabled", true);
+		    //x[i].setAttribute("disabled", true);
 		    break;
 		  case "u_appointmentdatetime":
-		    $('span.u_dt').hide();
+		    //alert("line 56");
+     		    $('.form_u_appointmentdatetime').datetimepicker('remove');
+		    //x[i].setAttribute("disabled", true);
+		    //$('span.s_u_appointmentdatetime').hide();
+		    break;
+		  case "tc_appointmentdatetime":
+     		    $('.form_tc_appointmentdatetime').datetimepicker('remove');
+		    //x[i].setAttribute("disabled", true);
+		    //$('span.s_tc_appointmentdatetime').hide();
+		    break;
+		  case "com_date":
+     		    $('.form_datetime').datetimepicker('remove');
+		    //x[i].setAttribute("disabled", true);
+		    //$('span.s_com_date').hide();
 		    break;
 	          default:
                     x[i].setAttribute("readonly", true);
@@ -63,11 +78,25 @@
               if (rightids[j] == componentvalue) {
 		switch(componentname) {
 		  case "u_model":
-                    //$("#u_model option").not(":selected").attr("disabled","");
-		    x[i].removeAttribute("disabled");
+                    //$("#u_model option").not(":selected").attr("disabled","false");
+                    $("#u_model option:not(:selected)").prop("disabled",null);
+		    //x[i].removeAttribute("disabled");
 		    break;
 		  case "u_appointmentdatetime":
-		    $('span.u_dt').show();
+		    //alert("line 83");
+     		    $('.form_u_appointmentdatetime').datetimepicker('show');
+		    //x[i].removeAttribute("disabled");
+		    //$('span.s_u_appointmentdatetime').show();
+		    break;
+		  case "tc_appointmentdatetime":
+     		    $('.form_tc_appointmentdatetime').datetimepicker('show');
+		    //x[i].removeAttribute("disabled");
+		    //$('span.s_tc_appointmentdatetime').show();
+		    break;
+		  case "com_date":
+     		    $('.form_datetime').datetimepicker('show');
+		    //x[i].removeAttribute("disabled");
+		    //$('span.s_com_date').show();
 		    break;
 		  default:
                     x[i].removeAttribute("readonly");
@@ -85,7 +114,7 @@
 
   function getstaffinfo(str, vform) {
     //get staff info by staffid
-    alert("str = "+str+" vform="+vform);
+    alert("zzz117:upgrades/get_staffinfo/"+str+"/"+vform);
     if (str == "") {
       return;
     } else {
@@ -94,8 +123,11 @@
         if (this.readyState == 4 && this.status == 200) {
           document.getElementById(vform).innerHTML = this.responseText;
         }
-      };
-      xmlhttp.open("GET","upgrades/get_staffinfo/"+str+"/"+vform,true);
+      };	
+      //alert("zzz127:"+window.location.pathname);	
+      //var url = windows.location.host + windows.location.pathname
+      xmlhttp.open("GET","http://10.39.8.113/dev/hs2/index.php/upgrades/get_staffinfo/"+str+"/"+vform,true);
+      //xmlhttp.open("GET","upgrades/get_staffinfo/1352731/v_upgradeCompletion",true);
       xmlhttp.send();
     }
   };
@@ -182,6 +214,13 @@
       }
     });
     showCustomAttr(this);
+    //prevent enter to submit
+    $(window).keydown(function(event){
+      if (event.keyCode == 13) {
+        event.preventDefault();
+        return false;
+      }
+    });
 /*
     var id = document.getElementById("appointment_msg").id;
     showErrMsg(id,''); 
@@ -294,7 +333,7 @@
       <div class="form-group">
         <label class="col-sm-2 control-label">Upgrade Router Model: </label>
         <div class="col-sm-10 dropdown"> 
-	  <select class="form-control" id="u_model" name="u_model" wid="5" rid="5" >
+	  <select class="form-control" id="u_model" name="u_model" wid="4" rid="5" >
 	    <?php echo "<option value='' ".(($upgradesinfo['u_model']==0)?'selected':'') .">Please select</option>";
 	    foreach ($upgradesinfo['tab_model'] as $row) 
 	    {
@@ -315,10 +354,10 @@
 
       <div class="form-group">
         <label for="dtp_u_appointment_input" class="col-sm-2 control-label">Appointment Date/Time:</label>
-        <div class="input-group date form_appdatetime col-md-7" data-date-format="yyyy-mm-dd hh:ii" data-link-field="dtp_u_appointment_input">
-          <input class="form-control" id="u_appointmentdatetime" size="10" type="text" name="u_appointmentdatetime" wid="5" rid="5" value="<?php echo $upgradesinfo['u_appointmentdatetime']; ?>" readonly>
-          <span class="input-group-addon u_dt" ><span class="glyphicon glyphicon-remove"></span></span>
-          <span class="input-group-addon u_dt" ><span class="glyphicon glyphicon-th"></span></span>
+        <div class="input-group date form_u_appointmentdatetime col-md-7" data-date-format="yyyy-mm-dd hh:ii" data-link-field="dtp_u_appointment_input">
+          <input class="form-control" id="u_appointmentdatetime" size="10" type="text" name="u_appointmentdatetime" wid="4" rid="5" value="<?php echo $upgradesinfo['u_appointmentdatetime']; ?>" readonly>
+          <span class="input-group-addon s_u_appointmentdatetime" ><span class="glyphicon glyphicon-remove"></span></span>
+          <span class="input-group-addon s_u_appointmentdatetime" ><span class="glyphicon glyphicon-th"></span></span>
         </div>
         <input type="hidden" id="dtp_u_appointment_input" value="" /><br/>
       </div>
@@ -397,40 +436,14 @@
 
       <div class="form-group">
         <label for="dtp_tc_appointment_input" class="col-sm-3 control-label">Appointment Date/Time:</label>
-        <div class="input-group date form_appdatetime col-sm-7" date-date-format="yyyy-mm-dd hh:ii" date-link-field="dtp_tc_appointment_input"> 
-	  <input class="form-control" id="tc_appointmentdatetime" size="10" type="text" name="tc_appointmentdatetime" wid="5" rid="5" value="<?php echo $upgradesinfo['tc_appointmentdatetime']; ?>" readonly> 
-          <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-          <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+        <div class="input-group date form_tc_appointmentdatetime col-sm-7" date-date-format="yyyy-mm-dd hh:ii" date-link-field="dtp_tc_appointment_input"> 
+	  <input class="form-control" id="tc_appointmentdatetime" size="10" type="text" name="tc_appointmentdatetime" wid="4" rid="5" value="<?php echo $upgradesinfo['tc_appointmentdatetime']; ?>" readonly> 
+          <span class="input-group-addon s_tc_appointmentdatetime"><span class="glyphicon glyphicon-remove"></span></span>
+          <span class="input-group-addon s_tc_appointmentdatetime"><span class="glyphicon glyphicon-th"></span></span>
 	</div>
         <input type="hidden" id="dtp_tc_appointment_input" value="" /><br/>
       </div>
 
-<!--
-      <div class="form-group">
-        <label class="col-sm-3 control-label">Appointment Date/Time:</label>
-        <div class="col-sm-5"> 
-	  <input class="form-control" id="tc_appointmentdate" type="text" name="tc_appointmentdate" wid="5" rid="5" value="<?php echo $upgradesinfo['tc_appointmentdate']; ?>"> 
-	</div>
-        <div class="col-sm-4"> 
-	  <input class="form-control" id="tc_appointmenttime" type="text" name="tc_appointmenttime" wid="5" rid="5" value="<?php echo $upgradesinfo['tc_appointmenttime']; ?>"> 
-	
-	  <select class="form-control" id="tctime" name="tctime" sid="5" rid="5">
-	  <option value="0900">0900</option>
-	  <option value="1000">1000</option>
-	  <option value="1100">1100</option>
-	  <option value="1200">1200</option>
-	  <option value="1300">1300</option>
-	  <option value="1400">1400</option>
-	  <option value="1500">1500</option>
-	  <option value="1600">1600</option>
-	  <option value="1700">1700</option>
-	  <option value="1800">1800</option>
-	  <option value="1900">1900</option>
-	  <option value="2000">2000</option>
-	  </select>
-	//-->
-	</div>
-      </div>
 
       <div class="form-group">
         <div class="col-sm-10">&nbsp;</div>
@@ -451,9 +464,9 @@
       <div class="form-group">
         <label for="dtp_com_input" class="col-md-3 control-label">Completion Date:</label>
         <div class="input-group date form_datetime col-md-7" data-date-format="yyyy-mm-dd" data-link-field="dtp_com_input">
-          <input class="form-control" id="com_date" size="10" type="text" name="com_date" wid="5" rid="5" value="<?php echo $upgradesinfo['com_date']; ?>" readonly>
-          <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-          <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+          <input class="form-control" id="com_date" size="10" type="text" name="com_date" wid="4" rid="5" value="<?php echo $upgradesinfo['com_date']; ?>" readonly>
+          <span class="input-group-addon s_com_date"><span class="glyphicon glyphicon-remove"></span></span>
+          <span class="input-group-addon s_com_date"><span class="glyphicon glyphicon-calendar"></span></span>
         </div>
         <input type="hidden" id="dtp_com_input" value="" /><br/>
       </div>
@@ -520,7 +533,7 @@
           //endDate: edate
           //initalDate: today
      });
-     $('.form_appdatetime').datetimepicker({
+     $('.form_tc_appointmentdatetime').datetimepicker({
           //minView: 2,
           //todayBtn:  1,
           autoclose: 1,
@@ -529,8 +542,21 @@
           forceParse: 0,
           minuteStep: 60,
           startDate: sdate,
-          endDate: edate
+          endDate: edate,
           //initalDate: today
      });
+     $('.form_u_appointmentdatetime').datetimepicker({
+          //minView: 2,
+          //todayBtn:  1,
+          autoclose: 1,
+          todayHighlight: 1,
+          startView: 2,
+          forceParse: 0,
+          minuteStep: 60,
+          startDate: sdate,
+          endDate: edate,
+          //initalDate: today
+     });
+
    </script>
 

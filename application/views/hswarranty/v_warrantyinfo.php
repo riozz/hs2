@@ -52,10 +52,52 @@
 	  for (j=0; j<rightids.length; j++) {
 	    if (rightids[j] != ",") {
 	      if (rightids[j] != componentvalue) {
-	        x[i].setAttribute("readonly", true);
+		switch(componentname) {
+		  case "w_category":
+		    $("#w_category option:not(:selected)").prop("disabled","true");
+		    break;
+		  case "w_package":
+		    $("#w_package option:not(:selected)").prop("disabled","true");
+		    break;
+		  case "w_effdate":
+		    $('.form_w_effdate').datetimepicker('remove'); 
+		    //$('span.s_w_effdate').hide();
+		    break;
+		  case "tc_appointmentdatetime":
+		    $('.form_tc_appointmentdatetime').datetimepicker('remove'); 
+		    //$('span.s_tc_appointmentdatetime').hide();
+		    break;
+		  case "com_date":
+		    $('.form_com_date').datetimepicker('remove'); 
+		    //$('span.s_com_date').hide();
+		    break;
+		  default:
+	            x[i].setAttribute("readonly", true);
+		}
 	      }
 	      if (rightids[j] == componentvalue) {
-	        x[i].removeAttribute("readonly");
+		switch(componentname) {
+		  case "w_category":
+		    $("#w_category option:not(:selected)").prop("disabled",null);
+		    break;
+		  case "w_package":
+		    $("#w_package option:not(:selected)").prop("disabled",null);
+		    break;
+		  case "w_effdate":
+		    $('.form_w_effdate').datetimepicker('show'); 
+		    //$('span.s_w_effdate').show();
+		    break;
+		  case "tc_appointmentdatetime":
+		    $('.form_tc_appointmentdatetime').datetimepicker('show'); 
+		    //$('span.s_tc_appointmentdatetime').show();
+		    break;
+		  case "com_date":
+		    $('.form_com_date').datetimepicker('show'); 
+		    //$('span.s_com_date').show();
+		    break;
+		  default:
+	            x[i].removeAttribute("readonly");
+		}
 	      }
 	    }
 	  }
@@ -71,7 +113,7 @@
   
   function getstaffinfo(str, vform) {
     //get staff info by staffid
-    alert("str = "+str+" vform="+vform);
+    alert("v_warrantyinfo@110:str = "+str+" vform="+vform);
     if (str == "") {
       return;
     } else {
@@ -81,7 +123,7 @@
 	  document.getElementById(vform).innerHTML = this.responseText;
 	}
       };
-      xmlhttp.open("GET","warrantys/get_staffinfo/"+str+"/"+vform,true);
+      xmlhttp.open("GET","http://10.39.8.113/dev/hs2/index.php/warrantys/get_staffinfo/"+str+"/"+vform,true);
       xmlhttp.send();
     }
   };
@@ -189,6 +231,14 @@
       }
     });
     showCustomAttr(this);
+    //prevent enter to submit
+    $(window).keydown(function(event){
+      if (event.keyCode == 13) {
+        event.preventDefault();
+        return false;
+      }
+    });
+
 
 /*
     var id = document.getElementById("appointment_msg").id;
@@ -301,7 +351,7 @@
      <div class="form-group">
        <label class="col-sm-2 control-label">Maintenance Category: </label>
        <div class="col-sm-5 dropdown"> 
-	  <select class="form-control" id="w_category" name="w_category" sid="5" rid="5">
+	  <select class="form-control" id="w_category" name="w_category" wid="4" rid="5">
 	  <?php echo "<option value='' ".(($warrantysinfo['w_category']==0)?'selected':'') .">Please select</option>";
 	  foreach ($warrantysinfo['tab_category'] as $row) 
 	  {
@@ -315,7 +365,7 @@
      <div class="form-group">
        <label class="col-sm-2 control-label">Warranty Package: </label>
        <div class="col-sm-5 dropdown"> 
-	  <select class="form-control" id="w_package" name="w_package" sid="5" rid="5">
+	  <select class="form-control" id="w_package" name="w_package" wid="4" rid="5">
           <?php echo "<option value='' ".(($warrantysinfo['w_package']==0)?'selected':'') .">Please select</option>";
 	    foreach ($warrantysinfo['tab_package'] as $row) 
 	    {
@@ -337,15 +387,15 @@
       <div class="form-group">
         <label class="col-sm-2 control-label">Sales Memo Number:</label>
         <div class="col-sm-10"> 
-	  <input class="form-control" id="w_smno" type="text" name="w_smno" wid="5" rid="5" value="<?php echo $warrantysinfo['w_smno']; ?>"> </div>
+	  <input class="form-control" id="w_smno" type="text" name="w_smno" wid="4" rid="5" value="<?php echo $warrantysinfo['w_smno']; ?>"> </div>
       </div>
 
       <div class="form-group">
         <label for="dtp_input1" class="col-md-2 control-label">Effective Date:</label>
-        <div class="input-group date form_datetime col-md-8" data-date-format="yyyy-mm-dd" data-link-field="dtp_input1">
-          <input class="form-control" id="w_effdate" size="10" type="text" name="w_effdate" wid="5" rid="5" value="<?php echo $warrantysinfo['w_effdate']; ?>" readonly>
-          <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-          <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+        <div class="input-group date form_w_effdate col-md-8" data-date-format="yyyy-mm-dd" data-link-field="dtp_input1">
+          <input class="form-control" id="w_effdate" size="10" type="text" name="w_effdate" wid="4" rid="5" value="<?php echo $warrantysinfo['w_effdate']; ?>" readonly>
+          <span class="input-group-addon s_w_effdate"><span class="glyphicon glyphicon-remove"></span></span>
+          <span class="input-group-addon s_w_effdate"><span class="glyphicon glyphicon-calendar"></span></span>
         </div>
         <input type="hidden" id="dtp_input1" value="" /><br/>
       </div>
@@ -415,10 +465,10 @@
 
      <div class="form-group">
         <label for="dtp_appointment_input" class="col-md-3 control-label">Appointment Date/Time:</label>
-        <div class="input-group date form_appdatetime col-md-7" data-date-format="yyyy-mm-dd hh:ii" data-link-field="dtp_appointment_input">
-          <input class="form-control" id="tc_appointmentdatetime" size="10" type="text" name="tc_appointmentdatetime" wid="5" rid="5" value="<?php echo $warrantysinfo['tc_appointmentdatetime']; ?>" readonly>
-          <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-          <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+        <div class="input-group date form_tc_appointmentdatetime col-md-7" data-date-format="yyyy-mm-dd hh:ii" data-link-field="dtp_appointment_input">
+          <input class="form-control" id="tc_appointmentdatetime" size="10" type="text" name="tc_appointmentdatetime" wid="4" rid="5" value="<?php echo $warrantysinfo['tc_appointmentdatetime']; ?>" readonly>
+          <span class="input-group-addon s_tc_appointmentdatetime"><span class="glyphicon glyphicon-remove"></span></span>
+          <span class="input-group-addon s_tc_appointmentdatetime"><span class="glyphicon glyphicon-th"></span></span>
         </div>
         <input type="hidden" id="dtp_appointment_input" value="" /><br/>
       </div>
@@ -467,10 +517,10 @@
 
       <div class="form-group">
         <label for="dtp_com_input" class="col-md-3 control-label">Completion Date:</label>
-        <div class="input-group date form_datetime col-md-7" data-date-format="yyyy-mm-dd" data-link-field="dtp_com_input">
-          <input class="form-control" id="com_date" size="10" type="text" name="com_date" wid="5" rid="5" value="<?php echo $warrantysinfo['com_date']; ?>" readonly>
-          <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-          <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+        <div class="input-group date form_com_date col-md-7" data-date-format="yyyy-mm-dd" data-link-field="dtp_com_input">
+          <input class="form-control" id="com_date" size="10" type="text" name="com_date" wid="4" rid="5" value="<?php echo $warrantysinfo['com_date']; ?>" readonly>
+          <span class="input-group-addon s_com_date"><span class="glyphicon glyphicon-remove"></span></span>
+          <span class="input-group-addon s_com_date"><span class="glyphicon glyphicon-calendar"></span></span>
         </div>
         <input type="hidden" id="dtp_com_input" value="" /><br/>
       </div>
@@ -532,7 +582,7 @@
      var sdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours()+":"+today.getMinutes();
      var weekday = new Date(today.getTime() + 168 * 60 * 60 * 1000);
      var edate = weekday.getFullYear()+'-'+(weekday.getMonth()+1)+'-'+weekday.getDate()+' '+weekday.getHours()+":"+weekday.getMinutes();
-     $('.form_datetime').datetimepicker({
+     $('.form_w_effdate').datetimepicker({
           //language:  'fr',
           //weekStart: 1,
           //showMeridian: 1,
@@ -547,7 +597,7 @@
 	  //endDate: edate
 	  //initalDate: today
      });
-     $('.form_appdatetime').datetimepicker({
+     $('.form_tc_appointmentdatetime').datetimepicker({
 	  //minView: 2,
           //todayBtn:  1,
           autoclose: 1,
@@ -557,6 +607,21 @@
 	  minuteStep: 60,
 	  startDate: sdate,
 	  endDate: edate
+	  //initalDate: today
+     });
+     $('.form_com_date').datetimepicker({
+          //language:  'fr',
+          //weekStart: 1,
+          //showMeridian: 1,
+	  minView: 2,
+          todayBtn:  1,
+          autoclose: 1,
+          todayHighlight: 1,
+          startView: 2,
+          forceParse: 0,
+	  //minuteStep: 30,
+	  startDate: sdate
+	  //endDate: edate
 	  //initalDate: today
      });
    </script>

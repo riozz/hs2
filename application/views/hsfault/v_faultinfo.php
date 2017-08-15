@@ -29,6 +29,7 @@
     //var x = document.forms[0];
     //alert("checkAttr,rightid = "+ checkAttr+" "+rightid);
     var rightids = "<?php echo implode(",",$rightids) ?>";
+    //alert("checkAttr,rightids = "+ checkAttr+" "+rightids.length);
     if (checkAttr>0) {  
       var x = document.forms['faultform'];
       //alert("x = "+ x);
@@ -42,12 +43,67 @@
         //alert("txt = "+txt);
 	if (componentvalue) { //not null
 	  for (j=0; j<rightids.length; j++) {
-	    if ($rightids[j] != ",") {
+            //alert("txt = "+rightids[0]+"~"+rightids[1]+"~"+rightids[2]);
+	    if (rightids[j] != ",") {
 	      if (rightids[j] != componentvalue) {
-	        x[i].setAttribute("readonly", true);
+		switch(componentname) {
+	  	case "c_certtype":
+		  $("#c_certtype option:not(:selected)").prop("disabled","true");
+		  break;
+		case "ia_area":
+		  $("#ia_area option:not(:selected)").prop("disabled","true");
+		  break;
+		case "ia_refordernoprefix":
+		  $("#ia_refordernoprefix option:not(:selected)").prop("disabled","true");
+		  break;
+		case "f_faulttoid":
+		  $("#f_faulttoid option:not(:selected)").prop("disabled","true");
+		  break;
+		case "f_itemtypeid":
+		  $("#f_itemtypeid option:not(:selected)").prop("disabled","true");
+		  break;
+		case "f_transfertoid":
+		  $("#f_transfertoid option:not(:selected)").prop("disabled","true");
+		  break;
+		case "appointment":
+		  $("#appointment option:not(:selected)").prop("disabled","true");
+		  break;
+		case "f_symptomid":
+		  $("#f_symptomid option:not(:selected)").prop("disabled","true");
+		  break;
+		default:
+		  x[i].setAttribute("readonly", true);
+		}
 	      }
 	      if (rightids[j] == componentvalue) {
-	        x[i].removeAttribute("readonly");
+		switch(componentname) {
+	  	case "c_certtype":
+		  $("#c_certtype option:not(:selected)").prop("disabled",null);
+		  break;
+		case "ia_area":
+		  $("#ia_area option:not(:selected)").prop("disabled",null);
+		  break;
+		case "ia_refordernoprefix":
+		  $("#ia_refordernoprefix option:not(:selected)").prop("disabled",null);
+		  break;
+		case "f_faulttoid":
+		  $("#f_faulttoid option:not(:selected)").prop("disabled",null);
+		  break;
+		case "f_itemtypeid":
+		  $("#f_itemtypeid option:not(:selected)").prop("disabled",null);
+		  break;
+		case "f_transfertoid":
+		  $("#f_transfertoid option:not(:selected)").prop("disabled",null);
+		  break;
+		case "appointment":
+		  $("#appointment option:not(:selected)").prop("disabled",null);
+		  break;
+		case "f_symptomid":
+		  $("#f_symptomid option:not(:selected)").prop("disabled",null);
+		  break;
+		default:
+	          x[i].removeAttribute("readonly");
+		}
 	      }
 	    } 
 	  }
@@ -141,6 +197,13 @@
     });
     //alert("ZZZ");
     showCustomAttr(this);
+    $(window).keydown(function(event){
+      if (event.keyCode == 13) {
+        event.preventDefault();
+        return false;
+      }
+    });
+
 
 /*
     var id = document.getElementById("appointment_msg").id;
@@ -268,9 +331,9 @@
     ?>
     <div class="form-group">
       <label class="col-sm-3">
-      <input type="radio" name="c_certtype" wid="5" rid="5" value="HKID" <?php echo (strpos(strtoupper($faultsinfo['c_uid']),'HKID')===false)?'':'checked'; ?>>HKID&nbsp;&nbsp;&nbsp;
-      <input type="radio" name="c_certtype" wid="5" rid="5" value="BR" <?php echo (strpos(strtoupper($faultsinfo['c_uid']),'BR')===false)?'':'checked'; ?>>BR&nbsp;&nbsp;&nbsp;
-      <input type="radio" name="c_certtype" wid="5" rid="5" value="PS" <?php echo (strpos(strtoupper($faultsinfo['c_uid']),'PS')===false)?'':'checked'; ?>>PS
+      <input type="radio" name="c_certtype" wid="4" rid="5" value="HKID" <?php echo (strpos(strtoupper($faultsinfo['c_uid']),'HKID')===false)?'':'checked'; ?>>HKID&nbsp;&nbsp;&nbsp;
+      <input type="radio" name="c_certtype" wid="4" rid="5" value="BR" <?php echo (strpos(strtoupper($faultsinfo['c_uid']),'BR')===false)?'':'checked'; ?>>BR&nbsp;&nbsp;&nbsp;
+      <input type="radio" name="c_certtype" wid="4" rid="5" value="PS" <?php echo (strpos(strtoupper($faultsinfo['c_uid']),'PS')===false)?'':'checked'; ?>>PS
       </label>
 
       <div class="col-sm-3">
@@ -331,7 +394,7 @@
 	    <?php $areacode=substr($faultsinfo['ia_area'],0,2); ?>
    	    <label class="col-sm-2 control-label">[ Area ]</label>
       	    <div class="col-sm-4 dropdown">
-	      <select class="form-control" id="area" name="ia_area" wid="5" rid="5">
+	      <select class="form-control" id="ia_area" name="ia_area" wid="5" rid="5">
 	         <option value="" <?php echo ($areacode=='')?'selected':''; ?>>Please select</option>
 	         <option value="HK" <?php echo ($areacode=='HK')?'selected':''; ?>>HK-Hong Kong Island</option>
 	         <option value="KLN" <?php echo ($areacode=='KL')?'selected':''; ?>>KLN-Kowloon</option>
@@ -351,7 +414,7 @@
       <div class="form-group">
         <label class="col-sm-2 control-label">Ref. Order No</label>
         <div class="col-sm-3 dropdown">
-          <select class="form-control" id="reforderno" name="ia_refordernoprefix" wid="5" rid="5">
+          <select class="form-control" id="ia_refordernoprefix" name="ia_refordernoprefix" wid="5" rid="5">
 	    <option value="SL">SL</option>
 	    <option value="AA">AA</option>
 	  </select>
@@ -374,7 +437,7 @@
 	  <?php foreach ($faultsinfo['reportto'] as $row) 
 	    {
               //echo "<label class='radio-inline'><input type='radio' name='faultto' value='".$row['id']."' >".$row['desc']."</label>";
-              echo "<label class='radio-inline'><input type='radio' name='f_faulttoid'  wid='5' rid='5' value='".$row['id']."' ". (($row['id']==$faultsinfo['f_reporttoid'])?'checked':'')  ." />".$row['content']."</label>";
+              echo "<label class='radio-inline'><input type='radio' id='f_faulttoid' name='f_faulttoid'  wid='5' rid='5' value='".$row['id']."' ". (($row['id']==$faultsinfo['f_reporttoid'])?'checked':'')  ." />".$row['content']."</label>";
 	    }
 	  ?>
 	</div>
@@ -384,8 +447,8 @@
         <label class="col-sm-1 control-label"></label>
         <label class="col-sm-3 control-label">[ Fault Category ]</label>
         <div class="col-sm-8"> 
-          <label class="checkbox-inline"> <input type="checkbox" value="PCD" name="f_pcd" wid="5" rid="5" <?php echo (strpos(strtoupper($faultsinfo['f_category']),"PCD")===false)?'':'checked'; ?>>PCD</label>
-	  <label class="checkbox-inline"> <input type="checkbox" value="LTS" name="f_lts" wid="5" rid="5" <?php echo (strpos(strtoupper($faultsinfo['f_category']),"LTS")===false)?'':'checked'; ?>>LTS</label>
+          <label class="checkbox-inline"> <input type="checkbox" value="PCD" name="f_pcd" wid="4" rid="5" <?php echo (strpos(strtoupper($faultsinfo['f_category']),"PCD")===false)?'':'checked'; ?>>PCD</label>
+	  <label class="checkbox-inline"> <input type="checkbox" value="LTS" name="f_lts" wid="4" rid="5" <?php echo (strpos(strtoupper($faultsinfo['f_category']),"LTS")===false)?'':'checked'; ?>>LTS</label>
 	</div>
       </div>
 
@@ -393,7 +456,7 @@
         <label class="col-sm-1 control-label"></label>
         <label class="col-sm-3 control-label">[ Fault Symptom ]</label>
         <div class="col-sm-8"> 
-          <select class="form-control" id="faultsym" name="f_symptomid" wid="5" rid="5">
+          <select class="form-control" id="f_symptomid" name="f_symptomid" wid="4" rid="5">
 	    <?php echo "<option value='' ".(($faultsinfo['f_symptomid']==0)?'selected':'') . ">Please select</option>";
 	      foreach ($faultsinfo['tab_symptom'] as $row) 
               {
@@ -416,7 +479,7 @@
       <label class="col-sm-1 control-label"></label>
       <label class="col-sm-3 control-label">[ Item Type ]</label>
       <div class="col-sm-8"> 
-        <select class="form-control" id="itemtype" name="f_itemtypeid" wid="5" rid="5">
+        <select class="form-control" id="f_itemtypeid" name="f_itemtypeid" wid="4" rid="5">
 	  <?php echo "<option value='' ".(($faultsinfo['f_itemtypeid']==0)?'selected':'') . ">Please select</option>";
 	    foreach ($faultsinfo['tab_itemtype'] as $row) 
             {

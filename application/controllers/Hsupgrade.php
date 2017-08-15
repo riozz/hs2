@@ -13,6 +13,7 @@
 
     public function index($oid = 0, $uid = 0)
     {
+      log_message('debug', 'zzz[index.php:16]');
       $page = 'index';
       if ( ! file_exists(APPPATH.'views/hsupgrade/'.$page.'.php'))
       {
