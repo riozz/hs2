@@ -2,7 +2,7 @@
 <?php echo log_message('debug', 'zzz[v_upgradehistory]2:'. json_encode($upgrades)); ?>
 <table class="table table-hover">
 <thead>
- <tr><th>Upgrade ID</th><th>Created Date</th><th>Staff Name</th><th>TC Name</th><th>Completed by</th><th>Detail</th></tr>
+ <tr><th>Upgrade/Addon ID</th><th>Created Date</th><th>Staff Name</th><th>TC Name</th><th>Completed by</th><th>Detail</th></tr>
 </thead>
 <tbody>
  <?php 
@@ -16,7 +16,7 @@
      echo "<td>".$upgrades_item['staff_name']."</td>";
      echo "<td>".$upgrades_item['tc_staff_name']."</td>";
      echo "<td>".$upgrades_item['com_staff_name']."</td>";
-     echo "<td><a href=".site_url('hsupgrade/index/'.$upgrades_item['orders_id'].'/'.$upgrades_item['id']).">Upgrade detail</a></td></tr>";
+     echo "<td><a href=".site_url('hsupgrade/index/'.$upgrades_item['orders_id'].'/'.$upgrades_item['id']).">Detail</a></td></tr>";
     endforeach; 
   } else {
      echo "<tr><td colspan=5>NO data found</td></tr>";

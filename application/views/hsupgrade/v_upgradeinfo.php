@@ -516,7 +516,7 @@
    <script type="text/javascript">
      var today = new Date();
      var sdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours()+":"+today.getMinutes();
-     var weekday = new Date(today.getTime() + 168 * 60 * 60 * 1000);
+     var weekday = new Date(today.getTime() + 1440 * 60 * 60 * 1000); //day * 24
      var edate = weekday.getFullYear()+'-'+(weekday.getMonth()+1)+'-'+weekday.getDate()+' '+weekday.getHours()+":"+weekday.getMinutes();
      $('.form_datetime').datetimepicker({
           //language:  'fr',
@@ -540,7 +540,7 @@
           todayHighlight: 1,
           startView: 2,
           forceParse: 0,
-          minuteStep: 60,
+          minuteStep: 30,
           startDate: sdate,
           endDate: edate,
           //initalDate: today
@@ -552,7 +552,7 @@
           todayHighlight: 1,
           startView: 2,
           forceParse: 0,
-          minuteStep: 60,
+          minuteStep: 30,
           startDate: sdate,
           endDate: edate,
           //initalDate: today

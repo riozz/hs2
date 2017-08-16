@@ -264,9 +264,9 @@
     });
 */
 
-    $('#warrantySubmit').click(function() {
-      showCustomAttr(this);
-    });
+    //$('#warrantySubmit').click(function() {
+      //showCustomAttr(this);
+    //});
  
 /*
     $('#faultForm').submit(function(e) {
@@ -463,7 +463,7 @@
      </div>
     </div>
 
-     <div class="form-group">
+      <div class="form-group">
         <label for="dtp_appointment_input" class="col-md-3 control-label">Appointment Date/Time:</label>
         <div class="input-group date form_tc_appointmentdatetime col-md-7" data-date-format="yyyy-mm-dd hh:ii" data-link-field="dtp_appointment_input">
           <input class="form-control" id="tc_appointmentdatetime" size="10" type="text" name="tc_appointmentdatetime" wid="4" rid="5" value="<?php echo $warrantysinfo['tc_appointmentdatetime']; ?>" readonly>
@@ -472,32 +472,6 @@
         </div>
         <input type="hidden" id="dtp_appointment_input" value="" /><br/>
       </div>
-
-<!--
-      <div class="form-group">
-        <label class="col-sm-3 control-label">Appointment Date/Time:</label>
-        <div class="col-sm-6"> 
-	  <input class="form-control" id="tc_appointmentdate" type="text" name="tc_appointmentdate" wid="5" rid="5" value="<?php echo $warrantysinfo['tc_appointmentdate']; ?>"> 
-	</div>
-        <div class="col-sm-3"> 
-	  <input class="form-control" id="tc_appointmenttime" type="text" name="tc_appointmenttime" wid="5" rid="5" value="<?php echo $warrantysinfo['tc_appointmenttime']; ?>"> 
-	  <select class="form-control" id="tctime" name="tctime" sid="5" rid="5">
-	  <option value="0900">0900</option>
-	  <option value="1000">1000</option>
-	  <option value="1100">1100</option>
-	  <option value="1200">1200</option>
-	  <option value="1300">1300</option>
-	  <option value="1400">1400</option>
-	  <option value="1500">1500</option>
-	  <option value="1600">1600</option>
-	  <option value="1700">1700</option>
-	  <option value="1800">1800</option>
-	  <option value="1900">1900</option>
-	  <option value="2000">2000</option>
-	  </select>
-	</div>
-      </div>
-//-->
 
       <div class="form-group">
         <div class="col-sm-10">&nbsp;</div>
@@ -580,7 +554,7 @@
    <script type="text/javascript">
      var today = new Date();
      var sdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours()+":"+today.getMinutes();
-     var weekday = new Date(today.getTime() + 168 * 60 * 60 * 1000);
+     var weekday = new Date(today.getTime() + 1440 * 60 * 60 * 1000); //days * 24
      var edate = weekday.getFullYear()+'-'+(weekday.getMonth()+1)+'-'+weekday.getDate()+' '+weekday.getHours()+":"+weekday.getMinutes();
      $('.form_w_effdate').datetimepicker({
           //language:  'fr',
@@ -604,7 +578,7 @@
           todayHighlight: 1,
           startView: 2,
           forceParse: 0,
-	  minuteStep: 60,
+	  minuteStep: 30,
 	  startDate: sdate,
 	  endDate: edate
 	  //initalDate: today

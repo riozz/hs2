@@ -3,8 +3,8 @@
 
             <div class="col-md-9">
 	   	<div class="row">
-    		  <div class="alert alert-info"><h3>Upgrade Management &nbsp;&nbsp;&nbsp
-      		  <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#upgradeinfo">Upgrade Info</button></h3>&nbsp;&nbsp;&nbsp;
+    		  <div class="alert alert-info"><h3>Upgrade/Addon Management &nbsp;&nbsp;&nbsp
+      		  <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#upgradeinfo">Upgrade/Addon Info</button></h3>&nbsp;&nbsp;&nbsp;
       		  <!--<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#upgradeinfo">Upgrade Info</button>&nbsp;&nbsp;&nbsp;
       		  <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#tcassignmentinfo">TC Assignment Info</button>&nbsp;&nbsp;&nbsp;
       		  <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#tccompletioninfo">TC Completion Info</button>-->
@@ -117,7 +117,7 @@
  
 <!-- history by ajax -->
                 <div class="thumbnail">
-		  <div class="alert alert-warning"><h3>Upgrade History</h3></div>
+		  <div class="alert alert-warning"><h3>Upgrade/Addon History</h3></div>
 		    <div id="history">
 		    </div>
 		</div>

@@ -70,9 +70,11 @@ class Faults_model extends CI_Model {
 		sf.serial f_serial, 
 		sf.transfertoid f_transfertoid,
 		sf.appointmentid f_appointmentid, 
+		sf.appointmentdatetime,
 		a.`date` appointmentdate,
 		a.`timeslot` appointmenttimeslot,
 		sf.details f_details, 
+		sf.resolve_details,
 		sf.updatetime f_updatetime, 
 		sf.createdby f_createdby, 
 		sf.createddate f_createddate
@@ -119,7 +121,9 @@ class Faults_model extends CI_Model {
 		'' f_serial, 
 		0 f_transfertoid,
 		0 f_appointmentid, 
+		'' appointmentdatetime, 
 		'' f_details, 
+		'' resolve_details, 
 		'' f_updatetime, 
 		'' f_createdby, 
 		'' f_createddate
@@ -193,10 +197,18 @@ class Faults_model extends CI_Model {
           $ia_reforderno = $this->input->post('ia_reforderno');
           $ia_reforderno = (strlen($ia_reforderno>0))?($ia_refordernoprefix.':'.$ia_reforderno):'';
           $f_faulttoid = $this->input->post('f_faulttoid');
-          $pcd = $this->input->post('f_pcd');
-          $lts = $this->input->post('f_lts');
-          $f_category = (isset($pcd)?'PCD':'');
-          $f_category = $f_category.' '.(isset($lts)?'LTS':'');
+          //$pcd = $this->input->post('f_pcd');
+          //$lts = $this->input->post('f_lts');
+	  $f_cat1 = $this->input->post('f_cat1');
+	  $f_cat2 = $this->input->post('f_cat2');
+	  $f_cat3 = $this->input->post('f_cat3');
+	  $f_cat4 = $this->input->post('f_cat4');
+	  $f_cat5 = $this->input->post('f_cat5');
+          $f_category = (isset($f_cat1)?'CAT1':'');
+          $f_category = $f_category.' '.(isset($f_cat2)?'CAT2':'');
+          $f_category = $f_category.' '.(isset($f_cat3)?'CAT3':'');
+          $f_category = $f_category.' '.(isset($f_cat4)?'CAT4':'');
+          $f_category = $f_category.' '.(isset($f_cat5)?'CAT5':'');
           $f_symptomid = $this->input->post('f_symptomid');
 	  $f_replacement = 0;
           $f_replacement = $this->input->post('f_replacement');
@@ -207,7 +219,9 @@ class Faults_model extends CI_Model {
           $f_transfertoid = $this->input->post('f_transfertoid');
           $f_appointmentid = $this->input->post('appointment');
           $f_o_appointmentid = $this->input->post('f_o_appointmentid');
+          $appointmentdatetime = $this->input->post('appointmentdatetime');
           $f_details = $this->input->post('f_details');
+          $resolve_details = $this->input->post('resolve_details');
 
 	  $ret['orderid']=$forderid;
 	  $ret['faultid']=$faultid;
@@ -276,7 +290,9 @@ class Faults_model extends CI_Model {
 		'serial' => $f_serial, 
 		'transfertoid' => $f_transfertoid, 
 		'appointmentid' => $f_appointmentid, 
+		'appointmentdatetime' => $appointmentdatetime, 
 		'details' => $f_details, 
+		'resolve_details' => $resolve_details, 
 		'c_name' => $c_name, 
 		'c_uid' => $c_uid, 
 		'c_workingloc' => $c_workingloc, 

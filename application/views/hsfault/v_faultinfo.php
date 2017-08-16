@@ -16,6 +16,8 @@
  ?>
 <script src="<?php echo base_url("js/jquery.min.js"); ?>"></script>
 <script src="<?php echo base_url("js/jquery.validate.min.js"); ?>"></script>
+<script src="<?php echo base_url("js/bootstrap.min.js"); ?>"></script>
+<script type="text/javascript" charset="UTF-8" src="<?php echo base_url("js/bootstrap-datetimepicker.js"); ?>"></script>
 
 <script>
   /*
@@ -48,7 +50,9 @@
 	      if (rightids[j] != componentvalue) {
 		switch(componentname) {
 	  	case "c_certtype":
-		  $("#c_certtype option:not(:selected)").prop("disabled","true");
+		  //$("#c_certtype option:not(:selected)").prop("disabled","true");
+		  //$("#c_certtype option:not(:checked)").attr('disabled',true);
+		  $(".radio_c_certtype:unchecked").prop("disabled", true);
 		  break;
 		case "ia_area":
 		  $("#ia_area option:not(:selected)").prop("disabled","true");
@@ -56,20 +60,33 @@
 		case "ia_refordernoprefix":
 		  $("#ia_refordernoprefix option:not(:selected)").prop("disabled","true");
 		  break;
-		case "f_faulttoid":
-		  $("#f_faulttoid option:not(:selected)").prop("disabled","true");
-		  break;
 		case "f_itemtypeid":
 		  $("#f_itemtypeid option:not(:selected)").prop("disabled","true");
 		  break;
-		case "f_transfertoid":
-		  $("#f_transfertoid option:not(:selected)").prop("disabled","true");
-		  break;
+		//case "f_transfertoid":
+		  //$("#f_transfertoid option:not(:selected)").prop("disabled","true");
+		  //break;
 		case "appointment":
 		  $("#appointment option:not(:selected)").prop("disabled","true");
 		  break;
 		case "f_symptomid":
 		  $("#f_symptomid option:not(:selected)").prop("disabled","true");
+		  break;
+		case "f_cat1":
+		case "f_cat2":
+		case "f_cat3":
+		case "f_cat4":
+		case "f_cat5":
+		  $(".chkbox_cat:unchecked").prop("disabled", true);
+		  break;
+		case "f_replacement":
+		  $(".chkbox_f_replacement:unchecked").prop("disabled", true);
+		  break;
+		case "f_faulttoid":
+		  $(".radio_f_faulttoid:unchecked").prop("disabled", true);
+		  break;
+		case "appointmentdatetime":
+		  $('.form_appointmentdatetime').datetimepicker('remove');
 		  break;
 		default:
 		  x[i].setAttribute("readonly", true);
@@ -78,7 +95,8 @@
 	      if (rightids[j] == componentvalue) {
 		switch(componentname) {
 	  	case "c_certtype":
-		  $("#c_certtype option:not(:selected)").prop("disabled",null);
+		  //$("#c_certtype option:not(:selected)").prop("disabled",null);
+		  $(".radio_c_certtype:unchecked").prop("disabled", false);
 		  break;
 		case "ia_area":
 		  $("#ia_area option:not(:selected)").prop("disabled",null);
@@ -86,20 +104,33 @@
 		case "ia_refordernoprefix":
 		  $("#ia_refordernoprefix option:not(:selected)").prop("disabled",null);
 		  break;
-		case "f_faulttoid":
-		  $("#f_faulttoid option:not(:selected)").prop("disabled",null);
-		  break;
 		case "f_itemtypeid":
 		  $("#f_itemtypeid option:not(:selected)").prop("disabled",null);
 		  break;
-		case "f_transfertoid":
-		  $("#f_transfertoid option:not(:selected)").prop("disabled",null);
-		  break;
+		//case "f_transfertoid":
+		  //$("#f_transfertoid option:not(:selected)").prop("disabled",null);
+		  //break;
 		case "appointment":
 		  $("#appointment option:not(:selected)").prop("disabled",null);
 		  break;
 		case "f_symptomid":
 		  $("#f_symptomid option:not(:selected)").prop("disabled",null);
+		  break;
+		case "f_cat1":
+		case "f_cat2":
+		case "f_cat3":
+		case "f_cat4":
+		case "f_cat5":
+		  $(".chkbox_cat:unchecked").prop("disabled", false);
+		  break;
+		case "f_replacement":
+		  $(".chkbox_f_replacement:unchecked").prop("disabled", false);
+		  break;
+		case "f_faulttoid":
+		  $(".radio_f_faulttoid:unchecked").prop("disabled", false);
+		  break;
+		case "appointmentdatetime":
+		  $('.form_appointmentdatetime').datetimepicker('show');
 		  break;
 		default:
 	          x[i].removeAttribute("readonly");
@@ -176,6 +207,7 @@
 	  required: true
 	},
 	*/
+	/* 
 	appointment: {
 	  //var rurl = <?php echo base_url(); ?>+"index.php/faults/check_appointmentquota/"+document.getElementById("appointment").value;
 	  required: true,
@@ -189,6 +221,7 @@
 	    }
 	  }
 	},
+	*/
 	f_details: {
 	  required: true,
 	  minlength: 3
@@ -331,18 +364,21 @@
     ?>
     <div class="form-group">
       <label class="col-sm-3">
-      <input type="radio" name="c_certtype" wid="4" rid="5" value="HKID" <?php echo (strpos(strtoupper($faultsinfo['c_uid']),'HKID')===false)?'':'checked'; ?>>HKID&nbsp;&nbsp;&nbsp;
-      <input type="radio" name="c_certtype" wid="4" rid="5" value="BR" <?php echo (strpos(strtoupper($faultsinfo['c_uid']),'BR')===false)?'':'checked'; ?>>BR&nbsp;&nbsp;&nbsp;
-      <input type="radio" name="c_certtype" wid="4" rid="5" value="PS" <?php echo (strpos(strtoupper($faultsinfo['c_uid']),'PS')===false)?'':'checked'; ?>>PS
+      <input type="radio" name="c_certtype" class="radio_c_certtype" wid="4" rid="5" value="HKID" <?php echo (strpos(strtoupper($faultsinfo['c_uid']),'HKID')===false)?'':'checked'; ?>>HKID&nbsp;&nbsp;&nbsp;
+      <input type="radio" name="c_certtype" class="radio_c_certtype" wid="4" rid="5" value="BR" <?php echo (strpos(strtoupper($faultsinfo['c_uid']),'BR')===false)?'':'checked'; ?>>BR&nbsp;&nbsp;&nbsp;
+      <input type="radio" name="c_certtype" class="radio_c_certtype" wid="4" rid="5" value="PS" <?php echo (strpos(strtoupper($faultsinfo['c_uid']),'PS')===false)?'':'checked'; ?>>PS
       </label>
 
       <div class="col-sm-3">
         <input class="form-control" id="c_certno" wid="5" rid="5" type="text" value="<?php echo (strlen($uid_no)>0)?$uid_no:''; ?>" name="c_certno" data-toggle="tooltip" data-placement="right" title="Hooray!">
       </div>
+      <label class="col-sm-6 control-label">&nbsp;</label>
+      <!--
       <label class="col-sm-2 control-label">Working location</label>
       <div class="col-sm-4">
-        <input class="form-control" id="c_workingloc" wid="3" rid="5" type="text" value="<?php echo $faultsinfo['c_workingloc']; ?>" name="c_workingloc" >
+        <input class="form-control" id="c_workingloc" wid="5" rid="5" type="text" value="<?php echo $faultsinfo['c_workingloc']; ?>" name="c_workingloc" >
       </div>
+      //-->
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">Contact Number</label>
@@ -437,7 +473,7 @@
 	  <?php foreach ($faultsinfo['reportto'] as $row) 
 	    {
               //echo "<label class='radio-inline'><input type='radio' name='faultto' value='".$row['id']."' >".$row['desc']."</label>";
-              echo "<label class='radio-inline'><input type='radio' id='f_faulttoid' name='f_faulttoid'  wid='5' rid='5' value='".$row['id']."' ". (($row['id']==$faultsinfo['f_reporttoid'])?'checked':'')  ." />".$row['content']."</label>";
+              echo "<label class='radio-inline'><input type='radio' id='f_faulttoid' name='f_faulttoid'  class='radio_f_faulttoid' wid='4' rid='5' value='".$row['id']."' ". (($row['id']==$faultsinfo['f_reporttoid'])?'checked':'')  ." />".$row['content']."</label>";
 	    }
 	  ?>
 	</div>
@@ -447,8 +483,15 @@
         <label class="col-sm-1 control-label"></label>
         <label class="col-sm-3 control-label">[ Fault Category ]</label>
         <div class="col-sm-8"> 
-          <label class="checkbox-inline"> <input type="checkbox" value="PCD" name="f_pcd" wid="4" rid="5" <?php echo (strpos(strtoupper($faultsinfo['f_category']),"PCD")===false)?'':'checked'; ?>>PCD</label>
-	  <label class="checkbox-inline"> <input type="checkbox" value="LTS" name="f_lts" wid="4" rid="5" <?php echo (strpos(strtoupper($faultsinfo['f_category']),"LTS")===false)?'':'checked'; ?>>LTS</label>
+	  <!--
+          <label class="checkbox-inline"> <input type="checkbox" value="PCD" class="chkbox_cat" name="f_pcd" wid="4" rid="5" <?php echo (strpos(strtoupper($faultsinfo['f_category']),"PCD")===false)?'':'checked'; ?>>PCD</label>
+	  <label class="checkbox-inline"> <input type="checkbox" value="LTS" class="chkbox_cat" name="f_lts" wid="4" rid="5" <?php echo (strpos(strtoupper($faultsinfo['f_category']),"LTS")===false)?'':'checked'; ?>>LTS</label>
+	  //-->
+          <label class="checkbox-inline"> <input type="checkbox" value="HA" class="chkbox_cat" name="f_cat1" wid="4" rid="5" <?php echo (strpos(strtoupper($faultsinfo['f_category']),"CAT1")===false)?'':'checked'; ?>>HA</label>
+          <label class="checkbox-inline"> <input type="checkbox" value="HE" class="chkbox_cat" name="f_cat2" wid="4" rid="5" <?php echo (strpos(strtoupper($faultsinfo['f_category']),"CAT2")===false)?'':'checked'; ?>>HE</label>
+          <label class="checkbox-inline"> <input type="checkbox" value="HN" class="chkbox_cat" name="f_cat3" wid="4" rid="5" <?php echo (strpos(strtoupper($faultsinfo['f_category']),"CAT3")===false)?'':'checked'; ?>>HN</label>
+          <label class="checkbox-inline"> <input type="checkbox" value="PABX" class="chkbox_cat" name="f_cat4" wid="4" rid="5" <?php echo (strpos(strtoupper($faultsinfo['f_category']),"CAT4")===false)?'':'checked'; ?>>PABX</label>
+          <label class="checkbox-inline"> <input type="checkbox" value="HS" class="chkbox_cat" name="f_cat5" wid="4" rid="5" <?php echo (strpos(strtoupper($faultsinfo['f_category']),"CAT5")===false)?'':'checked'; ?>>Home Security</label>
 	</div>
       </div>
 
@@ -469,9 +512,15 @@
 
       <div class="form-group">
         <label class="col-sm-1 control-label"></label>
+        <label class="col-sm-3 control-label">[ Fault Details ]</label>
+        <div class="col-sm-8"> <textarea class="form-control" id="faultdetail" row="5" id="faultdetail" name="f_details" wid="5" rid="5"><?php echo $faultsinfo['f_details']; ?></textarea> </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-1 control-label"></label>
         <label class="col-sm-3 control-label">[ Item Replacement ]</label>
         <div class="col-sm-8"> 
-          <label> <input type="checkbox" name="f_replacement" value='1' wid='5' rid='5' <?php echo (($faultsinfo['f_replacement']==0)?'':'checked') ?>>&nbsp;&nbsp;</label>
+          <label> <input type="checkbox" name="f_replacement" class="chkbox_f_replacement" value='1' wid='4' rid='5' <?php echo (($faultsinfo['f_replacement']==0)?'':'checked') ?>>&nbsp;&nbsp;</label>
 	</div>
       </div>
 
@@ -505,6 +554,7 @@
       <label class="col-sm-3 control-label">[ Use ";" for separation ]</label>
     </div>
 
+    <!--
     <div class="form-group">
       <label class="col-sm-1 control-label"></label>
       <label class="col-sm-3 control-label">[ Transfer To ]</label>
@@ -519,8 +569,21 @@
         </select>
       </div>
     </div>
+    //-->
+
+    <div class="form-group">
+      <label class="col-sm-1 control-label"></label>
+      <label for="dtp_appointment_input" class="col-md-3 control-label">[ Appointment ]</label>
+      <div class="input-group date form_appointmentdatetime col-md-7" data-date-format="yyyy-mm-dd hh:ii" data-link-field="dtp_appointment_input">
+        <input class="form-control" id="appointmentdatetime" size="10" type="text" name="appointmentdatetime" wid="4" rid="5" value="<?php echo $faultsinfo['appointmentdatetime']; ?>" readonly>
+        <span class="input-group-addon s_appointmentdatetime"><span class="glyphicon glyphicon-remove"></span></span>
+        <span class="input-group-addon s_appointmentdatetime"><span class="glyphicon glyphicon-th"></span></span>
+      </div>
+      <input type="hidden" id="dtp_appointment_input" value="" /><br/>
+    </div>
 
 
+<!--
     <div class="form-group">
       <label class="col-sm-1 control-label"></label>
       <label class="col-sm-3 control-label">[ Appointment ]</label>
@@ -541,11 +604,12 @@
       <label class="col-sm-3 control-label"></label>
       <label class="col-sm-8 control-label" id="appointment_msg"></label>
   </div>
+// -->
 
   <div class="form-group">
     <label class="col-sm-1 control-label"></label>
-    <label class="col-sm-3 control-label">[ Fault Details ]</label>
-    <div class="col-sm-8"> <textarea class="form-control" id="faultdetail" row="5" id="faultdetail" name="f_details" wid="5" rid="5"><?php echo $faultsinfo['f_details']; ?></textarea> </div>
+    <label class="col-sm-3 control-label">[ Resolve Details ]</label>
+    <div class="col-sm-8"> <textarea class="form-control" id="resolve_details" row="5" id="resolve_details" name="resolve_details" wid="5" rid="5"><?php echo $faultsinfo['resolve_details']; ?></textarea> </div>
   </div>
 
   <div class="form-group">
@@ -558,3 +622,25 @@
   </div>
 </div>
 </form>
+
+<!-- datetime picker -->
+   <script type="text/javascript">
+     var today = new Date();
+     var sdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours()+":"+today.getMinutes();
+     var weekday = new Date(today.getTime() + 1440 * 60 * 60 * 1000); //days * 24
+     var edate = weekday.getFullYear()+'-'+(weekday.getMonth()+1)+'-'+weekday.getDate()+' '+weekday.getHours()+":"+weekday.getMinutes();
+     $('.form_appointmentdatetime').datetimepicker({
+          //weekStart: 1,
+          //showMeridian: 1,
+          //todayBtn:  1,
+          autoclose: 1,
+          todayHighlight: 1,
+          startView: 2,
+          forceParse: 0,
+          minuteStep: 30,
+          startDate: sdate,
+          endDate: edate
+          //initalDate: today
+     });
+  </script>
+
