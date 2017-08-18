@@ -72,11 +72,11 @@
 		case "f_symptomid":
 		  $("#f_symptomid option:not(:selected)").prop("disabled","true");
 		  break;
-		case "f_cat1":
-		case "f_cat2":
-		case "f_cat3":
-		case "f_cat4":
-		case "f_cat5":
+		case "f_cat[]":
+		//case "f_cat[1]":
+		//case "f_cat[2]":
+		//case "f_cat[3]":
+		//case "f_cat[4]":
 		  $(".chkbox_cat:unchecked").prop("disabled", true);
 		  break;
 		case "f_replacement":
@@ -152,10 +152,6 @@
     $('#faultForm').validate({
       rules: {
 	/*
-	c_name: { 
-	  required: true,
-	  minlength: 5
-	},
 	c_certtype: {
 	  required: true
 	},
@@ -163,29 +159,7 @@
 	  required: true,
 	  minlength: 3
 	},
-	c_contact: {
-	  required: true,
-	  digits: true
-	},
-	c_ndcontact: {
-	  required: false,
-	  digits: true
-	},
-	c_officetel: {
-	  required: false,
-	  digits: true
-	},
-        c_email: {
-          required: true,
-          email: true
-        },
-	f_faulttoid: {
-	  required: true
-	},
 	f_transfertoid: {
-	  required: true
-	},
-	f_symptomid: {
 	  required: true
 	},
 	f_itemtypeid: {
@@ -222,6 +196,38 @@
 	  }
 	},
 	*/
+	c_name: { 
+	  required: true,
+	  minlength: 5
+	},
+	c_contact: {
+	  //required: true,
+	  number: true,
+	  minlength: 8
+	},
+	c_ndcontact: {
+	  //required: false,
+	  number: true,
+	  minlength: 8
+	},
+	c_officetel: {
+	  //required: false,
+	  number: true,
+	  minlength: 8
+	},
+        c_email: {
+          //required: true,
+          email: true
+        },
+	f_faulttoid: {
+	  required: true
+	},
+	'f_cat[]': {
+	  required: true
+	},
+	f_symptomid: {
+	  required: true
+	},
 	f_details: {
 	  required: true,
 	  minlength: 3
@@ -487,11 +493,11 @@
           <label class="checkbox-inline"> <input type="checkbox" value="PCD" class="chkbox_cat" name="f_pcd" wid="4" rid="5" <?php echo (strpos(strtoupper($faultsinfo['f_category']),"PCD")===false)?'':'checked'; ?>>PCD</label>
 	  <label class="checkbox-inline"> <input type="checkbox" value="LTS" class="chkbox_cat" name="f_lts" wid="4" rid="5" <?php echo (strpos(strtoupper($faultsinfo['f_category']),"LTS")===false)?'':'checked'; ?>>LTS</label>
 	  //-->
-          <label class="checkbox-inline"> <input type="checkbox" value="HA" class="chkbox_cat" name="f_cat1" wid="4" rid="5" <?php echo (strpos(strtoupper($faultsinfo['f_category']),"CAT1")===false)?'':'checked'; ?>>HA</label>
-          <label class="checkbox-inline"> <input type="checkbox" value="HE" class="chkbox_cat" name="f_cat2" wid="4" rid="5" <?php echo (strpos(strtoupper($faultsinfo['f_category']),"CAT2")===false)?'':'checked'; ?>>HE</label>
-          <label class="checkbox-inline"> <input type="checkbox" value="HN" class="chkbox_cat" name="f_cat3" wid="4" rid="5" <?php echo (strpos(strtoupper($faultsinfo['f_category']),"CAT3")===false)?'':'checked'; ?>>HN</label>
-          <label class="checkbox-inline"> <input type="checkbox" value="PABX" class="chkbox_cat" name="f_cat4" wid="4" rid="5" <?php echo (strpos(strtoupper($faultsinfo['f_category']),"CAT4")===false)?'':'checked'; ?>>PABX</label>
-          <label class="checkbox-inline"> <input type="checkbox" value="HS" class="chkbox_cat" name="f_cat5" wid="4" rid="5" <?php echo (strpos(strtoupper($faultsinfo['f_category']),"CAT5")===false)?'':'checked'; ?>>Home Security</label>
+          <label class="checkbox-inline"> <input type="checkbox" value="HA" class="chkbox_cat" name="f_cat[]" wid="4" rid="5" <?php echo (strpos(strtoupper($faultsinfo['f_category']),"HA")===false)?'':'checked'; ?>>HA</label>
+          <label class="checkbox-inline"> <input type="checkbox" value="HE" class="chkbox_cat" name="f_cat[]" wid="4" rid="5" <?php echo (strpos(strtoupper($faultsinfo['f_category']),"HE")===false)?'':'checked'; ?>>HE</label>
+          <label class="checkbox-inline"> <input type="checkbox" value="HN" class="chkbox_cat" name="f_cat[]" wid="4" rid="5" <?php echo (strpos(strtoupper($faultsinfo['f_category']),"HN")===false)?'':'checked'; ?>>HN</label>
+          <label class="checkbox-inline"> <input type="checkbox" value="PA" class="chkbox_cat" name="f_cat[]" wid="4" rid="5" <?php echo (strpos(strtoupper($faultsinfo['f_category']),"PA")===false)?'':'checked'; ?>>PABX</label>
+          <label class="checkbox-inline"> <input type="checkbox" value="HS" class="chkbox_cat" name="f_cat[]" wid="4" rid="5" <?php echo (strpos(strtoupper($faultsinfo['f_category']),"HS")===false)?'':'checked'; ?>>Home Security</label>
 	</div>
       </div>
 

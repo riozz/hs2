@@ -14,10 +14,12 @@
       $qresult=false;
     }
  ?>
+<!--
 <script src="<?php echo base_url("js/jquery.min.js"); ?>"></script>
 <script src="<?php echo base_url("js/jquery.validate.min.js"); ?>"></script>
 <script src="<?php echo base_url("js/bootstrap.min.js"); ?>"></script>
 <script type="text/javascript" charset="UTF-8" src="<?php echo base_url("js/bootstrap-datetimepicker.js"); ?>"></script>
+//-->
 
 
 <script>
@@ -114,6 +116,7 @@
 
   function getstaffinfo(str, vform) {
     //get staff info by staffid
+    var url="<?php echo HS_V1; ?>";
     alert("zzz117:upgrades/get_staffinfo/"+str+"/"+vform);
     if (str == "") {
       return;
@@ -126,7 +129,7 @@
       };	
       //alert("zzz127:"+window.location.pathname);	
       //var url = windows.location.host + windows.location.pathname
-      xmlhttp.open("GET","http://10.39.8.113/dev/hs2/index.php/upgrades/get_staffinfo/"+str+"/"+vform,true);
+      xmlhttp.open("GET",url+"2/index.php/upgrades/get_staffinfo/"+str+"/"+vform,true);
       //xmlhttp.open("GET","upgrades/get_staffinfo/1352731/v_upgradeCompletion",true);
       xmlhttp.send();
     }
@@ -190,7 +193,6 @@
 	f_transfertoid: {
 	  required: true
 	},
-	*/
 	tc_staff_name: {
 	  required: true,
 	  minlength: 6
@@ -208,8 +210,13 @@
 	    }
 	  }
 	},
+	*/
 	u_model: {
 	  required: true
+	},
+	u_quantity: {
+	  //required: true
+	  number: true
 	}
       }
     });
@@ -406,7 +413,7 @@
        <div class="form-group">
         <label class="col-sm-3 control-label">Technical Consultant Staff No.:</label>
         <div class="col-sm-3"> 
-	  <input class="form-control" id="tc_staff_id" type="text" name="tc_staff_id" onchange="getstaffinfo(this.value, 'v_upgradeAssignment')" wid="5" rid="5" value="<?php echo $upgradesinfo['tc_staff_id']; ?>"> 
+	  <input class="form-control" id="tc_staff_id" type="text" name="tc_staff_id" onchange="getstaffinfo(this.value, 'v_upgradeAssignment')" wid="7" rid="5" value="<?php echo $upgradesinfo['tc_staff_id']; ?>"> 
 	</div>
         <label class="col-sm-3 control-label">Technical Consultant Staff Name:</label>
         <div class="col-sm-3"> 
@@ -437,7 +444,7 @@
       <div class="form-group">
         <label for="dtp_tc_appointment_input" class="col-sm-3 control-label">Appointment Date/Time:</label>
         <div class="input-group date form_tc_appointmentdatetime col-sm-7" date-date-format="yyyy-mm-dd hh:ii" date-link-field="dtp_tc_appointment_input"> 
-	  <input class="form-control" id="tc_appointmentdatetime" size="10" type="text" name="tc_appointmentdatetime" wid="4" rid="5" value="<?php echo $upgradesinfo['tc_appointmentdatetime']; ?>" readonly> 
+	  <input class="form-control" id="tc_appointmentdatetime" size="10" type="text" name="tc_appointmentdatetime" wid="7" rid="5" value="<?php echo $upgradesinfo['tc_appointmentdatetime']; ?>" readonly> 
           <span class="input-group-addon s_tc_appointmentdatetime"><span class="glyphicon glyphicon-remove"></span></span>
           <span class="input-group-addon s_tc_appointmentdatetime"><span class="glyphicon glyphicon-th"></span></span>
 	</div>
@@ -464,7 +471,7 @@
       <div class="form-group">
         <label for="dtp_com_input" class="col-md-3 control-label">Completion Date:</label>
         <div class="input-group date form_datetime col-md-7" data-date-format="yyyy-mm-dd" data-link-field="dtp_com_input">
-          <input class="form-control" id="com_date" size="10" type="text" name="com_date" wid="4" rid="5" value="<?php echo $upgradesinfo['com_date']; ?>" readonly>
+          <input class="form-control" id="com_date" size="10" type="text" name="com_date" wid="7" rid="5" value="<?php echo $upgradesinfo['com_date']; ?>" readonly>
           <span class="input-group-addon s_com_date"><span class="glyphicon glyphicon-remove"></span></span>
           <span class="input-group-addon s_com_date"><span class="glyphicon glyphicon-calendar"></span></span>
         </div>
@@ -475,7 +482,7 @@
       <div class="form-group">
         <label class="col-sm-3 control-label">Technical Consultant Staff No.:</label>
         <div class="col-sm-3"> 
-	  <input class="form-control" id="com_staff_id" type="text" name="com_staff_id" onchange="getstaffinfo(this.value, 'v_upgradeCompletion')" wid="5" rid="5" value="<?php echo $upgradesinfo['com_staff_id']; ?>"> 
+	  <input class="form-control" id="com_staff_id" type="text" name="com_staff_id" onchange="getstaffinfo(this.value, 'v_upgradeCompletion')" wid="7" rid="5" value="<?php echo $upgradesinfo['com_staff_id']; ?>"> 
 	</div>
         <label class="col-sm-3 control-label">Technical Consultant Staff Name:</label>
         <div class="col-sm-3"> 
@@ -497,7 +504,7 @@
 
       <div class="form-group">
         <label class="col-sm-3 control-label">TC Remark:</label>
-        <div class="col-sm-9"> <textarea class="form-control" row="5" id="com_remark" name="com_remark"  wid="5" rid="5"><?php echo $upgradesinfo['com_remark']; ?></textarea></div>
+        <div class="col-sm-9"> <textarea class="form-control" row="5" id="com_remark" name="com_remark"  wid="7" rid="5"><?php echo $upgradesinfo['com_remark']; ?></textarea></div>
       </div>
       <div class="form-group">
         <div class="col-sm-10">&nbsp;</div>

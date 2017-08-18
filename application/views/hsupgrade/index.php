@@ -11,16 +11,13 @@
     		</div>
 
 
-<!--
-  	      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-//  -->
               <script src="<?php echo base_url("js/jquery.min.js"); ?>"></script>
               <script src="<?php echo base_url("js/jquery.validate.min.js"); ?>"></script>
               <script type="text/javascript" charset="UTF-8" src="<?php echo base_url("js/bootstrap-datetimepicker.js"); ?>"></script>
               <!-- Bootstrap Core JavaScript
-              <script src="<?php echo base_url("js/bootstrap.min.js"); ?>"></script>
-              // -->
               <script src="<?php echo base_url("js/bootstrap-table.js"); ?>"></script>
+              // -->
+              <script src="<?php echo base_url("js/bootstrap.min.js"); ?>"></script>
 	      <script>
 		/*
 	        $.validator.setDefaults({

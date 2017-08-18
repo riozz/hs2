@@ -197,18 +197,22 @@ class Faults_model extends CI_Model {
           $ia_reforderno = $this->input->post('ia_reforderno');
           $ia_reforderno = (strlen($ia_reforderno>0))?($ia_refordernoprefix.':'.$ia_reforderno):'';
           $f_faulttoid = $this->input->post('f_faulttoid');
-          //$pcd = $this->input->post('f_pcd');
-          //$lts = $this->input->post('f_lts');
-	  $f_cat1 = $this->input->post('f_cat1');
-	  $f_cat2 = $this->input->post('f_cat2');
-	  $f_cat3 = $this->input->post('f_cat3');
-	  $f_cat4 = $this->input->post('f_cat4');
-	  $f_cat5 = $this->input->post('f_cat5');
-          $f_category = (isset($f_cat1)?'CAT1':'');
-          $f_category = $f_category.' '.(isset($f_cat2)?'CAT2':'');
-          $f_category = $f_category.' '.(isset($f_cat3)?'CAT3':'');
-          $f_category = $f_category.' '.(isset($f_cat4)?'CAT4':'');
-          $f_category = $f_category.' '.(isset($f_cat5)?'CAT5':'');
+	  //$f_cat1 = $this->input->post('f_cat1');
+	  //$f_cat2 = $this->input->post('f_cat2');
+	  //$f_cat3 = $this->input->post('f_cat3');
+	  //$f_cat4 = $this->input->post('f_cat4');
+	  //$f_cat5 = $this->input->post('f_cat5');
+	  //$f_cat[] = $this->input->post('f_cat');
+	  //for ($i=0; $i<sizeof($f_cat); $i++) {
+	    //$f_category = (isset($f_cat[$i])?'CAT'.$i:'');
+  	  //}
+	  $f_category = substr(implode(',',$this->input->post('f_cat')), 0);
+	  log_message('debug', 'zzz[Faults_model]209:$f_category='.$f_category);
+          //$f_category = (isset($f_cat1)?'CAT1':'');
+          //$f_category = $f_category.' '.(isset($f_cat2)?'CAT2':'');
+          //$f_category = $f_category.' '.(isset($f_cat3)?'CAT3':'');
+          //$f_category = $f_category.' '.(isset($f_cat4)?'CAT4':'');
+          //$f_category = $f_category.' '.(isset($f_cat5)?'CAT5':'');
           $f_symptomid = $this->input->post('f_symptomid');
 	  $f_replacement = 0;
           $f_replacement = $this->input->post('f_replacement');
@@ -230,6 +234,7 @@ class Faults_model extends CI_Model {
 	  log_message('debug', 'zzz[Faults_model]215(orderid-faultid-appointmentid-o_appointmentid):'.$orderid.'-'.$faultid.'-'.$f_appointmentid.'-'.$f_o_appointmentid);
 
 	  //check appointment quota	
+	  /*
 	  $appointmentquota = 0;
 	  $sql = "select quotaused+1<=quota c from square_fault_appointment where id=?";
 	  log_message('debug', 'zzz[Faults_model]220:check quota'.$sql);
@@ -273,6 +278,9 @@ class Faults_model extends CI_Model {
 	    $ret['msg']="ERR257: Quota Full";
 	    return $ret;
 	  }
+	 */
+	 //bypass quota check, no need to check
+	 $presult = true;
 
 	  $data = array (
 		'staff_id' => $staffid,

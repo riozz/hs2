@@ -17,10 +17,10 @@
               <script src="<?php echo base_url("js/jquery.min.js"); ?>"></script>
               <script src="<?php echo base_url("js/jquery.validate.min.js"); ?>"></script>
     	      <script type="text/javascript" charset="UTF-8" src="<?php echo base_url("js/bootstrap-datetimepicker.js"); ?>"></script>
-    	      <!-- Bootstrap Core JavaScript 
-    	      <script src="<?php echo base_url("js/bootstrap.min.js"); ?>"></script>
-	      // -->
+    	      <!-- Bootstrap Core JavaScript  
     	      <script src="<?php echo base_url("js/bootstrap-table.js"); ?>"></script>
+	      // -->
+    	      <script src="<?php echo base_url("js/bootstrap.min.js"); ?>"></script>
 	      <script>
 		/*
 	        $.validator.setDefaults({
@@ -50,12 +50,13 @@
 		//get warranty history of orderid and action warrantyid
 		//var wurl = "<?php echo base_url(); ?>" + "index.php/warrantys/index/" + "<?php echo '/'.$fullorder_id; ?>";
 		var actionmsg = "<?php echo $actionmsg; ?>";
+		//alert('[ZZZ53]actionmsg='+actionmsg);
 		var wurl = "<?php echo base_url(); ?>" + "index.php/warrantys/index/" + "<?php echo '/'.$fullorder_id; ?>/<?php echo $actionwarrantyid; ?>";
 		//get fault detail of orderid
 		var wiurl = "<?php echo base_url(); ?>" + "index.php/warrantys/view/" + "<?php echo $fullorder_id; ?>/<?php echo $id; ?>";
 		//get fault detail
-		alert ("wurl="+wurl);	
-		alert ("wiurl="+wiurl);	
+		//alert ("wurl="+wurl);	
+		//alert ("wiurl="+wiurl);	
 		$(document).ready(function(){
 		    //alert("<?php echo "fullorderid=".$fullorder_id; ?>");
 		    //alert("href = "+window.location.href);
@@ -123,13 +124,6 @@
 		</div>
 <!-- ^history by ajax -->
 
-<!-- 
-		<div class="thumbnail">
-	      <?php
-	         echo 'zzz[index]94:'.$result['id']; //warrantyid
-	      ?>
-		</div>
-// -->
 
             </div>
 

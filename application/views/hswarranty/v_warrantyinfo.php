@@ -18,10 +18,12 @@
       $qresult=false;
     }
  ?>
+<!--
 <script src="<?php echo base_url("js/jquery.min.js"); ?>"></script>
 <script src="<?php echo base_url("js/jquery.validate.min.js"); ?>"></script>
 <script src="<?php echo base_url("js/bootstrap.min.js"); ?>"></script>
 <script type="text/javascript" charset="UTF-8" src="<?php echo base_url("js/bootstrap-datetimepicker.js"); ?>"></script>
+//-->
 
 
 <script>
@@ -113,6 +115,7 @@
   
   function getstaffinfo(str, vform) {
     //get staff info by staffid
+    var url = "<?php echo HS_V1; ?>";
     alert("v_warrantyinfo@110:str = "+str+" vform="+vform);
     if (str == "") {
       return;
@@ -123,7 +126,7 @@
 	  document.getElementById(vform).innerHTML = this.responseText;
 	}
       };
-      xmlhttp.open("GET","http://10.39.8.113/dev/hs2/index.php/warrantys/get_staffinfo/"+str+"/"+vform,true);
+      xmlhttp.open("GET",url+"2/index.php/warrantys/get_staffinfo/"+str+"/"+vform,true);
       xmlhttp.send();
     }
   };
@@ -189,12 +192,10 @@
 	f_transfertoid: {
 	  required: true
 	},
-	*/
 	tc_staff_name: {
 	  required: true,
 	  minlength: 6
 	},
-	/*
 	tc_staff_id: {
 	  required: true,
 	  minlength: 6,
@@ -351,7 +352,7 @@
      <div class="form-group">
        <label class="col-sm-2 control-label">Maintenance Category: </label>
        <div class="col-sm-5 dropdown"> 
-	  <select class="form-control" id="w_category" name="w_category" wid="4" rid="5">
+	  <select class="form-control" id="w_category" name="w_category" wid="5" rid="5">
 	  <?php echo "<option value='' ".(($warrantysinfo['w_category']==0)?'selected':'') .">Please select</option>";
 	  foreach ($warrantysinfo['tab_category'] as $row) 
 	  {
@@ -435,7 +436,7 @@
      <div class="form-group">
        <label class="col-sm-3 control-label">Technical Consultant Staff No.:</label>
        <div class="col-sm-3"> 
-         <input class="form-control" id="tc_staff_id" type="text" name="tc_staff_id" onchange="getstaffinfo(this.value, 'v_warrantyAssignment')" wid="5" rid="5" value="<?php echo $warrantysinfo['tc_staff_id']; ?>"> 
+         <input class="form-control" id="tc_staff_id" type="text" name="tc_staff_id" onchange="getstaffinfo(this.value, 'v_warrantyAssignment')" wid="7" rid="5" value="<?php echo $warrantysinfo['tc_staff_id']; ?>"> 
        </div>
        <label class="col-sm-3 control-label">Technical Consultant Staff Name:</label>
        <div class="col-sm-3"> 
@@ -466,7 +467,7 @@
       <div class="form-group">
         <label for="dtp_appointment_input" class="col-md-3 control-label">Appointment Date/Time:</label>
         <div class="input-group date form_tc_appointmentdatetime col-md-7" data-date-format="yyyy-mm-dd hh:ii" data-link-field="dtp_appointment_input">
-          <input class="form-control" id="tc_appointmentdatetime" size="10" type="text" name="tc_appointmentdatetime" wid="4" rid="5" value="<?php echo $warrantysinfo['tc_appointmentdatetime']; ?>" readonly>
+          <input class="form-control" id="tc_appointmentdatetime" size="10" type="text" name="tc_appointmentdatetime" wid="7" rid="5" value="<?php echo $warrantysinfo['tc_appointmentdatetime']; ?>" readonly>
           <span class="input-group-addon s_tc_appointmentdatetime"><span class="glyphicon glyphicon-remove"></span></span>
           <span class="input-group-addon s_tc_appointmentdatetime"><span class="glyphicon glyphicon-th"></span></span>
         </div>
@@ -492,7 +493,7 @@
       <div class="form-group">
         <label for="dtp_com_input" class="col-md-3 control-label">Completion Date:</label>
         <div class="input-group date form_com_date col-md-7" data-date-format="yyyy-mm-dd" data-link-field="dtp_com_input">
-          <input class="form-control" id="com_date" size="10" type="text" name="com_date" wid="4" rid="5" value="<?php echo $warrantysinfo['com_date']; ?>" readonly>
+          <input class="form-control" id="com_date" size="10" type="text" name="com_date" wid="7" rid="5" value="<?php echo $warrantysinfo['com_date']; ?>" readonly>
           <span class="input-group-addon s_com_date"><span class="glyphicon glyphicon-remove"></span></span>
           <span class="input-group-addon s_com_date"><span class="glyphicon glyphicon-calendar"></span></span>
         </div>
@@ -513,7 +514,7 @@
       <div class="form-group">
         <label class="col-sm-3 control-label">Technical Consultant Staff No.:</label>
         <div class="col-sm-3"> 
-	  <input class="form-control" id="com_staff_id" type="text" name="com_staff_id" onchange="getstaffinfo(this.value, 'v_warrantyCompletion')" wid="5" rid="5" value="<?php echo $warrantysinfo['com_staff_id']; ?>"> 
+	  <input class="form-control" id="com_staff_id" type="text" name="com_staff_id" onchange="getstaffinfo(this.value, 'v_warrantyCompletion')" wid="7" rid="5" value="<?php echo $warrantysinfo['com_staff_id']; ?>"> 
 	</div>
         <label class="col-sm-3 control-label">Technical Consultant Staff Name:</label>
         <div class="col-sm-3"> 
@@ -535,7 +536,7 @@
 
       <div class="form-group">
         <label class="col-sm-2 control-label">TC Remark:</label>
-        <div class="col-sm-10"> <textarea class="form-control" row="5" id="com_remark" name="com_remark"  wid="5" rid="5"><?php echo $warrantysinfo['com_remark']; ?></textarea></div>
+        <div class="col-sm-10"> <textarea class="form-control" row="5" id="com_remark" name="com_remark"  wid="7" rid="5"><?php echo $warrantysinfo['com_remark']; ?></textarea></div>
       </div>
       <div class="form-group">
         <div class="col-sm-10">&nbsp;</div>
