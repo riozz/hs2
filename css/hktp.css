@@ -14,3 +14,9 @@ label.error, textarea.error, input.error {
   color: red !important;
   font-weight: normal !important;
 }
+
+.autoResizeImage {
+  max-width: 100%;
+  height: auto;
+  width: 50%; 
+}

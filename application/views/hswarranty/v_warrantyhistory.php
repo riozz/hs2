@@ -2,7 +2,7 @@
 <?php echo log_message('debug', 'zzz[v_warrantyhistory]2:'. json_encode($warrantys)); ?>
 <table class="table table-hover">
 <thead>
- <tr><th>Warranty ID</th><th>Created Date</th><th>Staff Name</th><th>TC Name</th><th>Completed by</th><th>Detail</th></tr>
+ <tr><th>Warranty ID</th><th>Created Date</th><th>Staff Name</th><th>TC Name</th><th>Completed by</th><th>EDIT</th></tr>
 </thead>
 <tbody>
  <?php 
@@ -12,12 +12,12 @@
      //awid = active warranty id
      echo "<tr ".(($warrantys_item['id']==$awid)?'class="success"':'').">";
      //echo '<td><img class="img-thumbnail" src="'.base_url().'images/updates.png'.'" width="5" height="5">'.$faults_item['forder_id'].'-'.$faults_item['id'].'</td>';
-     echo '<td>'.$warrantys_item['fullorder_id'].'-'.$warrantys_item['id'].'</td>';
-     echo "<td>".$warrantys_item['createddate']."</td>";
-     echo "<td>".$warrantys_item['staff_name']."</td>";
-     echo "<td>".$warrantys_item['tc_staff_name']."</td>";
-     echo "<td>".$warrantys_item['com_staff_name']."</td>";
-     echo "<td><a href=".site_url('hswarranty/index/'.$warrantys_item['fullorder_id'].'/'.$warrantys_item['id']).">Warranty detail</a></td></tr>";
+     echo '<td class="col-md-3">'.$warrantys_item['fullorder_id'].'-'.$warrantys_item['id'].'</td>';
+     echo "<td class='col-md-3'>".$warrantys_item['createddate']."</td>";
+     echo "<td class='col-md-2'>".$warrantys_item['staff_name']."</td>";
+     echo "<td class='col-md-2'>".$warrantys_item['tc_staff_name']."</td>";
+     echo "<td class='col-md-2'>".$warrantys_item['com_staff_name']."</td>";
+     echo "<td class='col-md-1'><a href=".site_url('hswarranty/index/'.$warrantys_item['fullorder_id'].'/'.$warrantys_item['id'])." btn btn-info btn-lg<span class='glyphicon glyphicon-edit'</span></a></td></tr>";
     endforeach; 
   } else {
      echo "<tr><td colspan=5>NO data found</td></tr>";

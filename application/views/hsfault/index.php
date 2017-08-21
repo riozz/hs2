@@ -3,7 +3,7 @@
 
             <div class="col-md-9">
 	   	<div class="row">
-    			<div class="alert alert-info"><h3>Fault Management&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#faultinfo">Fault Info</button></h3></div>
+    			<div class="alert alert-info"><h3>Fault Management&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn-info btn-lg glyphicon glyphicon-circle-arrow-up" id="infotoggle" data-toggle="collapse" data-target="#faultinfo">&nbsp;Fault Info</button></h3></div>
 		</div>
 
 <!--
@@ -11,6 +11,10 @@
 //  -->
               <script src="<?php echo base_url("js/jquery.min.js"); ?>"></script>
               <script src="<?php echo base_url("js/jquery.validate.min.js"); ?>"></script>
+              <script type="text/javascript" charset="UTF-8" src="<?php echo base_url("js/bootstrap-datetimepicker.js"); ?>"></script>
+              <script src="<?php echo base_url("js/bootstrap.min.js"); ?>"></script>
+
+		<!--	
 	      <script>
 		/*
 	        $.validator.setDefaults({
@@ -19,8 +23,8 @@
 		    alert("submitted!");
 		  }
 		});
-		*/
 	      </script>
+		// -->
 	      <script>
 	        var fiid = <?php echo $faultid ?>; 
 		<?php
@@ -84,8 +88,13 @@
 		    if (actionmsg.length>0) {
 		      $("#actionmsg").collapse('show');
 		      $("#faultinfo").collapse('hide');
+		      $("#infotoggle").toggleClass('glyphicon-circle-arrow-up').toggleClass('glyphicon-circle-arrow-down');
 		    }
 		    return false;	
+		});
+
+		$('#infotoggle').click(function() {
+		  $(this).toggleClass('glyphicon-circle-arrow-up').toggleClass('glyphicon-circle-arrow-down');
 		});
 	      </script>
 

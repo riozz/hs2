@@ -4,7 +4,7 @@
             <div class="col-md-9">
 	   	<div class="row">
     		  <div class="alert alert-info"><h3>Upgrade/Addon Management &nbsp;&nbsp;&nbsp
-      		  <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#upgradeinfo">Upgrade/Addon Info</button></h3>&nbsp;&nbsp;&nbsp;
+      		  <button type="button" class="btn btn-info btn-lg glyphicon glyphicon-circle-arrow-up" id="infotoggle" data-toggle="collapse" data-target="#upgradeinfo">&nbsp;Upgrade/Addon Info</button></h3>&nbsp;&nbsp;&nbsp;
       		  <!--<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#upgradeinfo">Upgrade Info</button>&nbsp;&nbsp;&nbsp;
       		  <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#tcassignmentinfo">TC Assignment Info</button>&nbsp;&nbsp;&nbsp;
       		  <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#tccompletioninfo">TC Completion Info</button>-->
@@ -91,9 +91,14 @@
 		    if (actionmsg.length>0) {
 		      $("#actionmsg").collapse('show');
 		      $("#upgradeinfo").collapse('hide');
+                      $("#infotoggle").toggleClass('glyphicon-circle-arrow-up').toggleClass('glyphicon-circle-arrow-down');
 		    }
 		    return false;	
 		});
+
+                $('#infotoggle').click(function() {
+                  $(this).toggleClass('glyphicon-circle-arrow-up').toggleClass('glyphicon-circle-arrow-down');
+                });
 	      </script>
 
 <!-- upgrade info by ajax -->
