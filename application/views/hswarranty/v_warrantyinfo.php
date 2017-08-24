@@ -86,16 +86,19 @@
 		    $("#w_package option:not(:selected)").prop("disabled",null);
 		    break;
 		  case "w_effdate":
-		    $('.form_w_effdate').datetimepicker('show'); 
-		    //$('span.s_w_effdate').show();
+		    initDatetimePicker_w_effdate();
+		    //$('.form_w_effdate').datetimepicker('show'); 
+		    //$('.form_w_effdate').datetimepicker('hide'); 
 		    break;
 		  case "tc_appointmentdatetime":
-		    $('.form_tc_appointmentdatetime').datetimepicker('show'); 
-		    //$('span.s_tc_appointmentdatetime').show();
+		    initDatetimePicker_tc_appointmentdatetime();
+		    //$('.form_tc_appointmentdatetime').datetimepicker('show'); 
+		    //$('.form_tc_appointmentdatetime').datetimepicker('hide'); 
 		    break;
 		  case "com_date":
-		    $('.form_com_date').datetimepicker('show'); 
-		    //$('span.s_com_date').show();
+		    initDatetimePicker_com_date();
+		    //$('.form_com_date').datetimepicker('show'); 
+		    //$('.form_com_date').datetimepicker('hide'); 
 		    break;
 		  default:
 	            x[i].removeAttribute("readonly");
@@ -394,7 +397,7 @@
       <div class="form-group">
         <label for="dtp_input1" class="col-md-2 control-label">Effective Date:</label>
         <div class="input-group date form_w_effdate col-md-8" data-date-format="yyyy-mm-dd" data-link-field="dtp_input1">
-          <input class="form-control" id="w_effdate" size="10" type="text" name="w_effdate" wid="4" rid="5" value="<?php echo $warrantysinfo['w_effdate']; ?>" readonly>
+          <input class="form-control" id="w_effdate" size="10" type="text" name="w_effdate" wid="5" rid="5" value="<?php echo $warrantysinfo['w_effdate']; ?>" readonly>
           <span class="input-group-addon s_w_effdate"><span class="glyphicon glyphicon-remove"></span></span>
           <span class="input-group-addon s_w_effdate"><span class="glyphicon glyphicon-calendar"></span></span>
         </div>
@@ -553,11 +556,15 @@
 
 <!-- datetimepicker -->
    <script type="text/javascript">
-     var today = new Date();
-     var sdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours()+":"+today.getMinutes();
-     var weekday = new Date(today.getTime() + 1440 * 60 * 60 * 1000); //days * 24
-     var edate = weekday.getFullYear()+'-'+(weekday.getMonth()+1)+'-'+weekday.getDate()+' '+weekday.getHours()+":"+weekday.getMinutes();
-     $('.form_w_effdate').datetimepicker({
+
+     initDatetimePicker_w_effdate();
+     initDatetimePicker_tc_appointmentdatetime();
+     initDatetimePicker_com_date();
+
+     function initDatetimePicker_w_effdate() {
+       var today = new Date();
+       var sdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours()+":"+today.getMinutes();
+       $('.form_w_effdate').datetimepicker({
           //language:  'fr',
           //weekStart: 1,
           //showMeridian: 1,
@@ -571,8 +578,14 @@
 	  startDate: sdate
 	  //endDate: edate
 	  //initalDate: today
-     });
-     $('.form_tc_appointmentdatetime').datetimepicker({
+       });
+     }
+     function initDatetimePicker_tc_appointmentdatetime() {
+       var today = new Date();
+       var sdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours()+":"+today.getMinutes();
+       var weekday = new Date(today.getTime() + 1440 * 60 * 60 * 1000); //days * 24
+       var edate = weekday.getFullYear()+'-'+(weekday.getMonth()+1)+'-'+weekday.getDate()+' '+weekday.getHours()+":"+weekday.getMinutes();
+       $('.form_tc_appointmentdatetime').datetimepicker({
 	  //minView: 2,
           //todayBtn:  1,
           autoclose: 1,
@@ -583,8 +596,12 @@
 	  startDate: sdate,
 	  endDate: edate
 	  //initalDate: today
-     });
-     $('.form_com_date').datetimepicker({
+       });
+     }
+     function initDatetimePicker_com_date() {
+       var today = new Date();
+       var sdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours()+":"+today.getMinutes();
+       $('.form_com_date').datetimepicker({
           //language:  'fr',
           //weekStart: 1,
           //showMeridian: 1,
@@ -598,6 +615,7 @@
 	  startDate: sdate
 	  //endDate: edate
 	  //initalDate: today
-     });
+       });
+     }
    </script>
 

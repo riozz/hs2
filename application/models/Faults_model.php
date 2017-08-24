@@ -224,8 +224,11 @@ class Faults_model extends CI_Model {
           $f_appointmentid = $this->input->post('appointment');
           $f_o_appointmentid = $this->input->post('f_o_appointmentid');
           $appointmentdatetime = $this->input->post('appointmentdatetime');
+	  if (strlen($appointmentdatetime)<3)
+	    $appointmentdatetime = null;
           $f_details = $this->input->post('f_details');
           $resolve_details = $this->input->post('resolve_details');
+	  $editedby = $this->session->userdata('s_staffid');
 
 	  $ret['orderid']=$forderid;
 	  $ret['faultid']=$faultid;
@@ -319,7 +322,8 @@ class Faults_model extends CI_Model {
 		'ia_additionaladdr' => $ia_additionaladdr, 
 		'ia_reforderno' => $ia_reforderno, 
 		'createdby' => $this->session->userdata('s_staffid'), 
-		'createddate' => date("Y-m-d")
+		'createddate' => date("Y-m-d"),
+		'editedby' => $editedby
 	  );
 	  if ($presult) {
  	    if ($faultid == 0) {
@@ -365,6 +369,7 @@ class Faults_model extends CI_Model {
 
         public function insert_log($section, $action, $raw, $other) {
 	  $staffid = $raw['staff_id'];
+	  $editedby = $raw['editedby'];
 	  $raw['c_uid'] = 'XXXXXX';
 	  $raw['c_contact'] = 'XXXXXXXX';
 	  if (strlen($other)>0) 
@@ -375,6 +380,7 @@ class Faults_model extends CI_Model {
 		'section' => $section,
 		'action' => $action,
 		'user' => $staffid,
+		'editedby' => $editedby,
 		'data' => $d
 	  );
           $row = $this->db->insert('square_log', $data);

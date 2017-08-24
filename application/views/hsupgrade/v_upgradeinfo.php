@@ -55,9 +55,7 @@
 		    //x[i].setAttribute("disabled", true);
 		    break;
 		  case "u_appointmentdatetime":
-		    //alert("line 56");
      		    $('.form_u_appointmentdatetime').datetimepicker('remove');
-		    //x[i].setAttribute("disabled", true);
 		    //$('span.s_u_appointmentdatetime').hide();
 		    break;
 		  case "tc_appointmentdatetime":
@@ -85,20 +83,15 @@
 		    //x[i].removeAttribute("disabled");
 		    break;
 		  case "u_appointmentdatetime":
-		    //alert("line 83");
-     		    $('.form_u_appointmentdatetime').datetimepicker('show');
-		    //x[i].removeAttribute("disabled");
-		    //$('span.s_u_appointmentdatetime').show();
+		    initDatetimePicker_u_appointmentdatetime();
+     		    //$('.form_u_appointmentdatetime').datetimepicker('show');
+     		    //$('.form_u_appointmentdatetime').datetimepicker('hide');
 		    break;
 		  case "tc_appointmentdatetime":
-     		    $('.form_tc_appointmentdatetime').datetimepicker('show');
-		    //x[i].removeAttribute("disabled");
-		    //$('span.s_tc_appointmentdatetime').show();
+		    initDatetimePicker_tc_appointmentdatetime();
 		    break;
 		  case "com_date":
-     		    $('.form_datetime').datetimepicker('show');
-		    //x[i].removeAttribute("disabled");
-		    //$('span.s_com_date').show();
+		    initDatetimePicker_datetime();
 		    break;
 		  default:
                     x[i].removeAttribute("readonly");
@@ -521,11 +514,15 @@
 
 <!-- datetimepicker -->
    <script type="text/javascript">
-     var today = new Date();
-     var sdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours()+":"+today.getMinutes();
-     var weekday = new Date(today.getTime() + 1440 * 60 * 60 * 1000); //day * 24
-     var edate = weekday.getFullYear()+'-'+(weekday.getMonth()+1)+'-'+weekday.getDate()+' '+weekday.getHours()+":"+weekday.getMinutes();
-     $('.form_datetime').datetimepicker({
+
+     initDatetimePicker_datetime();
+     initDatetimePicker_tc_appointmentdatetime();
+     initDatetimePicker_u_appointmentdatetime();
+
+     function initDatetimePicker_datetime() {
+       var today = new Date();
+       var sdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours()+":"+today.getMinutes();
+       $('.form_datetime').datetimepicker({
           //language:  'fr',
           //weekStart: 1,
           //showMeridian: 1,
@@ -539,8 +536,14 @@
           startDate: sdate
           //endDate: edate
           //initalDate: today
-     });
-     $('.form_tc_appointmentdatetime').datetimepicker({
+       });
+     }
+     function initDatetimePicker_tc_appointmentdatetime() {
+       var today = new Date();
+       var sdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours()+":"+today.getMinutes();
+       var weekday = new Date(today.getTime() + 1440 * 60 * 60 * 1000); //day * 24
+       var edate = weekday.getFullYear()+'-'+(weekday.getMonth()+1)+'-'+weekday.getDate()+' '+weekday.getHours()+":"+weekday.getMinutes();
+       $('.form_tc_appointmentdatetime').datetimepicker({
           //minView: 2,
           //todayBtn:  1,
           autoclose: 1,
@@ -551,8 +554,14 @@
           startDate: sdate,
           endDate: edate,
           //initalDate: today
-     });
-     $('.form_u_appointmentdatetime').datetimepicker({
+       });
+     }
+     function initDatetimePicker_u_appointmentdatetime() {
+       var today = new Date();
+       var sdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours()+":"+today.getMinutes();
+       var weekday = new Date(today.getTime() + 1440 * 60 * 60 * 1000); //day * 24
+       var edate = weekday.getFullYear()+'-'+(weekday.getMonth()+1)+'-'+weekday.getDate()+' '+weekday.getHours()+":"+weekday.getMinutes();
+       $('.form_u_appointmentdatetime').datetimepicker({
           //minView: 2,
           //todayBtn:  1,
           autoclose: 1,
@@ -563,7 +572,7 @@
           startDate: sdate,
           endDate: edate,
           //initalDate: today
-     });
-
+       });
+     }
    </script>
 

@@ -132,7 +132,9 @@
 		  $(".radio_f_faulttoid:unchecked").prop("disabled", false);
 		  break;
 		case "appointmentdatetime":
-		  $('.form_appointmentdatetime').datetimepicker('show');
+		  initDatetimePicker_appointmentdatetime();
+		  //$('.form_appointmentdatetime').datetimepicker('show');
+		  //$('.form_appointmentdatetime').datetimepicker('hide');
 		  break;
 		default:
 	          x[i].removeAttribute("readonly");
@@ -633,11 +635,15 @@
 
 <!-- datetime picker -->
    <script type="text/javascript">
-     var today = new Date();
-     var sdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours()+":"+today.getMinutes();
-     var weekday = new Date(today.getTime() + 1440 * 60 * 60 * 1000); //days * 24
-     var edate = weekday.getFullYear()+'-'+(weekday.getMonth()+1)+'-'+weekday.getDate()+' '+weekday.getHours()+":"+weekday.getMinutes();
-     $('.form_appointmentdatetime').datetimepicker({
+
+     initDatetimePicker_appointmentdatetime();
+
+     function initDatetimePicker_appointmentdatetime() {
+       var today = new Date();
+       var sdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours()+":"+today.getMinutes();
+       var weekday = new Date(today.getTime() + 1440 * 60 * 60 * 1000); //days * 24
+       var edate = weekday.getFullYear()+'-'+(weekday.getMonth()+1)+'-'+weekday.getDate()+' '+weekday.getHours()+":"+weekday.getMinutes();
+       $('.form_appointmentdatetime').datetimepicker({
           //weekStart: 1,
           //showMeridian: 1,
           //todayBtn:  1,
@@ -650,5 +656,6 @@
           endDate: edate
           //initalDate: today
      });
+    }
   </script>
 

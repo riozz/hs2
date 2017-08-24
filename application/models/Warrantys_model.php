@@ -100,6 +100,8 @@ class Warrantys_model extends CI_Model {
 	  $w_offer = $this->input->post('w_offer');
 	  $w_smno = $this->input->post('w_smno');
 	  $w_effdate = $this->input->post('w_effdate');
+	  if (strlen($w_effdate) < 3)
+	    $w_effdate = null;
 	  $tc_staff_id = $this->input->post('tc_staff_id');
 	  $tc_staff_name = $this->input->post('tc_staff_name');
 	  $tc_staff_teamcode = $this->input->post('tc_staff_teamcode');
@@ -108,6 +110,8 @@ class Warrantys_model extends CI_Model {
 	  //$tc_appointmentdate = $this->input->post('tc_appointmentdate');
 	  //$tc_appointmenttime = $this->input->post('tc_appointmenttime');
 	  $tc_appointmentdatetime = $this->input->post('tc_appointmentdatetime');
+	  if (strlen($tc_appointmentdatetime)<3) 
+	    $tc_appointmentdatetime = null;
 	  $com_staff_id = $this->input->post('com_staff_id');
 	  $com_staff_name = $this->input->post('com_staff_name');
 	  $com_staff_teamcode = $this->input->post('com_staff_teamcode');
@@ -115,7 +119,10 @@ class Warrantys_model extends CI_Model {
 	  $com_staff_telno = $this->input->post('com_staff_telno');
 	  $com_remark = $this->input->post('com_remark');
 	  $com_date = $this->input->post('com_date');
+	  if (strlen($com_date)<3)
+	    $com_date = null;
           $action = $this->input->post('action');
+	  $editedby = $this->session->userdata('s_staffid');
 	  //$createdby = $this->input->post('createdby');
 	  //$modifiedby = $this->input->post('modifiedby');
 
@@ -123,7 +130,8 @@ class Warrantys_model extends CI_Model {
 	  $ret['id']=$id; //warrantyid
 	  $ret['msg']='DONE';
 
-	  log_message('debug', 'zzz[Warrantys_model]215(orderid-warrantyid):'.$fullorder_id.'-'.$id);
+	  log_message('debug', 'zzz[Warrantys_model]126(tc_appointmentdatetime):'.$tc_appointmentdatetime);
+	  log_message('debug', 'zzz[Warrantys_model]127(orderid-warrantyid):'.$fullorder_id.'-'.$id);
 
 	  //check appointment quota	
 	/*
@@ -203,7 +211,8 @@ class Warrantys_model extends CI_Model {
 		'createdby' => $this->session->userdata('s_staffid'), 
 		'modifiedby' => $this->session->userdata('s_staffid'), 
 		'createddate' => date("Y-m-d H:i:s"),
-		'com_date' => $com_date
+		'com_date' => $com_date,
+		'editedby' => $editedby
 	  );
 	  if ($presult) {
  	    if ($id == 0) { //warrantyid
@@ -249,6 +258,7 @@ class Warrantys_model extends CI_Model {
 
         public function insert_log($section, $action, $raw, $other) {
 	  $staffid = $raw['staff_id'];
+	  $editedby = $raw['editedby'];
 	  //$raw['c_uid'] = 'XXXXXX';
 	  //$raw['c_contact'] = 'XXXXXXXX';
 	  if (strlen($other)>0) 
@@ -259,6 +269,7 @@ class Warrantys_model extends CI_Model {
 		'section' => $section,
 		'action' => $action,
 		'user' => $staffid,
+		'editedby' => $editedby,
 		'data' => $d
 	  );
           $row = $this->db->insert('square_log', $data);

@@ -4,7 +4,7 @@
             <div class="col-md-9">
 	   	<div class="row">
     		  <div class="alert alert-info"><h3>Warranty Management &nbsp;&nbsp;&nbsp
-      		  <button type="button" class="btn-info btn-lg glyphicon glyphicon-circle-arrow-up" id="infotoggle" data-toggle="collapse" data-target="#warrantyinfo">&nbsp;Warranty Info</button></h3>&nbsp;&nbsp;&nbsp;
+      		  <button type="button" class="btn-info btn-lg glyphicon glyphicon-circle-arrow-up" id="infotoggle" data-toggle="collapse" data-target="#warrantyinfo">&nbsp;Warranty Detail</button></h3>&nbsp;&nbsp;&nbsp;
       		  <!--<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#upgradeinfo">Upgrade Info</button>&nbsp;&nbsp;&nbsp;
       		  <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#tcassignmentinfo">TC Assignment Info</button>&nbsp;&nbsp;&nbsp;
       		  <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#tccompletioninfo">TC Completion Info</button>-->

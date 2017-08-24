@@ -78,6 +78,8 @@ class Upgrades_model extends CI_Model {
 	  $u_appointmentdate = $this->input->post('u_appointmentdate');
 	  $u_appointmenttime = $this->input->post('u_appointmenttime');
 	  $u_appointmentdatetime = $this->input->post('u_appointmentdatetime');
+	  if (strlen($u_appointmentdatetime)<3)
+	    $u_appointmentdatetime = null;
 	  $u_smno = $this->input->post('u_smno');
 	  $u_remark = $this->input->post('u_remark');
 	  $tc_staff_id = $this->input->post('tc_staff_id');
@@ -88,6 +90,8 @@ class Upgrades_model extends CI_Model {
 	  $tc_appointmentdate = $this->input->post('tc_appointmentdate');
 	  $tc_appointmenttime= $this->input->post('tc_appointmenttime');
 	  $tc_appointmentdatetime= $this->input->post('tc_appointmentdatetime');
+	  if (strlen($tc_appointmentdatetime)<3)
+	    $tc_appointmentdatetime = null;
 	  $com_staff_id = $this->input->post('com_staff_id');
 	  $com_staff_name = $this->input->post('com_staff_name');
 	  $com_staff_teamcode = $this->input->post('com_staff_teamcode');
@@ -97,7 +101,11 @@ class Upgrades_model extends CI_Model {
 	  //$createdby = $this->input->post('createdby');
 	  //$modifiedby = $this->input->post('modifiedby');
 	  $com_date = $this->input->post('com_date');
+	  if (strlen($com_date)<3)
+	    $com_date = null;
+	  $com_staff_id = $this->input->post('com_staff_id');
           $action = $this->input->post('action');
+	  $editedby = $this->session->userdata('s_staffid');
 
 	  $ret['fullorder_id']=$fullorder_id;
 	  $ret['id']=$id; //upgrade id
@@ -185,7 +193,8 @@ class Upgrades_model extends CI_Model {
 		'com_date' => $com_date,
 		'createdby' => $this->session->userdata('s_staffid'), 
 		'modifiedby' => $this->session->userdata('s_staffid'), 
-		'createddate' => date("Y-m-d H:i:s")
+		'createddate' => date("Y-m-d H:i:s"),
+		'editedby' => $editedby
 	  );
 	  if ($presult) {
  	    if ($id == 0) { //upgradeid
@@ -231,6 +240,7 @@ class Upgrades_model extends CI_Model {
 
         public function insert_log($section, $action, $raw, $other) {
 	  $staffid = $raw['staff_id'];
+	  $editedby = $raw['editedby'];
 	  //$raw['c_uid'] = 'XXXXXX';
 	  //$raw['c_contact'] = 'XXXXXXXX';
 	  if (strlen($other)>0) 
@@ -241,6 +251,7 @@ class Upgrades_model extends CI_Model {
 		'section' => $section,
 		'action' => $action,
 		'user' => $staffid,
+		'editedby' => $editedby,
 		'data' => $d
 	  );
           $row = $this->db->insert('square_log', $data);
