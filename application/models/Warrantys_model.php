@@ -122,7 +122,7 @@ class Warrantys_model extends CI_Model {
 	  if (strlen($com_date)<3)
 	    $com_date = null;
           $action = $this->input->post('action');
-	  $editedby = $this->session->userdata('s_staffid');
+	  //$editedby = $this->session->userdata('s_staffid');
 	  //$createdby = $this->input->post('createdby');
 	  //$modifiedby = $this->input->post('modifiedby');
 
@@ -182,7 +182,9 @@ class Warrantys_model extends CI_Model {
 	//bypass quota checking, no need to check
 	$presult = true;
 
-	  $data = array (
+	  if ($presult) {
+ 	    if ($id == 0) { //warrantyid (insert)
+	      $data = array (
 		'staff_id' => $staff_id,
 		'staff_name' => $staff_name,
 		'staff_teamcode' => $staff_teamcode,
@@ -211,11 +213,8 @@ class Warrantys_model extends CI_Model {
 		'createdby' => $this->session->userdata('s_staffid'), 
 		'modifiedby' => $this->session->userdata('s_staffid'), 
 		'createddate' => date("Y-m-d H:i:s"),
-		'com_date' => $com_date,
-		'editedby' => $editedby
-	  );
-	  if ($presult) {
- 	    if ($id == 0) { //warrantyid
+		'com_date' => $com_date
+	      );
 	      if ($data['staff_id'] != null)  {
 	        log_message('debug', 'zzz[Warrantys_model]261/insert:'.json_encode($data));
 	        $row = $this->insert_log('warranty','insert',$data,'');
@@ -232,7 +231,36 @@ class Warrantys_model extends CI_Model {
 		  $ret['msg']='New Record Added Successfully.';
 	        }
   	      }
-	    } else {
+	    } else { //update
+	      $data = array (
+		'staff_id' => $staff_id,
+		'staff_name' => $staff_name,
+		'staff_teamcode' => $staff_teamcode,
+                'staff_channel' => $staff_channel,
+		'orders_id' => $orders_id,
+		'fullorder_id' => $fullorder_id,
+		'w_category' => $w_category,
+		'w_package' => $w_package,
+	        'w_offer' => $w_offer,
+		'w_smno' => $w_smno,
+		'w_effdate' => $w_effdate,
+		'tc_staff_id' => $tc_staff_id,
+		'tc_staff_name' => $tc_staff_name,
+		'tc_staff_teamcode' => $tc_staff_teamcode,
+		'tc_staff_channel' => $tc_staff_channel,
+		'tc_staff_telno' => $tc_staff_telno,
+		'tc_appointmentdatetime' => $tc_appointmentdatetime,
+		'com_staff_id' => $com_staff_id,
+		'com_staff_name' => $com_staff_name,
+		'com_staff_teamcode' => $com_staff_teamcode,
+		'com_staff_channel' => $com_staff_channel,
+		'com_staff_telno' => $com_staff_telno,
+		'com_remark' => $com_remark,
+		//'createdby' => $this->session->userdata('s_staffid'), 
+		'modifiedby' => $this->session->userdata('s_staffid'), 
+		//'createddate' => date("Y-m-d H:i:s"),
+		'com_date' => $com_date
+	      );
 	      log_message('debug', 'zzz[Warrantys_model]248/update:'.json_encode($data));
 	      $row = $this->insert_log('warranty','update',$data,$id); //warrantyid
 	      if ($row == 1) {
@@ -258,7 +286,7 @@ class Warrantys_model extends CI_Model {
 
         public function insert_log($section, $action, $raw, $other) {
 	  $staffid = $raw['staff_id'];
-	  $editedby = $raw['editedby'];
+	  $modifiedby = $raw['modifiedby'];
 	  //$raw['c_uid'] = 'XXXXXX';
 	  //$raw['c_contact'] = 'XXXXXXXX';
 	  if (strlen($other)>0) 
@@ -269,7 +297,7 @@ class Warrantys_model extends CI_Model {
 		'section' => $section,
 		'action' => $action,
 		'user' => $staffid,
-		'editedby' => $editedby,
+		'modifiedby' => $modifiedby,
 		'data' => $d
 	  );
           $row = $this->db->insert('square_log', $data);

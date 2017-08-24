@@ -105,7 +105,6 @@ class Upgrades_model extends CI_Model {
 	    $com_date = null;
 	  $com_staff_id = $this->input->post('com_staff_id');
           $action = $this->input->post('action');
-	  $editedby = $this->session->userdata('s_staffid');
 
 	  $ret['fullorder_id']=$fullorder_id;
 	  $ret['id']=$id; //upgrade id
@@ -162,7 +161,9 @@ class Upgrades_model extends CI_Model {
 	//bypass quota checking, no need to check
 	$presult = true;
 
-	  $data = array (
+	  if ($presult) {
+ 	    if ($id == 0) { //upgradeid (insert)
+	      $data = array (
 		'staff_id' => $staff_id,
 		'staff_name' => $staff_name,
 		'staff_teamcode' => $staff_teamcode,
@@ -193,11 +194,8 @@ class Upgrades_model extends CI_Model {
 		'com_date' => $com_date,
 		'createdby' => $this->session->userdata('s_staffid'), 
 		'modifiedby' => $this->session->userdata('s_staffid'), 
-		'createddate' => date("Y-m-d H:i:s"),
-		'editedby' => $editedby
-	  );
-	  if ($presult) {
- 	    if ($id == 0) { //upgradeid
+		'createddate' => date("Y-m-d H:i:s")
+	      );
 	      if ($data['staff_id'] != null)  {
 	        log_message('debug', 'zzz[Upgrades_model]261/insert:'.json_encode($data));
 	        $row = $this->insert_log('upgrade','insert',$data,'');
@@ -214,7 +212,40 @@ class Upgrades_model extends CI_Model {
 		  $ret['msg']='New Record Added Successfully.';
 	        }
   	      }
-	    } else {
+	    } else { //update
+	      $data = array (
+		'staff_id' => $staff_id,
+		'staff_name' => $staff_name,
+		'staff_teamcode' => $staff_teamcode,
+                'staff_channel' => $staff_channel,
+		'orders_id' => $orders_id,
+		'fullorder_id' => $fullorder_id,
+		'u_model' => $u_model,
+		'u_quantity' => $u_quantity,
+	        'u_appointmentdate' => $u_appointmentdate,
+		'u_appointmenttime' => $u_appointmenttime,
+		'u_appointmentdatetime' => $u_appointmentdatetime,
+		'u_smno' => $u_smno,
+		'u_remark' => $u_remark,
+		'tc_staff_id' => $tc_staff_id,
+		'tc_staff_name' => $tc_staff_name,
+		'tc_staff_teamcode' => $tc_staff_teamcode,
+		'tc_staff_channel' => $tc_staff_channel,
+		'tc_staff_telno' => $tc_staff_telno,
+		'tc_appointmentdate' => $tc_appointmentdate,
+		'tc_appointmenttime' => $tc_appointmenttime,
+		'tc_appointmentdatetime' => $tc_appointmentdatetime,
+		'com_staff_id' => $com_staff_id,
+		'com_staff_name' => $com_staff_name,
+		'com_staff_teamcode' => $com_staff_teamcode,
+		'com_staff_channel' => $com_staff_channel,
+		'com_staff_telno' => $com_staff_telno,
+		'com_remark' => $com_remark,
+		'com_date' => $com_date,
+		'modifiedby' => $this->session->userdata('s_staffid') 
+		//'createdby' => $this->session->userdata('s_staffid'), 
+		//'createddate' => date("Y-m-d H:i:s")
+	      );
 	      log_message('debug', 'zzz[Upgrades_model]248/update:'.json_encode($data));
 	      $row = $this->insert_log('upgrade','update',$data,$id);
 	      if ($row == 1) {
@@ -240,7 +271,7 @@ class Upgrades_model extends CI_Model {
 
         public function insert_log($section, $action, $raw, $other) {
 	  $staffid = $raw['staff_id'];
-	  $editedby = $raw['editedby'];
+	  $modifiedby = $raw['modifiedby'];
 	  //$raw['c_uid'] = 'XXXXXX';
 	  //$raw['c_contact'] = 'XXXXXXXX';
 	  if (strlen($other)>0) 
@@ -251,7 +282,7 @@ class Upgrades_model extends CI_Model {
 		'section' => $section,
 		'action' => $action,
 		'user' => $staffid,
-		'editedby' => $editedby,
+		'modifiedby' => $modifiedby,
 		'data' => $d
 	  );
           $row = $this->db->insert('square_log', $data);

@@ -285,7 +285,9 @@ class Faults_model extends CI_Model {
 	 //bypass quota check, no need to check
 	 $presult = true;
 
-	  $data = array (
+	  if ($presult) {
+ 	    if ($faultid == 0) { //insert
+	      $data = array (
 		'staff_id' => $staffid,
 		'staff_teamcode' => $staffteamcode,
                 'staff_channel' => $staffchannel,
@@ -323,10 +325,8 @@ class Faults_model extends CI_Model {
 		'ia_reforderno' => $ia_reforderno, 
 		'createdby' => $this->session->userdata('s_staffid'), 
 		'createddate' => date("Y-m-d"),
-		'editedby' => $editedby
-	  );
-	  if ($presult) {
- 	    if ($faultid == 0) {
+		'modifiedby' => $this->session->userdata('s_staffid')
+	      );
 	      if ($data['staff_id'] != null)  {
 	        log_message('debug', 'zzz[Faults_model]261/insert:'.json_encode($data));
 	        $row = $this->insert_log('fault','insert',$data,'');
@@ -344,6 +344,46 @@ class Faults_model extends CI_Model {
 	        }
   	      }
 	    } else {
+	      $data = array ( //update
+		'staff_id' => $staffid,
+		'staff_teamcode' => $staffteamcode,
+                'staff_channel' => $staffchannel,
+		'orders_id' => $orderid,
+		'forder_id' => $forderid,
+		'report_to' => $f_faulttoid,
+		'category' => $f_category, 
+		'symptomid' => $f_symptomid, 
+		'replacement' => $f_replacement, 
+		'itemtypeid' => $f_itemtypeid, 
+		'model' => $f_model, 
+		'quantity' => $f_quantity, 
+		'serial' => $f_serial, 
+		'transfertoid' => $f_transfertoid, 
+		'appointmentid' => $f_appointmentid, 
+		'appointmentdatetime' => $appointmentdatetime, 
+		'details' => $f_details, 
+		'resolve_details' => $resolve_details, 
+		'c_name' => $c_name, 
+		'c_uid' => $c_uid, 
+		'c_workingloc' => $c_workingloc, 
+		'c_contact' => $c_contact, 
+		'c_2contact' => $c_ndcontact, 
+		'c_officetel' => $c_officetel, 
+		'c_email' => $c_email, 
+		'ia_flat' => $ia_flat, 
+		'ia_floor' => $ia_floor, 
+		'ia_hse' => $ia_hse, 
+		'ia_bldg' => $ia_bldg, 
+		'ia_stno' => $ia_stno, 
+		'ia_street' => $ia_street, 
+		'ia_district' => $ia_district, 
+		'ia_area' => $ia_area, 
+		'ia_additionaladdr' => $ia_additionaladdr, 
+		'ia_reforderno' => $ia_reforderno, 
+		//'createdby' => $this->session->userdata('s_staffid'), 
+		//'createddate' => date("Y-m-d"),
+		'modifiedby' => $this->session->userdata('s_staffid')
+	      );
 	      log_message('debug', 'zzz[Faults_model]248/update:'.json_encode($data));
 	      $row = $this->insert_log('fault','update',$data,$faultid);
 	      if ($row == 1) {
@@ -369,7 +409,7 @@ class Faults_model extends CI_Model {
 
         public function insert_log($section, $action, $raw, $other) {
 	  $staffid = $raw['staff_id'];
-	  $editedby = $raw['editedby'];
+	  $modifiedby = $raw['modifiedby'];
 	  $raw['c_uid'] = 'XXXXXX';
 	  $raw['c_contact'] = 'XXXXXXXX';
 	  if (strlen($other)>0) 
@@ -380,7 +420,7 @@ class Faults_model extends CI_Model {
 		'section' => $section,
 		'action' => $action,
 		'user' => $staffid,
-		'editedby' => $editedby,
+		'modifiedby' => $modifiedby,
 		'data' => $d
 	  );
           $row = $this->db->insert('square_log', $data);
