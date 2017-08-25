@@ -26,7 +26,7 @@ class Upgrades_model extends CI_Model {
 	  //return data array
 	  $orderid = substr($oid, -6);
 	  //$sql="select su.id, su.orders_id, su.fullorder_id, su.staff_id, s.name, su.tc_staff_id, tc.name tcname, su.com_staff_id, com.name comname, su.createddate from square_upgrade su join ".HKTP.".staff s on su.staff_id = s.staffid join ".HKTP.".staff tc on su.tc_staff_id = tc.staffid join ".HKTP.".staff com on su.com_staff_id = com.staffid where su.orders_id=right(?,6) order by su.createddate desc";
-	$sql="select su.id, su.orders_id, su.fullorder_id, su.staff_id, su.staff_name, su.tc_staff_id, su.tc_staff_name, su.com_staff_id, com_staff_name, su.createddate from square_upgrade su where su.orders_id=right(?,6) order by su.createddate desc";
+	$sql="select su.id, su.orders_id, su.fullorder_id, su.staff_id, su.staff_name, su.tc_staff_id, su.tc_staff_name, su.com_staff_id, com_staff_name, su.createddate from square_upgrade su where su.orders_id=right(?,6) order by su.updatetime desc";
 	  $results = $this->db->query($sql, array($orderid));
 	  //return an array of result
 	  return $results->result_array();

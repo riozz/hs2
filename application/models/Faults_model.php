@@ -324,7 +324,7 @@ class Faults_model extends CI_Model {
 		'ia_additionaladdr' => $ia_additionaladdr, 
 		'ia_reforderno' => $ia_reforderno, 
 		'createdby' => $this->session->userdata('s_staffid'), 
-		'createddate' => date("Y-m-d"),
+		'createddate' => date("Y-m-d H:i:s"),
 		'modifiedby' => $this->session->userdata('s_staffid')
 	      );
 	      if ($data['staff_id'] != null)  {

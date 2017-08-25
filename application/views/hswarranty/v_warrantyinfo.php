@@ -73,6 +73,15 @@
 		    $('.form_com_date').datetimepicker('remove'); 
 		    //$('span.s_com_date').hide();
 		    break;
+		  case "warrantySubmit":
+		    $(".btn-warrantySubmit").prop("disabled", true);
+		    break;
+		  case "warrantyAssign":
+		    $(".btn-warrantyAssign").prop("disabled", true);
+		    break;
+		  case "warrantyComplete":
+		    $(".btn-warrantyComplete").prop("disabled", true);
+		    break;
 		  default:
 	            x[i].setAttribute("readonly", true);
 		}
@@ -99,6 +108,15 @@
 		    initDatetimePicker_com_date();
 		    //$('.form_com_date').datetimepicker('show'); 
 		    //$('.form_com_date').datetimepicker('hide'); 
+		    break;
+		  case "warrantySubmit":
+		    $(".btn-warrantySubmit").prop("disabled", false);
+		    break;
+		  case "warrantyAssign":
+		    $(".btn-warrantyAssign").prop("disabled", false);
+		    break;
+		  case "warrantyComplete":
+		    $(".btn-warrantyComplete").prop("disabled", false);
 		    break;
 		  default:
 	            x[i].removeAttribute("readonly");
@@ -425,7 +443,7 @@
         <input type="hidden" name="id" value=<?php echo $warrantysinfo['id']; ?>>
         <input type="hidden" name="fullorder_id" value=<?php echo $warrantysinfo['fullorder_id']; ?>>
         <input type="hidden" name="action" value="addwarranty">
-        <div class="col-sm-2"><button type="submit" class="btn btn-info" action="addwarranty" id="warrantySubmit">Submit</button>
+        <div class="col-sm-2"><button type="submit" class="btn btn-info btn-warrantySubmit" name="warrantySubmit" wid="5" rid="5" action="addwarranty" id="warrantySubmit">Submit</button>
 	</div>
       </div>
   </div>
@@ -482,7 +500,7 @@
         <input type="hidden" name="id" value=<?php echo $warrantysinfo['id']; ?>>
         <input type="hidden" name="fullorder_id" value=<?php echo $warrantysinfo['fullorder_id']; ?>>
         <input type="hidden" name="action" value="assign">
-        <div class="col-sm-2"><button type="submit" class="btn btn-info" action="assign" id="warrantyAssign">Assign</button>
+        <div class="col-sm-2"><button type="submit" class="btn btn-info btn-warrantyAssign" name="warrantyAssign" wid="7" rid="5" action="assign" id="warrantyAssign">Assign</button>
 	</div>
       </div>
    </div>
@@ -546,7 +564,7 @@
         <input type="hidden" name="id" value=<?php echo $warrantysinfo['id']; ?>>
         <input type="hidden" name="fullorder_id" value=<?php echo $warrantysinfo['fullorder_id']; ?>>
         <input type="hidden" name="action" value="complete">
-        <div class="col-sm-2"><button type="submit" class="btn btn-info" action="complete" id="warrantyComplete">Complete</button>
+        <div class="col-sm-2"><button type="submit" class="btn btn-info btn-warrantyComplete" name="warrantyComplete" wid="7" rid="5" action="complete" id="warrantyComplete">Complete</button>
 	</div>
       </div>
   </div>

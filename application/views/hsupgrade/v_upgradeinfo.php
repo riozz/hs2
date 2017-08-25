@@ -68,6 +68,15 @@
 		    //x[i].setAttribute("disabled", true);
 		    //$('span.s_com_date').hide();
 		    break;
+		  case "upgradeSubmit":
+		    $(".btn-upgradeSubmit").prop("disabled", true);
+		    break;
+		  case "upgradeAssign":
+		    $(".btn-upgradeAssign").prop("disabled", true);
+		    break;
+		  case "upgradeComplete":
+		    $(".btn-upgradeComplete").prop("disabled", true);
+		    break;
 	          default:
                     x[i].setAttribute("readonly", true);
 		}
@@ -92,6 +101,15 @@
 		    break;
 		  case "com_date":
 		    initDatetimePicker_datetime();
+		    break;
+		  case "upgradeSubmit":
+		    $(".btn-upgradeSubmit").prop("disabled", false);
+		    break;
+		  case "upgradeAssign":
+		    $(".btn-upgradeAssign").prop("disabled", false);
+		    break;
+		  case "upgradeComplete":
+		    $(".btn-upgradeComplete").prop("disabled", false);
 		    break;
 		  default:
                     x[i].removeAttribute("readonly");
@@ -391,7 +409,7 @@
         <input type="hidden" name="id" value=<?php echo $upgradesinfo['id']; ?>>
         <input type="hidden" name="fullorder_id" value=<?php echo $upgradesinfo['fullorder_id']; ?>>
         <input type="hidden" name="action" value="addupgrade">
-        <div class="col-sm-2"><button type="submit" class="btn btn-info" action="addupgrade" id="upgradeSubmit">Submit</button>
+        <div class="col-sm-2"><button type="submit" class="btn btn-info btn-upgradeSubmit" name="upgradeSubmit" wid="5" rid="5" action="addupgrade" id="upgradeSubmit">Submit</button>
         </div>
       </div>
 
@@ -450,7 +468,7 @@
         <input type="hidden" name="id" value=<?php echo $upgradesinfo['id']; ?>>
         <input type="hidden" name="fullorder_id" value=<?php echo $upgradesinfo['fullorder_id']; ?>>
         <input type="hidden" name="action" value="assign">
-        <div class="col-sm-2"><button type="submit" class="btn btn-info" action="assign" id="upgradeAssign">Assign</button>
+        <div class="col-sm-2"><button type="submit" class="btn btn-info btn-upgradeAssign" name="upgradeAssign" wid="7" rid="5" action="assign" id="upgradeAssign">Assign</button>
 	</div>
       </div>
     </div>
@@ -504,7 +522,7 @@
         <input type="hidden" name="id" value=<?php echo $upgradesinfo['id']; ?>>
         <input type="hidden" name="fullorder_id" value=<?php echo $upgradesinfo['fullorder_id']; ?>>
         <input type="hidden" name="action" value="complete">
-        <div class="col-sm-2"><button type="submit" class="btn btn-info" action="complete" id="upgradeComplete">Complete</button>
+        <div class="col-sm-2"><button type="submit" class="btn btn-info btn-upgradeComplete" name="upgradeComplete" wid="7" rid="5" action="complete" id="upgradeComplete">Complete</button>
 	</div>
       </div>
   </div>

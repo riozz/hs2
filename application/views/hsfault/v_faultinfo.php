@@ -90,6 +90,9 @@
 		case "appointmentdatetime":
 		  $('.form_appointmentdatetime').datetimepicker('remove');
 		  break;
+		case "faultSubmit":
+		  $(".btn").prop("disabled", true);
+		  break;
 		default:
 		  x[i].setAttribute("readonly", true);
 		}
@@ -135,6 +138,9 @@
 		  initDatetimePicker_appointmentdatetime();
 		  //$('.form_appointmentdatetime').datetimepicker('show');
 		  //$('.form_appointmentdatetime').datetimepicker('hide');
+		  break;
+		case "faultSubmit":
+		  $(".btn").prop("disabled", false);
 		  break;
 		default:
 	          x[i].removeAttribute("readonly");
@@ -530,7 +536,7 @@
         <label class="col-sm-1 control-label"></label>
         <label class="col-sm-3 control-label">[ Item Replacement ]</label>
         <div class="col-sm-8"> 
-          <label> <input type="checkbox" name="f_replacement" class="chkbox_f_replacement" value='1' wid='4' rid='5' <?php echo (($faultsinfo['f_replacement']==0)?'':'checked') ?>>&nbsp;&nbsp;</label>
+          <label> <input type="checkbox" name="f_replacement" class="chkbox_f_replacement" value='1' wid='7' rid='5' <?php echo (($faultsinfo['f_replacement']==0)?'':'checked') ?>>&nbsp;&nbsp;</label>
 	</div>
       </div>
 
@@ -538,7 +544,7 @@
       <label class="col-sm-1 control-label"></label>
       <label class="col-sm-3 control-label">[ Item Type ]</label>
       <div class="col-sm-8"> 
-        <select class="form-control" id="f_itemtypeid" name="f_itemtypeid" wid="4" rid="5">
+        <select class="form-control" id="f_itemtypeid" name="f_itemtypeid" wid="7" rid="5">
 	  <?php echo "<option value='' ".(($faultsinfo['f_itemtypeid']==0)?'selected':'') . ">Please select</option>";
 	    foreach ($faultsinfo['tab_itemtype'] as $row) 
             {
@@ -552,15 +558,15 @@
     <div class="form-group">
       <label class="col-sm-1 control-label"></label>
       <label class="col-sm-3 control-label">[ Item Model ]</label>
-      <div class="col-sm-3"> <input class="form-control" id="itemmodel" type="text" name="f_model" wid="5" rid="5" value="<?php echo $faultsinfo['f_model']; ?>"> </div>
+      <div class="col-sm-3"> <input class="form-control" id="itemmodel" type="text" name="f_model" wid="7" rid="5" value="<?php echo $faultsinfo['f_model']; ?>"> </div>
       <label class="col-sm-2 control-label">[ Quantities ]</label>
-      <div class="col-sm-3"> <input class="form-control" id="quantities" type="text" name="f_quantity" wid="5" rid="5" value="<?php echo $faultsinfo['f_quantity']; ?>"> </div>
+      <div class="col-sm-3"> <input class="form-control" id="quantities" type="text" name="f_quantity" wid="7" rid="5" value="<?php echo $faultsinfo['f_quantity']; ?>"> </div>
     </div>
 
     <div class="form-group">
       <label class="col-sm-1 control-label"></label>
       <label class="col-sm-3 control-label">[ Item Serial ]</label>
-      <div class="col-sm-5"> <input class="form-control" id="itemserial" type="text" name="f_serial" wid="5" rid="5" value="<?php echo $faultsinfo['f_serial']; ?>"> </div>
+      <div class="col-sm-5"> <input class="form-control" id="itemserial" type="text" name="f_serial" wid="7" rid="5" value="<?php echo $faultsinfo['f_serial']; ?>"> </div>
       <label class="col-sm-3 control-label">[ Use ";" for separation ]</label>
     </div>
 
@@ -585,7 +591,7 @@
       <label class="col-sm-1 control-label"></label>
       <label for="dtp_appointment_input" class="col-md-3 control-label">[ Appointment ]</label>
       <div class="input-group date form_appointmentdatetime col-md-7" data-date-format="yyyy-mm-dd hh:ii" data-link-field="dtp_appointment_input">
-        <input class="form-control" id="appointmentdatetime" size="10" type="text" name="appointmentdatetime" wid="4" rid="5" value="<?php echo $faultsinfo['appointmentdatetime']; ?>" readonly>
+        <input class="form-control" id="appointmentdatetime" size="10" type="text" name="appointmentdatetime" wid="7" rid="5" value="<?php echo $faultsinfo['appointmentdatetime']; ?>" readonly>
         <span class="input-group-addon s_appointmentdatetime"><span class="glyphicon glyphicon-remove"></span></span>
         <span class="input-group-addon s_appointmentdatetime"><span class="glyphicon glyphicon-th"></span></span>
       </div>
@@ -619,7 +625,7 @@
   <div class="form-group">
     <label class="col-sm-1 control-label"></label>
     <label class="col-sm-3 control-label">[ Resolve Details ]</label>
-    <div class="col-sm-8"> <textarea class="form-control" id="resolve_details" row="5" id="resolve_details" name="resolve_details" wid="5" rid="5"><?php echo $faultsinfo['resolve_details']; ?></textarea> </div>
+    <div class="col-sm-8"> <textarea class="form-control" id="resolve_details" row="5" id="resolve_details" name="resolve_details" wid="7" rid="5"><?php echo $faultsinfo['resolve_details']; ?></textarea> </div>
   </div>
 
   <div class="form-group">
@@ -627,7 +633,7 @@
     <input type="hidden" name="faultid" value=<?php echo $faultsinfo['faultid']; ?>>
     <input type="hidden" name="orderid" value=<?php echo $faultsinfo['orderid']; ?>>
     <input type="hidden" name="action" value="addfault">
-    <div class="col-sm-2"><button type="submit" class="btn btn-info" action="addfault" id="faultSubmit">Submit</button></div>
+    <div class="col-sm-2"><button type="submit" class="btn btn-info" name="faultSubmit" action="addfault" wid="7" rid="5" id="faultSubmit">Submit</button></div>
     </div>
   </div>
 </div>
