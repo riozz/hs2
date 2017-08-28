@@ -219,7 +219,7 @@ class Warrantys_model extends CI_Model {
 	        log_message('debug', 'zzz[Warrantys_model]261/insert:'.json_encode($data));
 	        $row = $this->insert_log('warranty','insert',$data,'');
 	        if ($row == 1) {
-		  $row = $this->email('HS - warranty','ringo.wc.lau@pccw.com','HS - Warranty', json_encode($data));
+		  //$row = $this->email('HS - warranty','ringo.wc.lau@pccw.com','HS - Warranty', json_encode($data));
                   $row = $this->db->insert('square_warranty', $data);
 	          if ($row==0) {
 	            $ret['msg']="ERR232: database error, Failed to insert warranty, please contact system administrator";
@@ -228,6 +228,7 @@ class Warrantys_model extends CI_Model {
 		  $ret['id'] = $this->db->insert_id(); //warrantyid
 	          log_message('debug', 'zzz[Warrantys_model]290:row='.$row);
 	          log_message('debug', 'zzz[Warrantys_model]291:actionwarrantyid='.$ret['id']);
+                  $row = $this->email('HS - Warranty','',$this->emailSubject($data,$ret['id']), $this->emailContent($data,$ret['id']));
 		  $ret['msg']='New Record Added Successfully.';
 	        }
   	      }
@@ -304,10 +305,24 @@ class Warrantys_model extends CI_Model {
 	  return $row;
 	}
 
+        public function emailSubject($data, $id) {
+          $warrantyid = $data['fullorder_id']."-".$id;
+          $subject = 'New order created (HS-Warranty ';
+          $subject = $subject.$warrantyid.')';
+          return $subject;
+        }
+
+        public function emailContent($data, $id) {
+          $warrantyid = $data['fullorder_id']."-".$id;
+          $ordertype = "HS-Warranty";
+          $content='<b>New order created</b><p>Order type: '.$ordertype.'<br>Order ID: '.$warrantyid.'<br>Created by: '.$data['createdby'].'<br>Created Date: '.$data['createddate'].'<p>Please visit <a href="http://hktpmis.pccw.com/hs/index.php/hswarranty">Home Solution</a> to review the order.<p>This is an automatically generated email.  Please do not reply.';
+          return $content;
+        }
+
  	public function email($section, $mailto, $mailsubject, $mailcontent) {
 	  $data = array (
 		'mail_system' => $section,
-		'mail_to' => $mailto,
+		'mail_to' => TCADMINEMAIL,
 		'mail_subject' => $mailsubject,
 		'mail_content' => $mailcontent,
 		'mail_inserttime' => date("Y-m-d H:i:s")

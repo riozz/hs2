@@ -331,7 +331,7 @@ class Faults_model extends CI_Model {
 	        log_message('debug', 'zzz[Faults_model]261/insert:'.json_encode($data));
 	        $row = $this->insert_log('fault','insert',$data,'');
 	        if ($row == 1) {
-		  $row = $this->email('HS - fault','ringo.wc.lau@pccw.com','HS - Fault', json_encode($data));
+		  //$row = $this->email('HS - fault','','HS - Fault', json_encode($data));
                   $row = $this->db->insert('square_fault', $data);
 	          if ($row==0) {
 	            $ret['msg']="ERR232: database error, Failed to insert fault, please contact system administrator";
@@ -340,6 +340,8 @@ class Faults_model extends CI_Model {
 		  $ret['faultid'] = $this->db->insert_id();
 	          log_message('debug', 'zzz[Faults_model]290:row='.$row);
 	          log_message('debug', 'zzz[Faults_model]291:actionfaultid='.$ret['faultid']);
+	          log_message('debug', 'zzz[Faults_model]345:emailSubject='.$this->emailSubject($data, $ret['faultid']));
+		  $row = $this->email('HS - Fault','',$this->emailSubject($data,$ret['faultid']), $this->emailContent($data,$ret['faultid']));
 		  $ret['msg']='New Record Added Successfully.';
 	        }
   	      }
@@ -427,10 +429,24 @@ class Faults_model extends CI_Model {
 	  return $row;
 	}
 
+ 	public function emailSubject($data, $id) {
+	  $faultid = $data['forder_id']."-".$id;
+	  $subject = 'New order created (HS-Fault ';
+	  $subject = $subject.$faultid.')';
+	  return $subject;
+	}
+
+	public function emailContent($data, $id) {	
+	  $faultid = $data['forder_id']."-".$id;
+    	  $ordertype = "HS-Upgrade";
+	  $content='<b>New order created</b><p>Order type: '.$ordertype.'<br>Order ID: '.$faultid.'<br>Created by: '.$data['createdby'].'<br>Created Date: '.$data['createddate'].'<p>Please visit <a href="http://hktpmis.pccw.com/hs/index.php/hsfault">Home Solution</a> to review the order.<p>This is an automatically generated email.  Please do not reply.';
+	  return $content; 
+	}
+
  	public function email($section, $mailto, $mailsubject, $mailcontent) {
 	  $data = array (
 		'mail_system' => $section,
-		'mail_to' => $mailto,
+		'mail_to' => TCADMINEMAIL,
 		'mail_subject' => $mailsubject,
 		'mail_content' => $mailcontent,
 		'mail_inserttime' => date("Y-m-d H:i:s")

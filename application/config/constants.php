@@ -90,11 +90,14 @@ defined('SYSID')	       OR define('SYSID', '1'); //Home solution (Square)
 defined('HS_V1')	       OR define('HS_V1', 'http://10.39.8.113/dev/hs');
 defined('HKTP')		       OR define('HKTP', 'devhktp'); 
 defined('ENV')		       OR define('ENV', 'DEV');
+defined('TCADMINEMAIL')	       OR define('TCADMINEMAIL', 'ringo.wc.lau@pccw.com');
 // UAT
 //defined('HS_V1')	       OR define('HS_V1', 'http://10.39.8.101/uat/hs');
 //defined('HKTP')		       OR define('HKTP', 'uathktp'); 
 //defined('ENV')		       OR define('ENV', 'UAT');
+//defined('TCADMINEMAIL')	       OR define('TCADMINEMAIL', 'ringo.wc.lau@pccw.com');
 // PRO
 //defined('HS_V1')	       OR define('HS_V1', 'hs');	 
 //defined('HKTP')		       OR define('HKTP', 'hktp'); 
 //defined('ENV')		       OR define('ENV', '');
+//defined('TCADMINEMAIL')	       OR define('TCADMINEMAIL', 'michael.yf.tong@pccw.com');
