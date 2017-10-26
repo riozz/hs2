@@ -351,7 +351,7 @@
       <div class="form-group">
         <label class="col-sm-2 control-label">Upgrade Router Model: </label>
         <div class="col-sm-10 dropdown"> 
-	  <select class="form-control" id="u_model" name="u_model" wid="4" rid="5" >
+	  <select class="form-control" id="u_model" name="u_model" wid="1" rid="5" >
 	    <?php echo "<option value='' ".(($upgradesinfo['u_model']==0)?'selected':'') .">Please select</option>";
 	    foreach ($upgradesinfo['tab_model'] as $row) 
 	    {
@@ -365,7 +365,7 @@
       <div class="form-group">
         <label class="col-sm-2 control-label">Upgrade Router Quantity: </label>
         <div class="col-sm-5"> 
-	  <input class="form-control" id="u_quantity" type="text" name="u_quantity" wid="5" rid="5" value="<?php echo $upgradesinfo['u_quantity']; ?>"> 
+	  <input class="form-control" id="u_quantity" type="text" name="u_quantity" wid="1" rid="5" value="<?php echo $upgradesinfo['u_quantity']; ?>"> 
 	</div>
         <label class="col-sm-5 control-label">&nbsp;&nbsp;</label>
       </div>
@@ -373,7 +373,7 @@
       <div class="form-group">
         <label for="dtp_u_appointment_input" class="col-sm-2 control-label">Appointment Date/Time:</label>
         <div class="input-group date form_u_appointmentdatetime col-md-7" data-date-format="yyyy-mm-dd hh:ii" data-link-field="dtp_u_appointment_input">
-          <input class="form-control" id="u_appointmentdatetime" size="10" type="text" name="u_appointmentdatetime" wid="4" rid="5" value="<?php echo $upgradesinfo['u_appointmentdatetime']; ?>" readonly>
+          <input class="form-control" id="u_appointmentdatetime" size="10" type="text" name="u_appointmentdatetime" wid="1" rid="5" value="<?php echo $upgradesinfo['u_appointmentdatetime']; ?>" readonly>
           <span class="input-group-addon s_u_appointmentdatetime" ><span class="glyphicon glyphicon-remove"></span></span>
           <span class="input-group-addon s_u_appointmentdatetime" ><span class="glyphicon glyphicon-th"></span></span>
         </div>
@@ -384,10 +384,10 @@
       <div class="form-group">
         <label class="col-sm-2 control-label">Appointment Date/Time:</label>
         <div class="col-sm-6"> 
-	  <input class="form-control" id="u_appointmentdate" type="text" name="u_appointmentdate" wid="5" rid="5" value="<?php echo $upgradesinfo['u_appointmentdate']; ?>"> 
+	  <input class="form-control" id="u_appointmentdate" type="text" name="u_appointmentdate" wid="1" rid="5" value="<?php echo $upgradesinfo['u_appointmentdate']; ?>"> 
 	</div>
         <div class="col-sm-4"> 
-	  <input class="form-control" id="u_appointmenttime" type="text" name="u_appointmenttime" wid="5" rid="5" value="<?php echo $upgradesinfo['u_appointmenttime']; ?>"> 
+	  <input class="form-control" id="u_appointmenttime" type="text" name="u_appointmenttime" wid="1" rid="5" value="<?php echo $upgradesinfo['u_appointmenttime']; ?>"> 
 	</div>
       </div>
 //-->
@@ -395,13 +395,13 @@
       <div class="form-group">
         <label class="col-sm-2 control-label">Sales Memo Number:</label>
         <div class="col-sm-10"> 
-	  <input class="form-control" id="u_smno" type="text" name="u_smno" wid="5" rid="5" value="<?php echo $upgradesinfo['u_smno']; ?>"> 
+	  <input class="form-control" id="u_smno" type="text" name="u_smno" wid="1" rid="5" value="<?php echo $upgradesinfo['u_smno']; ?>"> 
 	</div>
       </div>
 
       <div class="form-group">
         <label class="col-sm-2 control-label">Salesman Remark:</label>
-        <div class="col-sm-10"> <textarea class="form-control" row="5" id="u_remark" name="u_remark"  wid="5" rid="5"><?php echo $upgradesinfo['u_remark']; ?></textarea></div>
+        <div class="col-sm-10"> <textarea class="form-control" row="5" id="u_remark" name="u_remark"  wid="1" rid="5"><?php echo $upgradesinfo['u_remark']; ?></textarea></div>
       </div>
 
       <div class="form-group">
@@ -409,7 +409,7 @@
         <input type="hidden" name="id" value=<?php echo $upgradesinfo['id']; ?>>
         <input type="hidden" name="fullorder_id" value=<?php echo $upgradesinfo['fullorder_id']; ?>>
         <input type="hidden" name="action" value="addupgrade">
-        <div class="col-sm-2"><button type="submit" class="btn btn-info btn-upgradeSubmit" name="upgradeSubmit" wid="5" rid="5" action="addupgrade" id="upgradeSubmit">Submit</button>
+        <div class="col-sm-2"><button type="submit" class="btn btn-info btn-upgradeSubmit" name="upgradeSubmit" wid="1" rid="5" action="addupgrade" id="upgradeSubmit">Submit</button>
         </div>
       </div>
 
@@ -424,7 +424,7 @@
        <div class="form-group">
         <label class="col-sm-3 control-label">Technical Consultant Staff No.:</label>
         <div class="col-sm-3"> 
-	  <input class="form-control" id="tc_staff_id" type="text" name="tc_staff_id" onchange="getstaffinfo(this.value, 'v_upgradeAssignment')" wid="7" rid="5" value="<?php echo $upgradesinfo['tc_staff_id']; ?>"> 
+	  <input class="form-control" id="tc_staff_id" type="text" name="tc_staff_id" onchange="getstaffinfo(this.value, 'v_upgradeAssignment')" wid="1" rid="5" value="<?php echo $upgradesinfo['tc_staff_id']; ?>"> 
 	</div>
         <label class="col-sm-3 control-label">Technical Consultant Staff Name:</label>
         <div class="col-sm-3"> 
@@ -455,7 +455,7 @@
       <div class="form-group">
         <label for="dtp_tc_appointment_input" class="col-sm-3 control-label">Appointment Date/Time:</label>
         <div class="input-group date form_tc_appointmentdatetime col-sm-7" date-date-format="yyyy-mm-dd hh:ii" date-link-field="dtp_tc_appointment_input"> 
-	  <input class="form-control" id="tc_appointmentdatetime" size="10" type="text" name="tc_appointmentdatetime" wid="7" rid="5" value="<?php echo $upgradesinfo['tc_appointmentdatetime']; ?>" readonly> 
+	  <input class="form-control" id="tc_appointmentdatetime" size="10" type="text" name="tc_appointmentdatetime" wid="1" rid="5" value="<?php echo $upgradesinfo['tc_appointmentdatetime']; ?>" readonly> 
           <span class="input-group-addon s_tc_appointmentdatetime"><span class="glyphicon glyphicon-remove"></span></span>
           <span class="input-group-addon s_tc_appointmentdatetime"><span class="glyphicon glyphicon-th"></span></span>
 	</div>
@@ -468,7 +468,7 @@
         <input type="hidden" name="id" value=<?php echo $upgradesinfo['id']; ?>>
         <input type="hidden" name="fullorder_id" value=<?php echo $upgradesinfo['fullorder_id']; ?>>
         <input type="hidden" name="action" value="assign">
-        <div class="col-sm-2"><button type="submit" class="btn btn-info btn-upgradeAssign" name="upgradeAssign" wid="7" rid="5" action="assign" id="upgradeAssign">Assign</button>
+        <div class="col-sm-2"><button type="submit" class="btn btn-info btn-upgradeAssign" name="upgradeAssign" wid="1" rid="5" action="assign" id="upgradeAssign">Assign</button>
 	</div>
       </div>
     </div>
@@ -482,7 +482,7 @@
       <div class="form-group">
         <label for="dtp_com_input" class="col-md-3 control-label">Completion Date:</label>
         <div class="input-group date form_datetime col-md-7" data-date-format="yyyy-mm-dd" data-link-field="dtp_com_input">
-          <input class="form-control" id="com_date" size="10" type="text" name="com_date" wid="7" rid="5" value="<?php echo $upgradesinfo['com_date']; ?>" readonly>
+          <input class="form-control" id="com_date" size="10" type="text" name="com_date" wid="1" rid="5" value="<?php echo $upgradesinfo['com_date']; ?>" readonly>
           <span class="input-group-addon s_com_date"><span class="glyphicon glyphicon-remove"></span></span>
           <span class="input-group-addon s_com_date"><span class="glyphicon glyphicon-calendar"></span></span>
         </div>
@@ -493,7 +493,7 @@
       <div class="form-group">
         <label class="col-sm-3 control-label">Technical Consultant Staff No.:</label>
         <div class="col-sm-3"> 
-	  <input class="form-control" id="com_staff_id" type="text" name="com_staff_id" onchange="getstaffinfo(this.value, 'v_upgradeCompletion')" wid="7" rid="5" value="<?php echo $upgradesinfo['com_staff_id']; ?>"> 
+	  <input class="form-control" id="com_staff_id" type="text" name="com_staff_id" onchange="getstaffinfo(this.value, 'v_upgradeCompletion')" wid="1" rid="5" value="<?php echo $upgradesinfo['com_staff_id']; ?>"> 
 	</div>
         <label class="col-sm-3 control-label">Technical Consultant Staff Name:</label>
         <div class="col-sm-3"> 
@@ -515,14 +515,14 @@
 
       <div class="form-group">
         <label class="col-sm-3 control-label">TC Remark:</label>
-        <div class="col-sm-9"> <textarea class="form-control" row="5" id="com_remark" name="com_remark"  wid="7" rid="5"><?php echo $upgradesinfo['com_remark']; ?></textarea></div>
+        <div class="col-sm-9"> <textarea class="form-control" row="5" id="com_remark" name="com_remark"  wid="1" rid="5"><?php echo $upgradesinfo['com_remark']; ?></textarea></div>
       </div>
       <div class="form-group">
         <div class="col-sm-10">&nbsp;</div>
         <input type="hidden" name="id" value=<?php echo $upgradesinfo['id']; ?>>
         <input type="hidden" name="fullorder_id" value=<?php echo $upgradesinfo['fullorder_id']; ?>>
         <input type="hidden" name="action" value="complete">
-        <div class="col-sm-2"><button type="submit" class="btn btn-info btn-upgradeComplete" name="upgradeComplete" wid="7" rid="5" action="complete" id="upgradeComplete">Complete</button>
+        <div class="col-sm-2"><button type="submit" class="btn btn-info btn-upgradeComplete" name="upgradeComplete" wid="1" rid="5" action="complete" id="upgradeComplete">Complete</button>
 	</div>
       </div>
   </div>

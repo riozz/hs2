@@ -3,7 +3,18 @@
 
             <div class="col-md-9">
 	   	<div class="row">
-    			<div class="alert alert-info"><h3>Fault Management&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn-info btn-lg glyphicon glyphicon-circle-arrow-up" id="infotoggle" data-toggle="collapse" data-target="#faultinfo">&nbsp;Fault Detail</button></h3></div>
+    			<div class="alert alert-info">
+			<h3>
+			<form action='<?php echo HS_V1.'/mainpage.php'; ?>' method='post'><input type='hidden' name='actions' value='V'><input type='hidden' name='order_id' value='<?php echo $orderid; ?>'>
+			  <button type='submit' class='btn-info btn-lg'>
+			    <span class="glyphicon glyphicon-arrow-left"></span>
+			  </button>
+			</form>
+
+			&nbsp;Fault Management&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<button type="button" class="btn-info btn-lg glyphicon glyphicon-collapse-up" id="infotoggle" data-toggle="collapse" data-target="#faultinfo">&nbsp;Fault Detail</button>
+			</h3>
+			</div>
 		</div>
 
 <!--
@@ -88,13 +99,14 @@
 		    if (actionmsg.length>0) {
 		      $("#actionmsg").collapse('show');
 		      $("#faultinfo").collapse('hide');
-		      $("#infotoggle").toggleClass('glyphicon-circle-arrow-up').toggleClass('glyphicon-circle-arrow-down');
+		      //$("#infotoggle").toggleClass('glyphicon-circle-arrow-up').toggleClass('glyphicon-circle-arrow-down');
+		      $("#infotoggle").toggleClass('glyphicon-collapse-up').toggleClass('glyphicon-collapse-down');
 		    }
 		    return false;	
 		});
 
 		$('#infotoggle').click(function() {
-		  $(this).toggleClass('glyphicon-circle-arrow-up').toggleClass('glyphicon-circle-arrow-down');
+		  $(this).toggleClass('glyphicon-collapse-up').toggleClass('glyphicon-collapse-down');
 		});
 	      </script>
 

@@ -26,7 +26,7 @@ class Warrantys_model extends CI_Model {
 	  //return data array
 	  $orderid = substr($oid, -6);
 	  //$sql="select sw.id, sw.orders_id, sw.fullorder_id, sw.staff_id, s.name, sw.tc_staff_id, tc.name tcname, sw.com_staff_id, com.name comname, sw.createddate from square_warranty sw join ".HKTP.".staff s on sw.staff_id = s.staffid left join ".HKTP.".staff tc on sw.tc_staff_id = tc.staffid left join ".HKTP.".staff com on sw.com_staff_id = com.staffid where sw.orders_id=right(?,6) order by sw.createddate desc";
-	  $sql="select id, orders_id, fullorder_id, staff_id, staff_name, tc_staff_id, tc_staff_name, com_staff_id, com_staff_name, createddate from square_warranty where orders_id=right(?,6) order by updatetime desc";
+	  $sql="select id, orders_id, fullorder_id, staff_id, staff_name, tc_staff_id, tc_staff_name, com_staff_id, com_staff_name, createddate, com_date, date_add(com_date, interval 365 day) end_date from square_warranty where orders_id=right(?,6) order by updatetime desc";
 	  $results = $this->db->query($sql, array($orderid));
 	  //return an array of result
 	  return $results->result_array();

@@ -135,7 +135,7 @@ class Faults_model extends CI_Model {
 	    $data = $result->row_array();
           }
 
-	  $sql = "select `id`,`content` from square_fault_reportto";
+	  $sql = "select `id`,`content` from square_fault_reportto where active=1";
 	  $result = $this->db->query($sql);
 	  $data['reportto'] = $result->result_array();
 

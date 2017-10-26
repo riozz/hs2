@@ -373,7 +373,7 @@
      <div class="form-group">
        <label class="col-sm-2 control-label">Maintenance Category: </label>
        <div class="col-sm-5 dropdown"> 
-	  <select class="form-control" id="w_category" name="w_category" wid="5" rid="5">
+	  <select class="form-control" id="w_category" name="w_category" wid="1" rid="5">
 	  <?php echo "<option value='' ".(($warrantysinfo['w_category']==0)?'selected':'') .">Please select</option>";
 	  foreach ($warrantysinfo['tab_category'] as $row) 
 	  {
@@ -387,7 +387,7 @@
      <div class="form-group">
        <label class="col-sm-2 control-label">Warranty Package: </label>
        <div class="col-sm-5 dropdown"> 
-	  <select class="form-control" id="w_package" name="w_package" wid="4" rid="5">
+	  <select class="form-control" id="w_package" name="w_package" wid="1" rid="5">
           <?php echo "<option value='' ".(($warrantysinfo['w_package']==0)?'selected':'') .">Please select</option>";
 	    foreach ($warrantysinfo['tab_package'] as $row) 
 	    {
@@ -401,7 +401,7 @@
      <div class="form-group">
        <label class="col-sm-2 control-label">Extra offer:</label>
        <div class="col-sm-6"> 
-         <input class="form-control" id="w_offer" type="text" name="w_offer" wid="5" rid="5" value="<?php echo $warrantysinfo['w_offer']; ?>"> 
+         <input class="form-control" id="w_offer" type="text" name="w_offer" wid="1" rid="5" value="<?php echo $warrantysinfo['w_offer']; ?>"> 
        </div>
          <label class="col-sm-4 control-label"># (Please Contact Marketing)</label>
       </div>
@@ -409,13 +409,13 @@
       <div class="form-group">
         <label class="col-sm-2 control-label">Sales Memo Number:</label>
         <div class="col-sm-10"> 
-	  <input class="form-control" id="w_smno" type="text" name="w_smno" wid="4" rid="5" value="<?php echo $warrantysinfo['w_smno']; ?>"> </div>
+	  <input class="form-control" id="w_smno" type="text" name="w_smno" wid="1" rid="5" value="<?php echo $warrantysinfo['w_smno']; ?>"> </div>
       </div>
 
       <div class="form-group">
         <label for="dtp_input1" class="col-md-2 control-label">Effective Date:</label>
         <div class="input-group date form_w_effdate col-md-8" data-date-format="yyyy-mm-dd" data-link-field="dtp_input1">
-          <input class="form-control" id="w_effdate" size="10" type="text" name="w_effdate" wid="5" rid="5" value="<?php echo $warrantysinfo['w_effdate']; ?>" readonly>
+          <input class="form-control" id="w_effdate" size="10" type="text" name="w_effdate" wid="1" rid="5" value="<?php echo $warrantysinfo['w_effdate']; ?>" readonly>
           <span class="input-group-addon s_w_effdate"><span class="glyphicon glyphicon-remove"></span></span>
           <span class="input-group-addon s_w_effdate"><span class="glyphicon glyphicon-calendar"></span></span>
         </div>
@@ -433,7 +433,7 @@
       <div class="form-group">
         <label class="col-sm-2 control-label">Effective Date:</label>
         <div class="col-sm-10"> 
-	  <input class="form-control" id="w_effdate" type="text" name="w_effdate" wid="5" rid="5" value="<?php echo $warrantysinfo['w_effdate']; ?>"> #Only opened for CS/TS or TC.<br/>#If not selectd, effective date will follow the TC completion date of selected category / the end date of last row record added.
+	  <input class="form-control" id="w_effdate" type="text" name="w_effdate" wid="1" rid="5" value="<?php echo $warrantysinfo['w_effdate']; ?>"> #Only opened for CS/TS or TC.<br/>#If not selectd, effective date will follow the TC completion date of selected category / the end date of last row record added.
 	</div>
       </div>
 //-->
@@ -443,7 +443,7 @@
         <input type="hidden" name="id" value=<?php echo $warrantysinfo['id']; ?>>
         <input type="hidden" name="fullorder_id" value=<?php echo $warrantysinfo['fullorder_id']; ?>>
         <input type="hidden" name="action" value="addwarranty">
-        <div class="col-sm-2"><button type="submit" class="btn btn-info btn-warrantySubmit" name="warrantySubmit" wid="5" rid="5" action="addwarranty" id="warrantySubmit">Submit</button>
+        <div class="col-sm-2"><button type="submit" class="btn btn-info btn-warrantySubmit" name="warrantySubmit" wid="1" rid="5" action="addwarranty" id="warrantySubmit">Submit</button>
 	</div>
       </div>
   </div>
@@ -457,7 +457,7 @@
      <div class="form-group">
        <label class="col-sm-3 control-label">Technical Consultant Staff No.:</label>
        <div class="col-sm-3"> 
-         <input class="form-control" id="tc_staff_id" type="text" name="tc_staff_id" onchange="getstaffinfo(this.value, 'v_warrantyAssignment')" wid="7" rid="5" value="<?php echo $warrantysinfo['tc_staff_id']; ?>"> 
+         <input class="form-control" id="tc_staff_id" type="text" name="tc_staff_id" onchange="getstaffinfo(this.value, 'v_warrantyAssignment')" wid="1" rid="5" value="<?php echo $warrantysinfo['tc_staff_id']; ?>"> 
        </div>
        <label class="col-sm-3 control-label">Technical Consultant Staff Name:</label>
        <div class="col-sm-3"> 
@@ -488,7 +488,7 @@
       <div class="form-group">
         <label for="dtp_appointment_input" class="col-md-3 control-label">Appointment Date/Time:</label>
         <div class="input-group date form_tc_appointmentdatetime col-md-7" data-date-format="yyyy-mm-dd hh:ii" data-link-field="dtp_appointment_input">
-          <input class="form-control" id="tc_appointmentdatetime" size="10" type="text" name="tc_appointmentdatetime" wid="7" rid="5" value="<?php echo $warrantysinfo['tc_appointmentdatetime']; ?>" readonly>
+          <input class="form-control" id="tc_appointmentdatetime" size="10" type="text" name="tc_appointmentdatetime" wid="1" rid="5" value="<?php echo $warrantysinfo['tc_appointmentdatetime']; ?>" readonly>
           <span class="input-group-addon s_tc_appointmentdatetime"><span class="glyphicon glyphicon-remove"></span></span>
           <span class="input-group-addon s_tc_appointmentdatetime"><span class="glyphicon glyphicon-th"></span></span>
         </div>
@@ -500,7 +500,7 @@
         <input type="hidden" name="id" value=<?php echo $warrantysinfo['id']; ?>>
         <input type="hidden" name="fullorder_id" value=<?php echo $warrantysinfo['fullorder_id']; ?>>
         <input type="hidden" name="action" value="assign">
-        <div class="col-sm-2"><button type="submit" class="btn btn-info btn-warrantyAssign" name="warrantyAssign" wid="7" rid="5" action="assign" id="warrantyAssign">Assign</button>
+        <div class="col-sm-2"><button type="submit" class="btn btn-info btn-warrantyAssign" name="warrantyAssign" wid="1" rid="5" action="assign" id="warrantyAssign">Assign</button>
 	</div>
       </div>
    </div>
@@ -514,7 +514,7 @@
       <div class="form-group">
         <label for="dtp_com_input" class="col-md-3 control-label">Completion Date:</label>
         <div class="input-group date form_com_date col-md-7" data-date-format="yyyy-mm-dd" data-link-field="dtp_com_input">
-          <input class="form-control" id="com_date" size="10" type="text" name="com_date" wid="7" rid="5" value="<?php echo $warrantysinfo['com_date']; ?>" readonly>
+          <input class="form-control" id="com_date" size="10" type="text" name="com_date" wid="1" rid="5" value="<?php echo $warrantysinfo['com_date']; ?>" readonly>
           <span class="input-group-addon s_com_date"><span class="glyphicon glyphicon-remove"></span></span>
           <span class="input-group-addon s_com_date"><span class="glyphicon glyphicon-calendar"></span></span>
         </div>
@@ -525,7 +525,7 @@
       <div class="form-group">
         <label for="dtp_com_input" class="col-sm-3 control-label">Completion Date:</label>
         <div class="col-sm-3"> 
-	  <input class="form-control" id="com_date" type="text" name="com_date" wid="5" rid="5" value="<?php echo $warrantysinfo['com_date']; ?>"> 
+	  <input class="form-control" id="com_date" type="text" name="com_date" wid="1" rid="5" value="<?php echo $warrantysinfo['com_date']; ?>"> 
 	</div>
 	<label class="col-sm-6 control-label">&nbsp;</label>
       </div>
@@ -535,7 +535,7 @@
       <div class="form-group">
         <label class="col-sm-3 control-label">Technical Consultant Staff No.:</label>
         <div class="col-sm-3"> 
-	  <input class="form-control" id="com_staff_id" type="text" name="com_staff_id" onchange="getstaffinfo(this.value, 'v_warrantyCompletion')" wid="7" rid="5" value="<?php echo $warrantysinfo['com_staff_id']; ?>"> 
+	  <input class="form-control" id="com_staff_id" type="text" name="com_staff_id" onchange="getstaffinfo(this.value, 'v_warrantyCompletion')" wid="1" rid="5" value="<?php echo $warrantysinfo['com_staff_id']; ?>"> 
 	</div>
         <label class="col-sm-3 control-label">Technical Consultant Staff Name:</label>
         <div class="col-sm-3"> 
@@ -557,14 +557,14 @@
 
       <div class="form-group">
         <label class="col-sm-2 control-label">TC Remark:</label>
-        <div class="col-sm-10"> <textarea class="form-control" row="5" id="com_remark" name="com_remark"  wid="7" rid="5"><?php echo $warrantysinfo['com_remark']; ?></textarea></div>
+        <div class="col-sm-10"> <textarea class="form-control" row="5" id="com_remark" name="com_remark"  wid="1" rid="5"><?php echo $warrantysinfo['com_remark']; ?></textarea></div>
       </div>
       <div class="form-group">
         <div class="col-sm-10">&nbsp;</div>
         <input type="hidden" name="id" value=<?php echo $warrantysinfo['id']; ?>>
         <input type="hidden" name="fullorder_id" value=<?php echo $warrantysinfo['fullorder_id']; ?>>
         <input type="hidden" name="action" value="complete">
-        <div class="col-sm-2"><button type="submit" class="btn btn-info btn-warrantyComplete" name="warrantyComplete" wid="7" rid="5" action="complete" id="warrantyComplete">Complete</button>
+        <div class="col-sm-2"><button type="submit" class="btn btn-info btn-warrantyComplete" name="warrantyComplete" wid="1" rid="5" action="complete" id="warrantyComplete">Complete</button>
 	</div>
       </div>
   </div>

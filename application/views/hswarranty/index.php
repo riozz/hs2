@@ -3,14 +3,24 @@
 
             <div class="col-md-9">
 	   	<div class="row">
-    		  <div class="alert alert-info"><h3>Warranty Management &nbsp;&nbsp;&nbsp
-      		  <button type="button" class="btn-info btn-lg glyphicon glyphicon-circle-arrow-up" id="infotoggle" data-toggle="collapse" data-target="#warrantyinfo">&nbsp;Warranty Detail</button></h3>&nbsp;&nbsp;&nbsp;
+    		  <div class="alert alert-info">
+		  <h3>
+                    <form action='<?php echo HS_V1.'/mainpage.php'; ?>' method='post'><input type='hidden' name='actions' value='V'><input type='hidden' name='order_id' value='<?php echo $fullorder_id; ?>'>
+                      <button type='submit' class='btn-info btn-lg'>
+                      <span class="glyphicon glyphicon-arrow-left"></span>
+                      </button>
+                    </form>
+
+            	    &nbsp;Warranty Management &nbsp;&nbsp;&nbsp
+
+      		  <button type="button" class="btn-info btn-lg glyphicon glyphicon-collapse-up" id="infotoggle" data-toggle="collapse" data-target="#warrantyinfo">&nbsp;Warranty Detail</button>
+		  </h3>&nbsp;&nbsp;&nbsp;
       		  <!--<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#upgradeinfo">Upgrade Info</button>&nbsp;&nbsp;&nbsp;
       		  <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#tcassignmentinfo">TC Assignment Info</button>&nbsp;&nbsp;&nbsp;
       		  <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#tccompletioninfo">TC Completion Info</button>-->
     		</div>
 
-
+		</div>
 <!--
   	      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 //  -->
@@ -95,13 +105,13 @@
 		    if (actionmsg.length>0) {
 		      $("#actionmsg").collapse('show');
 		      $("#warrantyinfo").collapse('hide');
-		      $("#infotoggle").toggleClass('glyphicon-circle-arrow-up').toggleClass('glyphicon-circle-arrow-down');
+		      $("#infotoggle").toggleClass('glyphicon-collapse-up').toggleClass('glyphicon-collapse-down');
 		    }
 		    return false;	
 		});
 
                 $('#infotoggle').click(function() {
-                  $(this).toggleClass('glyphicon-circle-arrow-up').toggleClass('glyphicon-circle-arrow-down');
+                  $(this).toggleClass('glyphicon-collapse-up').toggleClass('glyphicon-collapse-down');
                 });
 	      </script>
 
