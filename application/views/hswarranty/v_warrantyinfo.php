@@ -137,7 +137,7 @@
   function getstaffinfo(str, vform) {
     //get staff info by staffid
     var url = "<?php echo HS_V1; ?>";
-    alert("v_warrantyinfo@110:str = "+str+" vform="+vform);
+    //alert("[zzz]:v_warrantyinfo@110:str = "+str+" vform="+vform);
     if (str == "") {
       return;
     } else {
@@ -581,7 +581,8 @@
 
      function initDatetimePicker_w_effdate() {
        var today = new Date();
-       var sdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours()+":"+today.getMinutes();
+       //var sdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours()+":"+today.getMinutes();
+       var sdate = today.getFullYear()+'-'+(today.getMonth()-3)+'-'+today.getDate()+' '+today.getHours()+":"+today.getMinutes();
        $('.form_w_effdate').datetimepicker({
           //language:  'fr',
           //weekStart: 1,
@@ -600,8 +601,9 @@
      }
      function initDatetimePicker_tc_appointmentdatetime() {
        var today = new Date();
-       var sdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours()+":"+today.getMinutes();
-       var weekday = new Date(today.getTime() + 1440 * 60 * 60 * 1000); //days * 24
+       //var sdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours()+":"+today.getMinutes();
+       var sdate = today.getFullYear()+'-'+(today.getMonth()-3)+'-'+today.getDate()+' '+today.getHours()+":"+today.getMinutes();
+       var weekday = new Date(today.getTime() + 2880 * 60 * 60 * 1000); //days * 24
        var edate = weekday.getFullYear()+'-'+(weekday.getMonth()+1)+'-'+weekday.getDate()+' '+weekday.getHours()+":"+weekday.getMinutes();
        $('.form_tc_appointmentdatetime').datetimepicker({
 	  //minView: 2,
@@ -618,7 +620,8 @@
      }
      function initDatetimePicker_com_date() {
        var today = new Date();
-       var sdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours()+":"+today.getMinutes();
+       //var sdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours()+":"+today.getMinutes();
+       var sdate = today.getFullYear()+'-'+(today.getMonth()-3)+'-'+today.getDate()+' '+today.getHours()+":"+today.getMinutes();
        $('.form_com_date').datetimepicker({
           //language:  'fr',
           //weekStart: 1,

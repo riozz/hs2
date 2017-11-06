@@ -128,7 +128,7 @@
   function getstaffinfo(str, vform) {
     //get staff info by staffid
     var url="<?php echo HS_V1; ?>";
-    alert("zzz117:upgrades/get_staffinfo/"+str+"/"+vform);
+    //alert("[zzz]117:upgrades/get_staffinfo/"+str+"/"+vform);
     if (str == "") {
       return;
     } else {
@@ -539,7 +539,8 @@
 
      function initDatetimePicker_datetime() {
        var today = new Date();
-       var sdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours()+":"+today.getMinutes();
+       //var sdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours()+":"+today.getMinutes();
+       var sdate = today.getFullYear()+'-'+(today.getMonth()-3)+'-'+today.getDate()+' '+today.getHours()+":"+today.getMinutes();
        $('.form_datetime').datetimepicker({
           //language:  'fr',
           //weekStart: 1,
@@ -558,8 +559,9 @@
      }
      function initDatetimePicker_tc_appointmentdatetime() {
        var today = new Date();
-       var sdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours()+":"+today.getMinutes();
-       var weekday = new Date(today.getTime() + 1440 * 60 * 60 * 1000); //day * 24
+       //var sdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours()+":"+today.getMinutes();
+       var sdate = today.getFullYear()+'-'+(today.getMonth()-3)+'-'+today.getDate()+' '+today.getHours()+":"+today.getMinutes();
+       var weekday = new Date(today.getTime() + 2880 * 60 * 60 * 1000); //day * 24
        var edate = weekday.getFullYear()+'-'+(weekday.getMonth()+1)+'-'+weekday.getDate()+' '+weekday.getHours()+":"+weekday.getMinutes();
        $('.form_tc_appointmentdatetime').datetimepicker({
           //minView: 2,
@@ -576,8 +578,9 @@
      }
      function initDatetimePicker_u_appointmentdatetime() {
        var today = new Date();
-       var sdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours()+":"+today.getMinutes();
-       var weekday = new Date(today.getTime() + 1440 * 60 * 60 * 1000); //day * 24
+       //var sdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours()+":"+today.getMinutes();
+       var sdate = today.getFullYear()+'-'+(today.getMonth()-3)+'-'+today.getDate()+' '+today.getHours()+":"+today.getMinutes();
+       var weekday = new Date(today.getTime() + 2880 * 60 * 60 * 1000); //day * 24
        var edate = weekday.getFullYear()+'-'+(weekday.getMonth()+1)+'-'+weekday.getDate()+' '+weekday.getHours()+":"+weekday.getMinutes();
        $('.form_u_appointmentdatetime').datetimepicker({
           //minView: 2,

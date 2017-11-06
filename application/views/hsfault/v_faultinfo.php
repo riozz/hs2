@@ -647,8 +647,9 @@
 
      function initDatetimePicker_appointmentdatetime() {
        var today = new Date();
-       var sdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours()+":"+today.getMinutes();
-       var weekday = new Date(today.getTime() + 1440 * 60 * 60 * 1000); //days * 24
+       //var sdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours()+":"+today.getMinutes();
+       var sdate = today.getFullYear()+'-'+(today.getMonth()-3)+'-'+today.getDate()+' '+today.getHours()+":"+today.getMinutes();
+       var weekday = new Date(today.getTime() + 2880 * 60 * 60 * 1000); //days * 24 * 60 * 60 *1000 as minisecond
        var edate = weekday.getFullYear()+'-'+(weekday.getMonth()+1)+'-'+weekday.getDate()+' '+weekday.getHours()+":"+weekday.getMinutes();
        $('.form_appointmentdatetime').datetimepicker({
           //weekStart: 1,
