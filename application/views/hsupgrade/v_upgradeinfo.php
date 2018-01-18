@@ -539,8 +539,9 @@
 
      function initDatetimePicker_datetime() {
        var today = new Date();
+       today.setMonth(today.getMonth()-3);
        //var sdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours()+":"+today.getMinutes();
-       var sdate = today.getFullYear()+'-'+(today.getMonth()-3)+'-'+today.getDate()+' '+today.getHours()+":"+today.getMinutes();
+       var sdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours()+":"+today.getMinutes();
        $('.form_datetime').datetimepicker({
           //language:  'fr',
           //weekStart: 1,
@@ -559,9 +560,10 @@
      }
      function initDatetimePicker_tc_appointmentdatetime() {
        var today = new Date();
+       today.setMonth(today.getMonth()-3);
        //var sdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours()+":"+today.getMinutes();
-       var sdate = today.getFullYear()+'-'+(today.getMonth()-3)+'-'+today.getDate()+' '+today.getHours()+":"+today.getMinutes();
-       var weekday = new Date(today.getTime() + 2880 * 60 * 60 * 1000); //day * 24
+       var sdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours()+":"+today.getMinutes();
+       var weekday = new Date(today.getTime() + 8760 * 60 * 60 * 1000); //day * 24
        var edate = weekday.getFullYear()+'-'+(weekday.getMonth()+1)+'-'+weekday.getDate()+' '+weekday.getHours()+":"+weekday.getMinutes();
        $('.form_tc_appointmentdatetime').datetimepicker({
           //minView: 2,
@@ -578,9 +580,10 @@
      }
      function initDatetimePicker_u_appointmentdatetime() {
        var today = new Date();
+       today.setMonth(today.getMonth()-3);
        //var sdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours()+":"+today.getMinutes();
-       var sdate = today.getFullYear()+'-'+(today.getMonth()-3)+'-'+today.getDate()+' '+today.getHours()+":"+today.getMinutes();
-       var weekday = new Date(today.getTime() + 2880 * 60 * 60 * 1000); //day * 24
+       var sdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours()+":"+today.getMinutes();
+       var weekday = new Date(today.getTime() + 8760 * 60 * 60 * 1000); //day * 24
        var edate = weekday.getFullYear()+'-'+(weekday.getMonth()+1)+'-'+weekday.getDate()+' '+weekday.getHours()+":"+weekday.getMinutes();
        $('.form_u_appointmentdatetime').datetimepicker({
           //minView: 2,
