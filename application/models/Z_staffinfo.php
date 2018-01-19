@@ -13,7 +13,7 @@ class Z_staffinfo extends CI_Model {
   check quota of selected appointment
 */
   public function getStaffInfoById($staff_id) {
-    $sql="select id,name,staffid,ccc,location,teamcode,channel,telno from staff where staffid=?";
+    $sql="select id,name,staffid,ccc,location,teamcode,channel,telno from staff where now()<enddate and staffid=?";
     $results = $this->hktp_db->query($sql, array($staff_id));
     $staffMetadata = $results -> row();
     if (isset($staffMetadata)) {
