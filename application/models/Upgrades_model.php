@@ -38,6 +38,7 @@ class Upgrades_model extends CI_Model {
 	  $orders_id = substr($oid, -6); 
 	  $id = $upgradeid;
 	  log_message('debug', 'zzz[Upgrades_model]34:orderid-upgradeid='.$fullorder_id.'-'.$id);
+  	  log_message('debug', 'zzz[Upgrades_model]41:id='.$id);
           if ($id > 0) { //upgradeid
 	    $sql="SELECT `su`.`id`, `su`.`staff_id`, `su`.staff_name, `su`.staff_teamcode, `su`.staff_channel, `su`.`orders_id`, `su`.`fullorder_id`, `su`.`u_model`, sum.model modelname, `su`.`u_quantity`, `su`.`u_appointmentdate`, `su`.`u_appointmenttime`, `su`.`u_appointmentdatetime`, `su`.`u_smno`, `su`.`u_remark`, `su`.`tc_staff_id`, `su`.`tc_staff_name`, `su`.`tc_staff_teamcode`, `su`.`tc_staff_channel`, `su`.`tc_staff_telno`, `su`.`tc_appointmentdate`, `su`.`tc_appointmenttime`, `su`.`tc_appointmentdatetime`, `su`.`com_staff_id`, `su`.`com_staff_name`, `su`.`com_staff_teamcode`,`su`.`com_staff_channel`,`su`.`com_staff_telno`, `su`.`com_remark`, `su`.`updatetime`, `su`.`createdby`, `su`.`modifiedby`, `su`.`createddate`, `su`.`com_date`
 		FROM `square_upgrade` su 
@@ -53,6 +54,8 @@ class Upgrades_model extends CI_Model {
 	    $result = $this->db->query($sql, array($orders_id));
 	    $data = $result->row_array();
           }
+	  log_message('debug','zzz[Upgrades_model]56:'. json_encode(array($orders_id)));
+	  log_message('debug', 'zzz[Upgrades_model]57:'.json_encode($data));
 
 	  $sql = "select `id`,`model` from square_upgrade_model";
 	  $result = $this->db->query($sql);

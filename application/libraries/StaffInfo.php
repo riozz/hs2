@@ -42,8 +42,11 @@ class StaffInfo {
  	  $data['s_orderid'] = $orderid;
 	  //$data['s_rightid'] = $staffMetadata->right_id;
 	  $sql ="select sr.right_id from staff s join system_right sr on s.id=sr.staff_sysid where s.staffid=? and sr.system_id=$systemid";
+	  log_message('debug','zzz[StaffInfo:45]:'.$sql);
 	  $result = $this->hktp_db->query($sql, $staffid);
+	  log_message('debug','zzz[StaffInfo:47]:'.$staffid);
 	  $data['s_rightid'] = $result->result_array();
+	  log_message('debug','zzz[StaffInfo:49]:'.json_encode($data));
           $this->CI->session->set_userdata($data);
         }
 

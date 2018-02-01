@@ -33,7 +33,7 @@ class UpgradeInfo {
 		join orders o on su.orders_id = o.id
 		join devhktp.staff s on su.staff_id = s.staffid
 		join devhktp.staff t on su.tc_staff_id = t.staffid
-		where su.orders_id=right('H201702001937',6) order by su.createddate desc;
+		where su.orders_id=right('H201702001930',6) order by su.createddate desc;
 	 */
 	  $results = $this->db->query($sql, array($orderid));
           $upgradeHistoryMetadata = $results -> row();

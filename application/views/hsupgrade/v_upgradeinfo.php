@@ -3,6 +3,8 @@
     //echo json_encode($faultsinfo); 
     //$rightid = $this->session->userdata('s_rightid');
     $i = 0; //convert php array to javascript array
+    log_message('debug','zzz[v_upgradeinfo.php]6-s_rightid:'.json_encode($this->session->userdata('s_rightid')));
+    log_message('debug','zzz[v_upgradeinfo.php]7-s_name:'.json_encode($this->session->userdata('s_name')));
     foreach ($this->session->userdata('s_rightid') as $row)
     {
       $rightids[$i] = $row['right_id'];

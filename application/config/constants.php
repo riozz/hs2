@@ -97,7 +97,7 @@ defined('TCADMINEMAIL')	       OR define('TCADMINEMAIL', 'ringo.wc.lau@pccw.com'
 //defined('ENV')		       OR define('ENV', 'UAT');
 //defined('TCADMINEMAIL')	       OR define('TCADMINEMAIL', 'ringo.wc.lau@pccw.com');
 // PRO
-//defined('HS_V1')	       OR define('HS_V1', 'hs');	 
+//defined('HS_V1')	       OR define('HS_V1', 'http://hktpmis.pccw.com/hs');	 
 //defined('HKTP')		       OR define('HKTP', 'hktp'); 
 //defined('ENV')		       OR define('ENV', '');
 //defined('TCADMINEMAIL')	       OR define('TCADMINEMAIL', 'michael.yf.tong@pccw.com');
