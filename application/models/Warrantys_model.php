@@ -26,7 +26,7 @@ class Warrantys_model extends CI_Model {
 	  //return data array
 	  $orderid = substr($oid, -6);
 	  //$sql="select sw.id, sw.orders_id, sw.fullorder_id, sw.staff_id, s.name, sw.tc_staff_id, tc.name tcname, sw.com_staff_id, com.name comname, sw.createddate from square_warranty sw join ".HKTP.".staff s on sw.staff_id = s.staffid left join ".HKTP.".staff tc on sw.tc_staff_id = tc.staffid left join ".HKTP.".staff com on sw.com_staff_id = com.staffid where sw.orders_id=right(?,6) order by sw.createddate desc";
-	  $sql="select w.id, w.orders_id, w.fullorder_id, w.staff_id, w.staff_name, w.tc_staff_id, w.tc_staff_name, w.com_staff_id, w.com_staff_name, w.createddate, w.com_date, w.w_effdate, date_add(w.w_effdate, interval p.months month) end_date from square_warranty w left join square_warranty_package p on w.w_package = p.id where w.orders_id=right(?,6) order by w.updatetime desc";
+	  $sql="select w.id, w.orders_id, w.fullorder_id, w.staff_id, w.staff_name, w.tc_staff_id, w.tc_staff_name, w.com_staff_id, w.com_staff_name, w.createddate, w.com_date, w.w_effdate, date_add(date_add(w.w_effdate, interval p.months month), interval -1 day) end_date from square_warranty w left join square_warranty_package p on w.w_package = p.id where w.orders_id=right(?,6) order by w.updatetime desc";
 	  $results = $this->db->query($sql, array($orderid));
 	  //return an array of result
 	  return $results->result_array();
